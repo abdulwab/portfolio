@@ -1,6 +1,12 @@
 'use client';
 import { useEffect } from "react";
+import dynamic from 'next/dynamic';
 import AOS from "aos";
+
+// Dynamically import CustomCursor with no SSR
+const CustomCursor = dynamic(() => import('./CustomCursor'), {
+  ssr: false,
+});
 
 export default function ClientLayout({
   children,
@@ -21,6 +27,7 @@ export default function ClientLayout({
 
   return (
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <CustomCursor />
       {children}
     </body>
   );
