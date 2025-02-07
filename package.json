@@ -27,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "@eslint/eslintrc": "^3",
-    "@types/aos": "^3.0.7"
+    "@types/aos": "^3.0.7",
+    "@tailwindcss/typography": "^0.5.10"
   }
 }
