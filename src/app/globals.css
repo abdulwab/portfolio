@@ -5,6 +5,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --code-background: #161B22;
+  --tag-background: #161B22;
+  --cursor-color: #58A6FF;
+  --cursor-size: 8px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,16 +18,111 @@
   }
 }
 
+/* Base styles */
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-geist-sans);
+  cursor: none; /* Hide default cursor for custom cursor */
+}
+
+/* Custom cursor */
+.cursor-dot {
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  background: var(--cursor-color);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.cursor-dot::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border: 2px solid var(--cursor-color);
+  border-radius: 50%;
+  opacity: 0.5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: cursorAura 1.5s infinite alternate;
+}
+
+/* GitHub-inspired markdown styling */
+.markdown {
+  @apply prose prose-slate dark:prose-invert max-w-none;
+}
+
+.markdown pre {
+  @apply bg-[#161B22] border border-[#30363D] rounded-lg p-4 overflow-x-auto;
+  font-family: var(--font-geist-mono);
+}
+
+.markdown code {
+  @apply bg-[#161B22] px-1.5 py-0.5 rounded text-sm border border-[#30363D];
+  font-family: var(--font-geist-mono);
+}
+
+/* Custom tag styling */
+.tag {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium transition-all;
+  background: var(--tag-background);
+}
+
+.tag-ai {
+  @apply text-accent-ai border border-accent-ai/30 hover:border-accent-ai;
+}
+
+.tag-iot {
+  @apply text-accent-iot border border-accent-iot/30 hover:border-accent-iot;
+}
+
+.tag-web {
+  @apply text-accent-web border border-accent-web/30 hover:border-accent-web;
+}
+
+.tag-chatbot {
+  @apply text-accent-chatbot border border-accent-chatbot/30 hover:border-accent-chatbot;
+}
+
+/* Hover animations */
+@layer utilities {
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+  
+  .hover-glow:hover {
+    @apply shadow-lg;
+    filter: drop-shadow(0 0 8px var(--cursor-color));
+  }
+}
+
+/* Cursor animations */
+@keyframes cursorAura {
+  from {
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+  }
+  to {
+    width: 30px;
+    height: 30px;
+    opacity: 0.2;
+  }
 }
 
 /* AOS custom animations */
 [data-aos] {
   pointer-events: none;
 }
+
 [data-aos].aos-animate {
   pointer-events: auto;
 }
