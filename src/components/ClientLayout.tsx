@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import dynamic from 'next/dynamic';
 import AOS from "aos";
+import Navigation from './Navigation';
 
 // Dynamically import CustomCursor with no SSR
 const CustomCursor = dynamic(() => import('./CustomCursor'), {
@@ -28,6 +29,7 @@ export default function ClientLayout({
   return (
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <CustomCursor />
+      <Navigation />
       {children}
     </body>
   );
