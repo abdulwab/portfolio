@@ -2,28 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base colors that don't change with theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --code-background: #161B22;
-  --tag-background: #161B22;
-  --cursor-color: #58A6FF;
-  --cursor-size: 8px;
+  --accent-web: #2ea043;
+  --accent-ai: #7c3aed;
+  --accent-iot: #3b82f6;
+  --accent-mobile: #ec4899;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0D1117;
-    --foreground: #C9D1D9;
-  }
+/* Dark theme (default) */
+:root {
+  --bg-primary: #0D1117;
+  --bg-secondary: #161B22;
+  --text-primary: #ffffff;
+  --text-secondary: #8b949e;
+  --border-primary: #30363D;
 }
 
-/* Base styles */
+/* Light theme colors */
+:root[class='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --text-primary: #24292f;
+  --text-secondary: #57606a;
+  --border-primary: #d0d7de;
+}
+
+/* Apply theme variables */
 body {
-  color: var(--foreground);
-  background: var(--background);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-geist-sans);
   cursor: none; /* Hide default cursor for custom cursor */
+}
+
+/* Update component colors */
+.bg-\[\#0D1117\] {
+  background-color: var(--bg-primary);
+}
+
+.bg-\[\#161B22\] {
+  background-color: var(--bg-secondary);
+}
+
+.text-github-text {
+  color: var(--text-secondary);
+}
+
+.border-\[\#30363D\] {
+  border-color: var(--border-primary);
+}
+
+/* Add smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Custom cursor */
@@ -125,4 +157,49 @@ body {
 
 [data-aos].aos-animate {
   pointer-events: auto;
+}
+
+/* Timeline customization */
+.vertical-timeline::before {
+  background: #30363d !important;
+}
+
+.vertical-timeline-element-content {
+  box-shadow: none !important;
+}
+
+.vertical-timeline-element-content .vertical-timeline-element-date {
+  color: #8b949e !important;
+}
+
+@media only screen and (min-width: 1170px) {
+  .vertical-timeline--two-columns .vertical-timeline-element-content .vertical-timeline-element-date {
+    text-align: left;
+    padding-right: 2rem;
+  }
+
+  .vertical-timeline--two-columns .vertical-timeline-element:nth-child(even):not(.vertical-timeline-element--left) .vertical-timeline-element-content .vertical-timeline-element-date {
+    text-align: right;
+    padding-left: 2rem;
+  }
+}
+
+/* Hide cursor when custom cursor is active */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Optimize images */
+img {
+  @apply transition-opacity duration-300;
+}
+
+.lazy-load {
+  @apply opacity-0;
+}
+
+.lazy-loaded {
+  @apply opacity-100;
 }
