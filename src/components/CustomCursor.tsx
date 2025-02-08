@@ -1,42 +1,52 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mounted, setMounted] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 25, stiffness: 700 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    setMounted(true);
-    
-    const updateCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX - 16);
+      cursorY.set(e.clientY - 16);
     };
 
-    const updateHoverState = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      setIsHovering(target.matches('a, button, [role="button"]'));
-    };
+    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseLeave = () => setIsVisible(false);
 
-    window.addEventListener('mousemove', updateCursor);
-    window.addEventListener('mouseover', updateHoverState);
+    document.addEventListener('mousemove', moveCursor);
+    document.addEventListener('mouseenter', handleMouseEnter);
+    document.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      window.removeEventListener('mousemove', updateCursor);
-      window.removeEventListener('mouseover', updateHoverState);
+      document.removeEventListener('mousemove', moveCursor);
+      document.removeEventListener('mouseenter', handleMouseEnter);
+      document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
-
-  // Don't render anything on the server side
-  if (!mounted) return null;
+  }, [cursorX, cursorY]);
 
   return (
-    <div
-      className={`cursor-dot ${isHovering ? 'scale-150' : ''}`}
+    <motion.div
+      className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-50 mix-blend-difference"
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
-        transition: 'transform 0.1s ease-out, scale 0.3s ease',
+        x: cursorXSpring,
+        y: cursorYSpring,
       }}
-    />
+    >
+      <motion.div
+        className="w-full h-full rounded-full bg-white"
+        animate={{
+          scale: isVisible ? 1 : 0,
+          opacity: isVisible ? 1 : 0,
+        }}
+        transition={{ duration: 0.2 }}
+      />
+    </motion.div>
   );
 } 
