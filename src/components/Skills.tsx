@@ -1,109 +1,178 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
+type Proficiency = 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
 
 type Skill = {
+  name: string;
   icon: string;
-  title: string;
-  tags: string[];
-  description: string;
-  category: 'web' | 'mobile' | 'iot' | 'ai';
+  proficiency: Proficiency;
+  category: 'ai' | 'iot' | 'web' | 'mobile';
 };
 
-const skills: Record<string, Skill[]> = {
-  web: [
-    { icon: '🌐', title: 'Next.js', tags: ['#React', '#SSR'], description: 'Full-stack React framework with SSR/SSG capabilities', category: 'web' },
-    { icon: '🎨', title: 'Tailwind', tags: ['#CSS', '#Utility'], description: 'Utility-first CSS framework for rapid UI development', category: 'web' },
-    { icon: '⚡', title: 'tRPC', tags: ['#API', '#TypeSafe'], description: 'End-to-end typesafe APIs for modern web apps', category: 'web' },
-  ],
-  mobile: [
-    { icon: '📱', title: 'React Native', tags: ['#Mobile', '#Cross'], description: 'Cross-platform mobile app development', category: 'mobile' },
-    { icon: '🔄', title: 'Expo', tags: ['#DevTools', '#Deploy'], description: 'Tools and services for React Native development', category: 'mobile' },
-    { icon: '📊', title: 'Native APIs', tags: ['#Device', '#Platform'], description: 'Native device capabilities integration', category: 'mobile' },
-  ],
-  iot: [
-    { icon: '🔌', title: 'Arduino', tags: ['#C++', '#Hardware'], description: 'Microcontroller programming and prototyping', category: 'iot' },
-    { icon: '🤖', title: 'RaspberryPi', tags: ['#Linux', '#Python'], description: 'Single-board computer for IoT projects', category: 'iot' },
-    { icon: '📡', title: 'MQTT', tags: ['#Protocol', '#IoT'], description: 'Lightweight messaging protocol for IoT devices', category: 'iot' },
-  ],
-  ai: [
-    { icon: '🧠', title: 'GPT-4', tags: ['#LLM', '#RAG'], description: 'OpenAI\'s multimodal language model', category: 'ai' },
-    { icon: '🔍', title: 'LangChain', tags: ['#AI', '#Chain'], description: 'Framework for developing LLM applications', category: 'ai' },
-    { icon: '🤖', title: 'TensorFlow', tags: ['#ML', '#DL'], description: 'Machine learning and deep learning framework', category: 'ai' },
-  ],
-};
+const skills: Skill[] = [
+  // Web Skills (showing first as default tab)
+  { name: 'React', icon: '⚛️', proficiency: 'Expert', category: 'web' },
+  { name: 'Next.js', icon: '▲', proficiency: 'Expert', category: 'web' },
+  { name: 'TypeScript', icon: '📘', proficiency: 'Expert', category: 'web' },
+  { name: 'Node.js', icon: '💚', proficiency: 'Advanced', category: 'web' },
+  { name: 'TailwindCSS', icon: '🎨', proficiency: 'Expert', category: 'web' },
+  { name: 'GraphQL', icon: '📊', proficiency: 'Advanced', category: 'web' },
+  { name: 'PostgreSQL', icon: '🐘', proficiency: 'Advanced', category: 'web' },
+  { name: 'MongoDB', icon: '🍃', proficiency: 'Advanced', category: 'web' },
+  { name: 'Redis', icon: '⚡', proficiency: 'Intermediate', category: 'web' },
+  { name: 'Docker', icon: '🐳', proficiency: 'Advanced', category: 'web' },
 
-const categories = [
-  { id: 'web', icon: '🌐', title: 'Web Development' },
-  { id: 'mobile', icon: '📱', title: 'Mobile Development' },
-  { id: 'iot', icon: '🔌', title: 'IoT Solutions' },
-  { id: 'ai', icon: '🤖', title: 'AI & Chatbots' },
+  // AI/ML Skills
+  { name: 'GPT-4', icon: '🤖', proficiency: 'Advanced', category: 'ai' },
+  { name: 'LangChain', icon: '🔗', proficiency: 'Advanced', category: 'ai' },
+  { name: 'PyTorch', icon: '🔥', proficiency: 'Intermediate', category: 'ai' },
+  { name: 'TensorFlow', icon: '📊', proficiency: 'Intermediate', category: 'ai' },
+  { name: 'Scikit-learn', icon: '🧮', proficiency: 'Advanced', category: 'ai' },
+  { name: 'Hugging Face', icon: '🤗', proficiency: 'Advanced', category: 'ai' },
+  { name: 'RAG', icon: '📚', proficiency: 'Expert', category: 'ai' },
+  { name: 'Vector DBs', icon: '🎯', proficiency: 'Advanced', category: 'ai' },
+
+  // IoT Skills
+  { name: 'ESP32', icon: '📡', proficiency: 'Expert', category: 'iot' },
+  { name: 'MQTT', icon: '📨', proficiency: 'Expert', category: 'iot' },
+  { name: 'Arduino', icon: '⚡', proficiency: 'Advanced', category: 'iot' },
+  { name: 'Raspberry Pi', icon: '🥧', proficiency: 'Expert', category: 'iot' },
+  { name: 'Sensors', icon: '🔌', proficiency: 'Advanced', category: 'iot' },
+  { name: 'LoRaWAN', icon: '📶', proficiency: 'Intermediate', category: 'iot' },
+
+  // Mobile Skills
+  { name: 'React Native', icon: '📱', proficiency: 'Advanced', category: 'mobile' },
+  { name: 'Flutter', icon: '🎯', proficiency: 'Intermediate', category: 'mobile' },
+  { name: 'iOS', icon: '🍎', proficiency: 'Intermediate', category: 'mobile' },
+  { name: 'Android', icon: '🤖', proficiency: 'Intermediate', category: 'mobile' }
 ];
 
+const tabs = [
+  { id: 'web', label: 'Web', color: 'var(--accent-web)' },
+  { id: 'ai', label: 'AI & ML', color: 'var(--accent-ai)' },
+  { id: 'iot', label: 'IoT', color: 'var(--accent-iot)' },
+  { id: 'mobile', label: 'Mobile', color: 'var(--accent-mobile)' },
+] as const;
+
 export default function Skills() {
+  const [activeTab, setActiveTab] = useState<typeof tabs[number]['id']>('web');
+  const [showAll, setShowAll] = useState(false);
+
+  const filteredSkills = skills.filter(skill => skill.category === activeTab);
+  const displayedSkills = showAll ? filteredSkills : filteredSkills.slice(0, 8);
+
+  const getProficiencyColor = (proficiency: Proficiency) => {
+    switch (proficiency) {
+      case 'Expert': return '#22C55E';
+      case 'Advanced': return '#3B82F6';
+      case 'Intermediate': return '#A855F7';
+      case 'Beginner': return '#EC4899';
+    }
+  };
+
+  const getProgressWidth = (proficiency: Proficiency) => {
+    switch (proficiency) {
+      case 'Expert': return '100%';
+      case 'Advanced': return '80%';
+      case 'Intermediate': return '60%';
+      case 'Beginner': return '40%';
+    }
+  };
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="max-w-7xl mx-auto"
-      >
-        <h2 className="text-3xl font-bold mb-12 text-center">Technical Skills</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {categories.map((category) => (
-            <div key={category.id} className="space-y-4">
-              <h3 className="text-xl font-semibold flex items-center gap-2">
-                <span>{category.icon}</span>
-                {category.title}
-              </h3>
-              
-              <div className="space-y-4">
-                {skills[category.id].map((skill) => (
-                  <motion.div
-                    key={skill.title}
-                    className="group relative bg-[#0D1117] p-4 rounded-lg border border-[#30363D] 
-                             hover:border-accent-web transition-all duration-300
-                             hover:shadow-lg hover:shadow-accent-web/10"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    {/* Tooltip */}
-                    <div className="absolute invisible group-hover:visible opacity-0 group-hover:opacity-100
-                                  transition-opacity duration-300 bottom-full left-1/2 -translate-x-1/2 mb-2
-                                  bg-[#161B22] text-sm p-2 rounded shadow-lg border border-[#30363D]
-                                  w-48 text-center z-10">
-                      {skill.description}
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
-                                    border-4 border-transparent border-t-[#161B22]" />
-                    </div>
-                    
-                    {/* Skill Content */}
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-2xl">{skill.icon}</span>
-                          <h4 className="font-medium">{skill.title}</h4>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {skill.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className={`tag tag-${skill.category} text-xs px-2 py-1`}
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+      <div className="max-w-7xl mx-auto">
+        <motion.h2
+          className="text-4xl font-bold mb-12 text-[#E5E7EB]"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          Skills & Expertise
+        </motion.h2>
+
+        <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id);
+                setShowAll(false);
+              }}
+              className={`px-4 py-2 rounded-lg transition-all duration-300 whitespace-nowrap
+                       ${activeTab === tab.id 
+                         ? 'bg-[#161B22] text-[#E5E7EB]' 
+                         : 'text-github-text hover:text-[#E5E7EB]'}`}
+              style={{
+                boxShadow: activeTab === tab.id ? `0 0 12px ${tab.color}` : 'none',
+                border: `2px solid ${activeTab === tab.id ? tab.color : '#30363D'}`
+              }}
+            >
+              {tab.label}
+            </button>
           ))}
         </div>
-      </motion.div>
+
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.05
+              }
+            }
+          }}
+        >
+          {displayedSkills.map((skill, i) => (
+            <motion.div
+              key={skill.name}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="bg-[#161B22] p-4 rounded-lg border-2 border-[#30363D]
+                       hover:border-[var(--accent-web)] transition-all duration-300"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">{skill.icon}</span>
+                <h3 className="text-[#E5E7EB] font-medium">{skill.name}</h3>
+              </div>
+              <div className="h-2 bg-[#30363D] rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ 
+                    backgroundColor: getProficiencyColor(skill.proficiency),
+                    width: getProgressWidth(skill.proficiency)
+                  }}
+                  initial={{ width: 0 }}
+                  animate={{ width: getProgressWidth(skill.proficiency) }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                />
+              </div>
+              <div className="mt-2 text-sm text-github-text">
+                {skill.proficiency}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {filteredSkills.length > 8 && (
+          <motion.button
+            onClick={() => setShowAll(!showAll)}
+            className="mt-8 px-4 py-2 rounded-lg border-2 border-[#30363D] 
+                     hover:border-[var(--accent-web)] bg-[#161B22] 
+                     text-[#E5E7EB] transition-all duration-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {showAll ? 'Show Less' : `Show ${filteredSkills.length - 8} More`}
+          </motion.button>
+        )}
+      </div>
     </section>
   );
 } 
