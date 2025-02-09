@@ -33,7 +33,6 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-geist-sans);
-  cursor: none; /* Hide default cursor for custom cursor */
 }
 
 /* Update component colors */
@@ -59,7 +58,7 @@ body {
 }
 
 /* Custom cursor */
-.cursor-dot {
+/* .cursor-dot {
   width: var(--cursor-size);
   height: var(--cursor-size);
   background: var(--cursor-color);
@@ -81,7 +80,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   animation: cursorAura 1.5s infinite alternate;
-}
+} */
 
 /* GitHub-inspired markdown styling */
 .markdown {
