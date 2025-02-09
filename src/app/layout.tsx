@@ -3,7 +3,6 @@ import "./globals.css";
 import ClientWrapper from "@/components/ClientWrapper";
 import type { Metadata } from "next";
 import { ThemeProvider } from '@/components/ThemeProvider';
-import CustomCursor from '@/components/CustomCursor';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +28,6 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
-          <CustomCursor />
           <ClientWrapper>{children}</ClientWrapper>
         </ThemeProvider>
       </body>
