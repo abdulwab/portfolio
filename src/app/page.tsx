@@ -6,6 +6,7 @@ import IoTSolutions from '@/components/IoTSolutions';
 import Experience from '@/components/Experience';
 import Navigation from '@/components/Navigation';
 import Contact from '@/components/Contact';
+import WebDevelopment from '@/components/WebDevelopment';
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
       </section>
       <section id="skills">
         <Skills />
+      </section>
+      <section id="web">
+        <WebDevelopment />
       </section>
       <section id="ai">
         <AIAgent />
