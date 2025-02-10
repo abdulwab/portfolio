@@ -26,7 +26,7 @@ export default function VideoBackground() {
             maxHeight: '100vh'
           }}
         >
-          <source src="/background.mp4" type="video/mp4" />
+          <source src="/videos/background.mp4" type="video/mp4" />
         </video>
         <div 
           className="absolute inset-0 bg-gradient-to-b from-transparent 
