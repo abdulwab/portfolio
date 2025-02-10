@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { useState } from 'react';
+import Image from 'next/image';
+import ChatDemo from '@/components/ChatDemo';
+import ImageWithFallback from './ImageWithFallback';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
@@ -13,82 +16,138 @@ export default function Hero() {
   };
 
   return (
-    <div className="relative min-h-[80vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8">
-      <motion.h1 
-        className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <span className="text-foreground">Abdul Wahab</span>
-        <span className="text-accent-web"> | </span>
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent-web via-accent-iot to-accent-ai">
-          Full-Stack Engineer + AI/IoT Specialist
-        </span>
-      </motion.h1>
-
-      <div className="text-lg sm:text-xl mb-8 text-github-text">
-        <TypeAnimation
-          sequence={[
-            'Building intelligent solutions at the intersection of Web, IoT, and AI.',
-            1000,
-            'Transforming ideas into scalable, production-ready applications.',
-            1000,
-          ]}
-          wrapper="span"
-          speed={50}
-          repeat={Infinity}
-        />
+    <div className="relative min-h-screen flex items-center">
+      {/* Video Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute min-h-screen w-full object-cover"
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        {/* Overlay with blur and gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/80 to-[#0D1117] 
+                      backdrop-blur-sm" />
       </div>
 
-      <motion.div 
-        className="flex gap-4 mb-12"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {[
-          { level: 4, href: 'https://linkedin.com/in/yourusername', label: 'LinkedIn' },
-          { level: 8, href: 'mailto:your@email.com', label: 'Email' },
-          { level: 12, href: 'tel:+1234567890', label: 'Phone' },
-        ].map((link, i) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className={`w-12 h-12 rounded-sm flex items-center justify-center transition-all
-              bg-[#0D1117] hover:scale-110 hover:shadow-lg
-              ${getContributionColor(link.level)}`}
-            aria-label={link.label}
+      {/* Content */}
+      <div className="w-full py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column: Text and Image */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            {getIconForLink(link.label)}
-          </a>
-        ))}
-      </motion.div>
-
-      <motion.div
-        className="fixed bottom-8 right-8 cursor-pointer"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-        onClick={handleCopy}
-      >
-        <div className="bg-[#0D1117] rounded-lg p-4 shadow-xl border border-[#30363D] hover:border-accent-web transition-colors">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-              <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-              <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+            <div className="relative mb-8 inline-block">
+              <ImageWithFallback
+                src="/profile.jpg"
+                fallbackSrc="/images/placeholder-avatar.png"
+                alt="Abdul Wahab"
+                width={180}
+                height={180}
+                className="rounded-full border-4 border-accent-web"
+                priority
+              />
+              <div className="absolute -bottom-2 -right-2 bg-accent-web text-white p-2 rounded-full">
+                <span className="text-xl">👋</span>
+              </div>
             </div>
-            <div className="text-sm text-github-text">terminal</div>
-          </div>
-          <div className="font-mono text-sm">
-            <span className="text-accent-iot">$ </span>
-            <span className="text-github-text">
-              {copied ? 'Copied! 📋' : 'npm create @abdulwahab/project'}
-            </span>
-          </div>
+
+            <h1 className="text-5xl font-bold mb-6 text-white">
+              Hi, I'm Abdul Wahab
+              <br />
+              <span className="text-accent-web">
+                <TypeAnimation
+                  sequence={[
+                    'Full Stack Developer',
+                    2000,
+                    'AI Engineer',
+                    2000,
+                    'IoT Specialist',
+                    2000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                />
+              </span>
+            </h1>
+
+            <p className="text-gray-200 text-lg mb-8 max-w-lg">
+              I specialize in building intelligent web applications with modern technologies.
+              Let's create something amazing together!
+            </p>
+
+            <motion.div 
+              className="flex gap-4 mb-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              {[
+                { level: 4, href: 'https://linkedin.com/in/yourusername', label: 'LinkedIn' },
+                { level: 8, href: 'mailto:your@email.com', label: 'Email' },
+                { level: 12, href: 'tel:+1234567890', label: 'Phone' },
+              ].map((link, i) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`w-12 h-12 rounded-sm flex items-center justify-center transition-all
+                    bg-[#0D1117] hover:scale-110 hover:shadow-lg
+                    ${getContributionColor(link.level)}`}
+                  aria-label={link.label}
+                >
+                  {getIconForLink(link.label)}
+                </a>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column: AI Chat */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            className="relative"
+          >
+            <div className="absolute -top-6 left-4 bg-[#161B22]/80 backdrop-blur-sm px-4 py-2 
+                          rounded-full border border-[#30363D] text-sm text-github-text">
+              Ask me anything! 🤖
+            </div>
+            <ChatDemo />
+          </motion.div>
+
+          {/* Terminal Command */}
+          <motion.div
+            className="fixed bottom-8 right-8 cursor-pointer"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            onClick={handleCopy}
+          >
+            <div className="bg-[#0D1117] rounded-lg p-4 shadow-xl border border-[#30363D] hover:border-accent-web transition-colors">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                </div>
+                <div className="text-sm text-github-text">terminal</div>
+              </div>
+              <div className="font-mono text-sm">
+                <span className="text-accent-iot">$ </span>
+                <span className="text-github-text">
+                  {copied ? 'Copied! 📋' : 'npm create @abdulwahab/project'}
+                </span>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
