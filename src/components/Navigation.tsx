@@ -62,9 +62,28 @@ const navItems: NavItem[] = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [hasScrolled, setHasScrolled] = useState(false);
   const [position, setPosition] = useState({ x: 32, y: window.innerHeight / 2 });
   const dragControls = useDragControls();
   const constraintsRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 20);
+      
+      // Update active section based on scroll position
+      const sections = document.querySelectorAll('section[id]');
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          setActiveSection(section.id);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -94,150 +113,99 @@ export default function Navigation() {
   };
 
   return (
-    <>
-      {/* Drag Constraints */}
-      <div
-        ref={constraintsRef}
-        className="fixed inset-0 pointer-events-none"
-      />
+    <motion.header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        hasScrolled 
+          ? 'bg-[#0D1117]/95 backdrop-blur-sm border-b border-[#30363D] h-16' 
+          : 'h-20 bg-transparent'
+      }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+        {/* Logo/Brand */}
+        <Link href="#home" className="text-xl font-bold">
+          AW
+        </Link>
 
-      {/* Desktop Navigation - Now Draggable */}
-      <motion.nav
-        drag
-        dragControls={dragControls}
-        dragMomentum={false}
-        dragConstraints={constraintsRef}
-        dragElastic={0}
-        initial={false}
-        animate={{
-          x: position.x,
-          y: position.y,
-        }}
-        onDragEnd={(event, info) => {
-          setPosition({ x: info.point.x, y: info.point.y });
-        }}
-        className="hidden lg:flex fixed flex-col gap-6 z-50
-                  bg-[#0D1117]/95 backdrop-blur-sm p-5 rounded-2xl cursor-move
-                  border-2 border-[#30363D] hover:border-accent-web transition-all duration-300
-                  shadow-xl shadow-black/20"
-        style={{
-          touchAction: 'none',
-          transform: `translate(-50%, -50%)`,
-        }}
-      >
-        {/* Drag Handle */}
-        <div className="absolute top-0 left-0 right-0 h-8 flex items-center justify-center
-                      border-b border-[#30363D] cursor-move rounded-t-2xl">
-          <div className="w-16 h-1 bg-[#30363D] rounded-full" />
-        </div>
-
-        <div className="mt-4 flex flex-col gap-4">
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center gap-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              onClick={(e) => {
-                e.preventDefault();
-                handleClick(item.href);
-              }}
-              className={`group flex items-center gap-3 p-3 rounded-xl hover:bg-[#161B22] 
-                transition-all duration-300 cursor-pointer
-                ${activeSection === item.href.slice(1) 
-                  ? 'text-white translate-x-2 bg-[#161B22]/80' 
-                  : 'text-[#8b949e] hover:text-white'}`}
+              className={`px-4 py-2 rounded-lg transition-all duration-300
+                ${activeSection === item.href.slice(1)
+                  ? 'text-white bg-[#161B22]'
+                  : 'text-[#8b949e] hover:text-white hover:bg-[#161B22]/50'
+                }`}
             >
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center
-                           bg-[#161B22] border-2 transition-all duration-300
-                           ${activeSection === item.href.slice(1)
-                             ? 'border-accent-web bg-accent-web/10 shadow-lg shadow-accent-web/20'
-                             : 'border-[#30363D] group-hover:border-accent-web'}`}>
-                <item.icon className="w-5 h-5" />
-              </div>
-              <span className={`font-medium transition-all duration-300 ${
-                activeSection === item.href.slice(1) 
-                  ? 'opacity-100 translate-x-0' 
-                  : 'opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0'
-              }`}>
-                {item.label}
-              </span>
+              {item.label}
             </Link>
           ))}
         </div>
-      </motion.nav>
 
-      {/* Mobile Menu Button - Enhanced styling */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 right-4 z-50 w-12 h-12 rounded-lg
-                 bg-[#161B22] border-2 border-[#30363D] flex items-center justify-center
-                 shadow-xl shadow-black/20 hover:border-accent-web transition-all duration-300"
-        aria-label="Toggle menu"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-[#8b949e]"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="lg:hidden p-2 rounded-lg hover:bg-[#161B22]"
         >
-          {isOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            />
+          </svg>
+        </button>
 
-      {/* Mobile Menu - Enhanced styling */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop with stronger blur */}
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isOpen && (
             <motion.div
+              className="lg:hidden fixed inset-0 z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-md z-40"
-              onClick={() => setIsOpen(false)}
-            />
-            
-            {/* Menu with enhanced styling */}
-            <motion.nav
-              initial={{ opacity: 0, x: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: '100%' }}
-              transition={{ type: 'tween' }}
-              className="lg:hidden fixed inset-y-0 right-0 w-72 bg-[#0D1117]/95 backdrop-blur-sm
-                       border-l-2 border-[#30363D] z-40 flex flex-col p-6 gap-4
-                       shadow-2xl shadow-black/20"
             >
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClick(item.href);
-                  }}
-                  className={`flex items-center gap-4 p-3 rounded-xl transition-all duration-300
-                    ${activeSection === item.href.slice(1) 
-                      ? 'text-white bg-[#161B22]/80 translate-x-2' 
-                      : 'text-[#8b949e] hover:text-white hover:bg-[#161B22] hover:translate-x-2'}`}
-                >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center
-                               bg-[#161B22] border-2 transition-all duration-300
-                               ${activeSection === item.href.slice(1) 
-                                 ? 'border-accent-web bg-accent-web/10 shadow-lg shadow-accent-web/20' 
-                                 : 'border-[#30363D]'}`}>
+              <motion.div
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+                onClick={() => setIsOpen(false)}
+              />
+              <motion.nav
+                className="fixed right-0 top-0 bottom-0 w-64 bg-[#0D1117] border-l border-[#30363D]
+                         p-6 flex flex-col gap-4"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+              >
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all
+                      ${activeSection === item.href.slice(1)
+                        ? 'text-white bg-[#161B22]'
+                        : 'text-[#8b949e] hover:text-white hover:bg-[#161B22]/50'
+                      }`}
+                  >
                     <item.icon className="w-5 h-5" />
-                  </div>
-                  {item.label}
-                </Link>
-              ))}
-            </motion.nav>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+                    {item.label}
+                  </Link>
+                ))}
+              </motion.nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </motion.header>
   );
 } 
