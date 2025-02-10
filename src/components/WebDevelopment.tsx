@@ -17,7 +17,7 @@ const webProjects: WebProject[] = [
   {
     title: 'E-commerce Platform',
     description: 'Full-stack e-commerce solution with real-time inventory and payments',
-    image: '/projects/ecommerce.jpg',
+    image: '/images/projects/ecommerce.jpg',
     techStack: ['Next.js', 'TypeScript', 'Stripe', 'Prisma', 'PostgreSQL'],
     demo: 'https://demo.store',
     github: 'https://github.com/yourusername/ecommerce'
