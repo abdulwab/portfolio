@@ -36,55 +36,57 @@ const generateMockData = (): SensorData[] => [
 ];
 
 export default function MQTTDashboard() {
-  const [sensorData, setSensorData] = useState<SensorData[]>(generateMockData());
+  const [data, setData] = useState<SensorData[]>(generateMockData());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSensorData(generateMockData());
-    }, 2000);
+      setData(generateMockData());
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold mb-4">Sensor Dashboard</h3>
-      
-      <div className="grid gap-4">
-        <AnimatePresence mode="wait">
-          {sensorData.map((sensor) => (
-            <motion.div
-              key={sensor.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="bg-[#161B22] p-4 rounded-lg border border-[#30363D]"
-            >
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-github-text">{sensor.type}</span>
-                <span className="text-xs text-github-text opacity-60">
-                  {sensor.timestamp.toLocaleTimeString()}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <AnimatePresence mode="sync">
+        {data.map((sensor) => (
+          <motion.div
+            key={sensor.id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+            className="bg-[#161B22] p-4 rounded-lg border border-[#30363D]"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">{sensor.type}</h3>
+              <span className="text-sm text-github-text">
+                {new Date(sensor.timestamp).toLocaleTimeString()}
+              </span>
+            </div>
+            
+            <div className="relative h-2 bg-[#30363D] rounded-full mb-2">
+              <motion.div
+                className="absolute top-0 left-0 h-full rounded-full bg-accent-iot"
+                initial={{ width: 0 }}
+                animate={{ 
+                  width: `${(sensor.value / getMaxValue(sensor.type)) * 100}%` 
+                }}
+                transition={{ duration: 0.5 }}
+              />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <span className="text-2xl font-bold">
+                {sensor.value}
+                <span className="text-sm ml-1 text-github-text">
+                  {sensor.unit}
                 </span>
-              </div>
-              <div className="flex items-end gap-2">
-                <span className="text-2xl font-mono">
-                  {sensor.value.toFixed(1)}
-                </span>
-                <span className="text-github-text">{sensor.unit}</span>
-              </div>
-              <div className="mt-2 bg-[#0D1117] rounded-full h-2 overflow-hidden">
-                <motion.div
-                  className="h-full bg-accent-iot"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(sensor.value / getMaxValue(sensor.type)) * 100}%` }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+              </span>
+            </div>
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
