@@ -10,7 +10,7 @@ import WebDevelopment from '@/components/WebDevelopment';
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative">
       <Navigation />
       <section id="home">
         <Hero />
@@ -20,9 +20,6 @@ export default function Home() {
       </section>
       <section id="web">
         <WebDevelopment />
-      </section>
-      <section id="ai">
-        <AIAgent />
       </section>
       <section id="iot">
         <IoTSolutions />
