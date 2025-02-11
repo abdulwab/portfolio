@@ -1,247 +1,155 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import { BeakerIcon, CpuChipIcon, CodeBracketIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { CodeBracketIcon, CpuChipIcon, BeakerIcon, CloudIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 
-type Proficiency = 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-type Category = 'ai' | 'iot' | 'web' | 'mobile';
+type Category = 'web' | 'ai' | 'iot' | 'cloud' | 'tools';
 
 interface Skill {
   name: string;
   icon: string;
-  proficiency: Proficiency;
   category: Category;
   tags: string[];
   details: string;
+  projects: number;
 }
 
 const skills: Skill[] = [
-  // Web Development Skills
-  { 
-    name: 'React', 
-    icon: '⚛️', 
-    proficiency: 'Expert',
-    category: 'web',
-    tags: ['#Hooks', '#Redux', '#NextJS'],
-    details: 'Built 20+ production applications'
-  },
-  // ... add more skills for each category
+  // Web Development (10 skills)
+  { name: 'Next.js', icon: '🌐', category: 'web', tags: ['SSR', 'API Routes', 'ISR'], details: 'Enterprise-scale applications', projects: 22 },
+  { name: 'React', icon: '⚛️', category: 'web', tags: ['Hooks', 'Context', 'Suspense'], details: '20+ production apps', projects: 28 },
+  { name: 'Node.js', icon: '🟢', category: 'web', tags: ['Express', 'GraphQL', 'WebSocket'], details: 'High-performance APIs', projects: 18 },
+  { name: 'TypeScript', icon: '📘', category: 'web', tags: ['Type Safety', 'Generics', 'Decorators'], details: 'Type-first development', projects: 25 },
+  { name: 'Firebase', icon: '🔥', category: 'web', tags: ['Auth', 'Firestore', 'Functions'], details: 'Realtime systems', projects: 14 },
+  { name: 'PostgreSQL', icon: '🐘', category: 'web', tags: ['JSONB', 'Indexing', 'Partitioning'], details: 'Database architecture', projects: 15 },
+  { name: 'Redis', icon: '🔴', category: 'web', tags: ['Caching', 'Pub/Sub', 'Streams'], details: 'Real-time systems', projects: 12 },
+  { name: 'Docker', icon: '🐳', category: 'web', tags: ['Containers', 'Swarm', 'Compose'], details: 'CI/CD pipelines', projects: 17 },
+  { name: 'AWS', icon: '☁️', category: 'web', tags: ['Lambda', 'S3', 'EC2'], details: 'Cloud infrastructure', projects: 14 },
+  { name: 'Jest', icon: '🃏', category: 'web', tags: ['Unit Testing', 'Mocks', 'Coverage'], details: 'Test-driven development', projects: 19 },
 
-  // AI/ML Skills
-  {
-    name: 'LangChain',
-    icon: '🔗',
-    proficiency: 'Advanced',
-    category: 'ai',
-    tags: ['#RAG', '#Agents', '#LLM'],
-    details: 'Developed custom AI agents for enterprise'
-  },
-  
-  // IoT Skills
-  {
-    name: 'ESP32',
-    icon: '⚡',
-    proficiency: 'Expert',
-    category: 'iot',
-    tags: ['#MQTT', '#BLE', '#WiFi'],
-    details: 'Deployed in 15+ IoT projects'
-  },
+  // AI & Agents (10 skills)
+  { name: 'GPT-4', icon: '🧠', category: 'ai', tags: ['Fine-tuning', 'Function Calling', 'Vision'], details: 'Multimodal solutions', projects: 9 },
+  { name: 'LangChain', icon: '⛓️', category: 'ai', tags: ['RAG', 'Agents', 'Tools'], details: 'AI workflows', projects: 11 },
+  { name: 'LlamaIndex', icon: '🦙', category: 'ai', tags: ['Data Loaders', 'Query Engine', 'Chat'], details: 'Data augmentation', projects: 7 },
+  { name: 'HuggingFace', icon: '🤗', category: 'ai', tags: ['Transformers', 'Pipelines', 'Inference'], details: 'Model deployment', projects: 8 },
+  { name: 'Vector DBs', icon: '📊', category: 'ai', tags: ['Pinecone', 'Chroma', 'Qdrant'], details: 'Semantic search', projects: 6 },
+  { name: 'OpenAI', icon: '🔓', category: 'ai', tags: ['API', 'Embeddings', 'Moderation'], details: 'Enterprise integrations', projects: 12 },
+  { name: 'LangSmith', icon: '🔍', category: 'ai', tags: ['Tracing', 'Monitoring', 'Testing'], details: 'LLM observability', projects: 5 },
+  { name: 'AutoGPT', icon: '🤖', category: 'ai', tags: ['Agents', 'Memory', 'Planning'], details: 'Autonomous systems', projects: 4 },
+  { name: 'TensorFlow', icon: '📈', category: 'ai', tags: ['Keras', 'Layers', 'Models'], details: 'Neural networks', projects: 6 },
+  { name: 'PyTorch', icon: '🔥', category: 'ai', tags: ['Tensors', 'Autograd', 'NN'], details: 'Deep learning', projects: 5 },
+
+  // IoT (10 skills)
+  { name: 'ESP32', icon: '⚡', category: 'iot', tags: ['BLE', 'WiFi', 'FreeRTOS'], details: '15+ deployments', projects: 21 },
+  { name: 'LoRaWAN', icon: '📡', category: 'iot', tags: ['Long Range', 'Mesh', 'LPWAN'], details: 'Industrial IoT', projects: 8 },
+  { name: 'Zigbee', icon: '🐝', category: 'iot', tags: ['Mesh', 'Low Power', 'HA'], details: 'Smart home systems', projects: 12 },
+  { name: 'MQTT', icon: '🔌', category: 'iot', tags: ['Pub/Sub', 'Broker', 'QoS'], details: 'Message streaming', projects: 17 },
+  { name: 'Raspberry Pi', icon: '🍓', category: 'iot', tags: ['Python', 'GPIO', 'Linux'], details: 'Edge computing', projects: 14 },
+  { name: 'Arduino', icon: '🔄', category: 'iot', tags: ['Sensors', 'Actuators', 'Shields'], details: 'Rapid prototyping', projects: 16 },
+  { name: 'RTOS', icon: '⏱️', category: 'iot', tags: ['FreeRTOS', 'Zephyr', 'ThreadX'], details: 'Real-time systems', projects: 9 },
+  { name: 'OPC UA', icon: '🏭', category: 'iot', tags: ['IIoT', 'Security', 'PubSub'], details: 'Industrial automation', projects: 7 },
+  { name: 'Modbus', icon: '🔧', category: 'iot', tags: ['TCP', 'RTU', 'ASCII'], details: 'Industrial protocol', projects: 6 },
+  { name: 'CoAP', icon: '🌐', category: 'iot', tags: ['RESTful', 'DTLS', 'Observe'], details: 'Constrained devices', projects: 5 },
 ];
 
-const tabs = [
-  { id: 'web', label: 'Web Development', icon: CodeBracketIcon, color: 'var(--accent-web)' },
-  { id: 'ai', label: 'AI & ML', icon: BeakerIcon, color: 'var(--accent-ai)' },
-  { id: 'iot', label: 'IoT', icon: CpuChipIcon, color: 'var(--accent-iot)' },
-  { id: 'mobile', label: 'Mobile', icon: DevicePhoneMobileIcon, color: 'var(--accent-mobile)' }
+const categories = [
+  { id: 'web', label: 'Web Stack', icon: CodeBracketIcon, color: '#58A6FF' },
+  { id: 'ai', label: 'AI Agents', icon: BeakerIcon, color: '#10B981' },
+  { id: 'iot', label: 'IoT', icon: CpuChipIcon, color: '#3B82F6' },
+  { id: 'cloud', label: 'Cloud', icon: CloudIcon, color: '#F59E0B' },
+  { id: 'tools', label: 'Tools', icon: CommandLineIcon, color: '#8B5CF6' },
 ];
-
-// Move these utility functions outside of the Skills component
-const getProficiencyColor = (proficiency: Proficiency) => {
-  switch (proficiency) {
-    case 'Expert': return '#16A34A';
-    case 'Advanced': return '#2563EB';
-    case 'Intermediate': return '#9333EA';
-    case 'Beginner': return '#DB2777';
-    default: return '#DB2777';
-  }
-};
-
-const getProgressWidth = (proficiency: Proficiency) => {
-  switch (proficiency) {
-    case 'Expert': return '100%';
-    case 'Advanced': return '80%';
-    case 'Intermediate': return '60%';
-    case 'Beginner': return '40%';
-    default: return '40%';
-  }
-};
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState<Category>('web');
-  const [showMore, setShowMore] = useState(false);
-  const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
-  const swiperRef = useRef<any>(null);
-
-  const filteredSkills = skills.filter(skill => skill.category === activeTab);
-  const mainSkills = filteredSkills.slice(0, 6);
-  const extraSkills = filteredSkills.slice(6);
-
-  const handleTabChange = (tab: Category) => {
-    setActiveTab(tab);
-    if (swiperRef.current?.swiper) {
-      swiperRef.current.swiper.slideTo(0);
-    }
-  };
+  const [flippedSkill, setFlippedSkill] = useState<string | null>(null);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0D1117]">
+    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#0D1117]" id="skills">
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl font-bold mb-12 text-[#E5E7EB]"
+          className="text-3xl font-bold mb-8 text-[#E5E7EB] text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          Skills & Expertise
+          Technical Expertise
         </motion.h2>
 
-        {/* Tabs */}
-        <div className="flex gap-4 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-          {tabs.map((tab) => (
+        {/* Category Tabs */}
+        <div className="flex flex-wrap gap-2 mb-6 justify-center">
+          {categories.map((category) => (
             <button
-              key={tab.id}
-              onClick={() => handleTabChange(tab.id as Category)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300
-                       ${activeTab === tab.id ? 'bg-[#161B22] text-[#E5E7EB]' : 'text-github-text'}
-                       hover:text-[#E5E7EB] whitespace-nowrap`}
-              style={{
-                boxShadow: activeTab === tab.id ? `0 0 12px ${tab.color}` : 'none',
-                border: `2px solid ${activeTab === tab.id ? tab.color : '#30363D'}`
-              }}
+              key={category.id}
+              onClick={() => setActiveTab(category.id as Category)}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors
+                ${activeTab === category.id ? 'bg-[#161B22] text-[#E5E7EB]' : 'text-[#8B949E] hover:bg-[#161B22]/50'}
+                border ${activeTab === category.id ? 'border-[#58A6FF]' : 'border-transparent'}`}
+              style={{ boxShadow: activeTab === category.id ? `0 0 8px ${category.color}` : 'none' }}
             >
-              <tab.icon className="w-5 h-5" />
-              {tab.label}
+              <category.icon className="w-4 h-4" />
+              {category.label}
             </button>
           ))}
         </div>
 
-        {/* Carousel */}
-        <div className="relative"
-             onMouseEnter={() => setIsAutoplayPaused(true)}
-             onMouseLeave={() => setIsAutoplayPaused(false)}>
-          <Swiper
-            ref={swiperRef}
-            modules={[Autoplay, Pagination, Navigation]}
-            spaceBetween={24}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 }
-            }}
-            autoplay={{
-              delay: 8000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: true
-            }}
-            pagination={{ clickable: true }}
-            navigation
-            className="skill-carousel"
-          >
-            {mainSkills.map((skill) => (
-              <SwiperSlide key={skill.name}>
-                <SkillCard skill={skill} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        {/* Show More Section */}
-        {extraSkills.length > 0 && (
-          <div className="mt-8 text-center">
-            <button
-              onClick={() => setShowMore(!showMore)}
-              className="px-4 py-2 rounded-lg border-2 border-[#30363D] hover:border-[var(--accent-web)]
-                       text-[#E5E7EB] transition-all duration-300"
-            >
-              {showMore ? 'Show Less' : `Show ${extraSkills.length} More`}
-            </button>
-          </div>
-        )}
-
-        {/* Extra Skills Grid */}
-        <AnimatePresence>
-          {showMore && (
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {skills.filter(s => s.category === activeTab).map((skill) => (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8"
+              key={skill.name}
+              className="relative h-40 cursor-pointer group"
+              onClick={() => setFlippedSkill(skill.name === flippedSkill ? null : skill.name)}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
             >
-              {extraSkills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <SkillCard skill={skill} />
-                </motion.div>
-              ))}
+              {/* Front Side */}
+              <motion.div
+                className="absolute w-full h-full bg-[#161B22] p-3 rounded-lg border border-[#30363D]
+                          flex flex-col justify-between backface-hidden"
+                animate={{ rotateY: flippedSkill === skill.name ? 180 : 0 }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">{skill.icon}</span>
+                  <h3 className="text-lg font-medium text-[#E5E7EB]">{skill.name}</h3>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {skill.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 text-xs rounded-md bg-[#0D1117] text-[#58A6FF]
+                               border border-[#30363D]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="text-[#8B949E] text-xs mt-auto">
+                  Applied in {skill.projects}+ projects
+                </div>
+              </motion.div>
+
+              {/* Back Side */}
+              <motion.div
+                className="absolute w-full h-full bg-[#161B22] p-3 rounded-lg border border-[#58A6FF]
+                          flex flex-col justify-center items-center text-center backface-hidden"
+                initial={{ rotateY: 180 }}
+                animate={{ rotateY: flippedSkill === skill.name ? 0 : 180 }}
+              >
+                <p className="text-sm text-[#E5E7EB] mb-2 px-2 leading-tight">
+                  {skill.details}
+                </p>
+                <div className="text-[#58A6FF] text-xs mb-2">
+                  {skill.tags.slice(0, 3).join(' • ')}
+                </div>
+                <div className="text-xs text-[#8B949E]">
+                  {skill.projects}+ successful implementations
+                </div>
+              </motion.div>
             </motion.div>
-          )}
-        </AnimatePresence>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
-
-function SkillCard({ skill }: { skill: Skill }) {
-  return (
-    <motion.div
-      className="bg-[var(--bg-secondary)] p-6 rounded-lg border border-[var(--border-primary)] group
-                hover:border-[var(--accent-web)] transition-all duration-300"
-      whileHover={{ scale: 1.05 }}
-    >
-      <div className="flex items-center gap-3 mb-4">
-        <span className="text-3xl">{skill.icon}</span>
-        <h3 className="text-[var(--text-primary)] font-medium text-lg">{skill.name}</h3>
-      </div>
-
-      <div className="h-2 bg-[var(--border-primary)] rounded-full overflow-hidden mb-3">
-        <motion.div
-          className="h-full rounded-full"
-          style={{
-            backgroundColor: getProficiencyColor(skill.proficiency),
-            width: getProgressWidth(skill.proficiency)
-          }}
-          initial={{ width: 0 }}
-          animate={{ width: getProgressWidth(skill.proficiency) }}
-          transition={{ duration: 0.5 }}
-        />
-      </div>
-
-      <div className="flex flex-wrap gap-2 mb-3">
-        {skill.tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-2 py-1 text-xs rounded-md bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border-primary)]"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                    absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1
-                    bg-[var(--bg-secondary)] text-[var(--text-primary)] text-sm rounded-lg 
-                    border border-[var(--border-primary)] whitespace-nowrap">
-        {skill.details}
-      </div>
-    </motion.div>
-  );
-} 
