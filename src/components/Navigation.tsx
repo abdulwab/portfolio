@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { useTheme } from './ThemeProvider';
 
 type NavItem = {
   label: string;
@@ -66,10 +67,15 @@ export default function Navigation() {
   const [position, setPosition] = useState({ x: 32, y: window.innerHeight / 2 });
   const dragControls = useDragControls();
   const constraintsRef = useRef(null);
+  const pathname = usePathname();
+  const { theme } = useTheme();
+
+  // Get active section from pathname
+  const activeSectionFromPath = pathname?.split('#')[1] || 'home';
 
   useEffect(() => {
     const handleScroll = () => {
-      setHasScrolled(window.scrollY > 20);
+      setHasScrolled(window.scrollY > 0);
       
       // Update active section based on scroll position
       const sections = document.querySelectorAll('section[id]');
@@ -112,20 +118,45 @@ export default function Navigation() {
     }
   };
 
+  const bgColor = theme === 'dark' 
+    ? 'bg-white/95' 
+    : 'bg-[#0D1117]/95';
+
+  const textColor = theme === 'dark'
+    ? 'text-[#0D1117]'
+    : 'text-white';
+
+  const hoverBgColor = theme === 'dark'
+    ? 'hover:bg-gray-100'
+    : 'hover:bg-[#161B22]';
+
+  const activeBgColor = theme === 'dark'
+    ? 'bg-accent-web/10'
+    : 'bg-accent-web/20';
+
+  const activeTextColor = theme === 'dark'
+    ? 'text-accent-web'
+    : 'text-accent-web';
+
+  const inactiveTextColor = theme === 'dark'
+    ? 'text-gray-600 hover:text-accent-web'
+    : 'text-gray-400 hover:text-accent-web';
+
+  const borderColor = theme === 'dark'
+    ? 'border-gray-200'
+    : 'border-[#30363D]';
+
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        hasScrolled 
-          ? 'bg-[#0D1117]/95 backdrop-blur-sm border-b border-[#30363D] h-16' 
-          : 'h-20 bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
+        ${hasScrolled ? `${bgColor} backdrop-blur-sm border-b ${borderColor} h-16` : 'h-20 bg-transparent'}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.3 }}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
         {/* Logo/Brand */}
-        <Link href="#home" className="text-xl font-bold">
+        <Link href="#home" className={`text-xl font-bold ${activeTextColor}`}>
           AW
         </Link>
 
@@ -135,10 +166,11 @@ export default function Navigation() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => handleClick(item.href)}
               className={`px-4 py-2 rounded-lg transition-all duration-300
                 ${activeSection === item.href.slice(1)
-                  ? 'text-white bg-[#161B22]'
-                  : 'text-[#8b949e] hover:text-white hover:bg-[#161B22]/50'
+                  ? `${activeTextColor} ${activeBgColor} font-medium border border-accent-web/30`
+                  : `${inactiveTextColor} ${hoverBgColor}`
                 }`}
             >
               {item.label}
@@ -149,7 +181,8 @@ export default function Navigation() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden p-2 rounded-lg hover:bg-[#161B22]"
+          className={`lg:hidden p-2 rounded-lg ${hoverBgColor} ${activeTextColor}`}
+          aria-label="Toggle menu"
         >
           <svg
             className="w-6 h-6"
@@ -180,8 +213,8 @@ export default function Navigation() {
                 onClick={() => setIsOpen(false)}
               />
               <motion.nav
-                className="fixed right-0 top-0 bottom-0 w-64 bg-[#0D1117] border-l border-[#30363D]
-                         p-6 flex flex-col gap-4"
+                className={`fixed right-0 top-0 bottom-0 w-64 ${bgColor} border-l ${borderColor}
+                         p-6 flex flex-col gap-4`}
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
@@ -190,11 +223,14 @@ export default function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all
+                    onClick={() => {
+                      handleClick(item.href);
+                      setIsOpen(false);
+                    }}
+                    className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-300
                       ${activeSection === item.href.slice(1)
-                        ? 'text-white bg-[#161B22]'
-                        : 'text-[#8b949e] hover:text-white hover:bg-[#161B22]/50'
+                        ? `${activeTextColor} ${activeBgColor} font-medium border border-accent-web/30`
+                        : `${inactiveTextColor} ${hoverBgColor}`
                       }`}
                   >
                     <item.icon className="w-5 h-5" />
