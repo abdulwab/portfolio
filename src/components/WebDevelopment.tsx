@@ -148,11 +148,11 @@ export default function WebDevelopment() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-semibold mb-6">Core Web Expertise</h3>
+              <h3 className="text-xl font-semibold mb-6 text-[var(--text-primary)]">Core Web Expertise</h3>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="text-github-text">Frameworks & Libraries</h4>
-                  <ul className="space-y-2">
+                  <h4 className="text-[var(--text-secondary)]">Frameworks & Libraries</h4>
+                  <ul className="space-y-2 text-[var(--text-primary)]">
                     {['React', 'Next.js', 'Angular', 'Vue.js'].map((item) => (
                       <li key={item} className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent-web" />
@@ -162,8 +162,8 @@ export default function WebDevelopment() {
                   </ul>
                 </div>
                 <div className="space-y-4">
-                  <h4 className="text-github-text">Tools & Performance</h4>
-                  <ul className="space-y-2">
+                  <h4 className="text-[var(--text-secondary)]">Tools & Performance</h4>
+                  <ul className="space-y-2 text-[var(--text-primary)]">
                     {[
                       'Webpack & Vite',
                       'Jest & Testing Library',
