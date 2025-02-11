@@ -20,7 +20,7 @@ export default function VideoBackground() {
           muted
           playsInline
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-                   min-h-full min-w-full object-cover opacity-90"
+                   min-h-full min-w-full object-cover opacity-70"
           style={{
             maxWidth: '100%',
             maxHeight: '100vh'
@@ -30,7 +30,7 @@ export default function VideoBackground() {
         </video>
         <div 
           className="absolute inset-0 bg-gradient-to-b from-transparent 
-                   via-[#0D1117]/10 to-[#0D1117]/30 backdrop-blur-[0.5px]"
+                   "
         />
       </div>
     </div>
