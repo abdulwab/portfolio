@@ -1,9 +1,8 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useTheme } from './ThemeProvider';
 
 type NavItem = {
   label: string;
@@ -61,38 +60,40 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { theme } = useTheme();
 
   return (
     <>
       {/* Desktop Navigation */}
       <motion.header 
-        className="fixed top-0 left-0 w-full z-50 bg-[var(--bg-primary)] border-b border-[var(--border-primary)]"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.3 }}
+        className="fixed top-0 left-0 w-full z-50 bg-[#0D1117] border-b border-[#30363D]"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <Link href="/" className="text-2xl font-bold text-[var(--text-primary)]">
+            <Link 
+              href="/" 
+              className="text-2xl font-bold text-[#58A6FF] hover:text-[#58A6FF]/90 transition-colors"
+            >
               AW
             </Link>
             
-            {/* Desktop Menu - Hidden on Mobile */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm transition-colors ${
-                    pathname === item.href
-                      ? 'text-accent-web'
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                  }`}
+                  className="group relative text-[#8B949E] hover:text-[#C9D1D9] transition-colors"
                 >
-                  {item.label}
+                  <span className="text-sm">{item.label}</span>
+                  <motion.div
+                    className="absolute bottom-0 left-0 h-px bg-[#58A6FF]"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: '100%' }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </Link>
               ))}
             </div>
@@ -102,23 +103,24 @@ export default function Navigation() {
 
       {/* Mobile Bottom Navigation */}
       <motion.nav
-        className="fixed bottom-0 left-0 right-0 bg-[var(--bg-primary)] border-t 
-                  border-[var(--border-primary)] md:hidden z-50 safe-bottom"
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.3 }}
+        className="fixed bottom-0 left-0 right-0 bg-[#0D1117] border-t border-[#30363D] md:hidden z-50 safe-bottom"
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
       >
         <div className="flex justify-around items-center p-3">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center p-2 rounded-lg transition-colors
-                        ${pathname === item.href 
-                          ? 'text-accent-web' 
-                          : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+              className="flex flex-col items-center p-2 rounded-lg text-[#8B949E] hover:text-[#C9D1D9] transition-colors group"
             >
-              <item.icon className="w-5 h-5" />
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="p-2 rounded-full bg-[#161B22] border border-[#30363D] group-hover:border-[#58A6FF] transition-colors"
+              >
+                <item.icon className="w-5 h-5" />
+              </motion.div>
               <span className="text-xs mt-1">{item.label}</span>
             </Link>
           ))}
@@ -126,4 +128,4 @@ export default function Navigation() {
       </motion.nav>
     </>
   );
-} 
+}
