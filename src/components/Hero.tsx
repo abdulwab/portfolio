@@ -26,7 +26,7 @@ export default function Hero() {
           playsInline
           className="absolute min-h-screen w-full object-cover"
         >
-          <source src="/background.mp4" type="video/mp4" />
+          <source src="/videos/background.mp4" type="video/mp4" />
         </video>
         {/* Overlay with blur and gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/80 to-[#0D1117] 
@@ -43,16 +43,20 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
           >
             <div className="relative mb-8 inline-block">
-              <ImageWithFallback
-                src="/profile.jpg"
-                fallbackSrc="/images/placeholder-avatar.png"
-                alt="Abdul Wahab"
-                width={180}
-                height={180}
-                className="rounded-full border-4 border-accent-web"
-                priority
-              />
-              <div className="absolute -bottom-2 -right-2 bg-accent-web text-white p-2 rounded-full">
+              <div className="w-[180px] h-[180px] rounded-full overflow-hidden border-4 border-accent-web
+                            shadow-lg shadow-accent-web/20">
+                <ImageWithFallback
+                  src="/images/profile.jpeg"
+                  fallbackSrc="/images/profile.jpeg"
+                  alt="Abdul Wahab"
+                  width={180}
+                  height={180}
+                  className="w-full h-full object-cover"
+                  priority
+                />
+              </div>
+              <div className="absolute -bottom-2 -right-2 bg-accent-web text-white p-2 rounded-full
+                            shadow-lg shadow-accent-web/20">
                 <span className="text-xl">👋</span>
               </div>
             </div>
@@ -115,7 +119,7 @@ export default function Hero() {
             className="relative"
           >
             <div className="absolute -top-6 left-4 bg-[#161B22]/80 backdrop-blur-sm px-4 py-2 
-                          rounded-full border border-[#30363D] text-sm text-github-text">
+                          rounded-full border border-[#808080] text-sm text-blue-500 font-bold">
               Ask me anything! 🤖
             </div>
             <ChatDemo />
