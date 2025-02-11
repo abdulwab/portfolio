@@ -61,7 +61,7 @@ export default function Contact() {
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-3xl font-bold mb-12 text-center"
+          className="text-3xl font-bold mb-12 text-center text-[var(--text-primary)]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -98,7 +98,7 @@ export default function Contact() {
 
         <motion.footer
           className="flex flex-col sm:flex-row items-center justify-between gap-4 
-                   border-t border-[#30363D] pt-8 text-github-text text-sm"
+                   border-t border-[var(--border-primary)] pt-8 text-[var(--text-secondary)] text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
