@@ -4,16 +4,16 @@
 
 /* Base colors that don't change with theme */
 :root {
-  --accent-web: #F59E0B;
-  --accent-ai: #10B981;
-  --accent-iot: #8B5CF6;
+  --accent-web: #7DD3FC;
+  --accent-ai: #34D399;
+  --accent-iot: #60A5FA;
   --accent-mobile: #F43F5E;
 }
 
 /* Dark theme (default) */
 :root {
   --bg-primary: #0D1117;
-  --bg-secondary: #1E242D;
+  --bg-secondary: #161B22;
   --text-primary: #E5E7EB;
   --text-secondary: #A1A6B3;
   --border-primary: #30363D;
@@ -219,4 +219,65 @@ img {
 
 .proficiency-beginner {
   background-color: #DB2777;
+}
+
+/* Add text shadow utility */
+.text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Hero section gradient */
+.hero-gradient {
+  background: linear-gradient(45deg, #0D1117 30%, #1A1F2C);
+}
+
+/* Add these responsive utility classes */
+@layer utilities {
+  .touch-feedback {
+    @apply active:scale-95 transition-transform duration-200;
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Add these z-index utilities */
+  .z-stack {
+    @apply relative;
+    
+    /* Base layers */
+    --z-background: -10;
+    --z-content: 10;
+    --z-overlay: 20;
+    --z-modal: 30;
+    --z-popover: 40;
+    --z-floating: 50;
+    --z-terminal: 100;
+  }
+
+  /* Ensure sections stack properly */
+  section {
+    @apply relative z-10;
+  }
+
+  /* Ensure floating elements stay on top */
+  .floating {
+    @apply fixed z-50;
+  }
+
+  /* Ensure terminal stays on top */
+  .terminal {
+    @apply z-[100];
+  }
+}
+
+/* Adjust base font sizes for mobile */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
 }

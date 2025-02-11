@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import AOS from "aos";
 import Navigation from './Navigation';
 
-// Dynamically import CustomCursor with no SSR
+// Keep the import but comment out the CustomCursor component
 const CustomCursor = dynamic(() => import('./CustomCursor'), {
   ssr: false,
 });
@@ -28,7 +28,8 @@ export default function ClientLayout({
 
   return (
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <CustomCursor />
+      {/* Temporarily comment out CustomCursor */}
+      {/* <CustomCursor /> */}
       <Navigation />
       {children}
     </body>

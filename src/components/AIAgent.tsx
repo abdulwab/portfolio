@@ -27,11 +27,11 @@ export default function AIAgent() {
   const [activeWorkflow, setActiveWorkflow] = useState('rag');
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 overflow-hidden relative z-10">
       <div className="max-w-7xl mx-auto">
         <motion.h2 
           className="text-3xl font-bold mb-12 text-center bg-gradient-to-r from-accent-web to-accent-ai 
-                     bg-clip-text text-transparent animate-pulse"
+                     bg-clip-text text-transparent animate-pulse relative z-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -42,7 +42,7 @@ export default function AIAgent() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left Column: Workflow Diagrams */}
           <motion.div
-            className="space-y-8"
+            className="space-y-8 relative z-20"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -69,6 +69,7 @@ export default function AIAgent() {
 
           {/* Right Column: Chat Demo */}
           <motion.div
+            className="relative z-20"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}

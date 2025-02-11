@@ -39,7 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       {children}
       <motion.button
         onClick={toggleTheme}
-        className="fixed bottom-8 left-8 p-3 rounded-full border-2 
+        className="fixed bottom-20 left-4 md:bottom-8 md:left-8 p-3 rounded-full border-2 
                  hover:border-accent-web transition-all duration-300 z-50
                  bg-[var(--bg-primary)] border-[var(--border-primary)]"
         whileHover={{ scale: 1.1 }}

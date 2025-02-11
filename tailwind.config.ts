@@ -12,14 +12,15 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         github: {
-          dark: '#0D1117',
-          text: '#C9D1D9',
+          dark: '#161B22',
+          text: '#E5E7EB',
         },
         accent: {
-          web: '#58A6FF',
-          iot: '#3B82F6',
+          web: '#7DD3FC',
+          iot: '#60A5FA',
+          ai: '#34D399',
+          mobile: '#F43F5E',
           chatbot: '#EC4899',
-          ai: '#10B981',
         },
       },
       animation: {

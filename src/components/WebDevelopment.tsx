@@ -70,7 +70,7 @@ export default function WebDevelopment() {
     <section id="web" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl font-bold mb-12"
+          className="text-4xl font-bold mb-12 text-shadow"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -84,8 +84,8 @@ export default function WebDevelopment() {
               {webProjects.map((project, i) => (
                 <motion.div
                   key={project.title}
-                  className="relative group rounded-lg border-2 border-[#30363D] overflow-hidden
-                           bg-[#161B22] hover:border-accent-web transition-all duration-300"
+                  className="relative group rounded-lg border-2 border-[var(--border-primary)] overflow-hidden
+                           bg-[var(--bg-secondary)] hover:border-[var(--accent-web)] transition-all duration-300"
                   initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}

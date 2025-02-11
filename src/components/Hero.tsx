@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ChatDemo from '@/components/ChatDemo';
 import ImageWithFallback from './ImageWithFallback';
+import VideoBackground from './VideoBackground';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
@@ -16,55 +17,46 @@ export default function Hero() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center">
-      {/* Video Background */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute min-h-screen w-full object-cover"
-        >
-          <source src="/videos/background.mp4" type="video/mp4" />
-        </video>
-        {/* Overlay with blur and gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/80 to-[#0D1117] 
-                      backdrop-blur-sm" />
-      </div>
+    <section id="home" className="min-h-screen relative pt-16 md:pt-20 pb-20 md:pb-12">
+      {/* Background */}
+      <VideoBackground />
 
       {/* Content */}
-      <div className="w-full py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column: Text and Image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="relative mb-8 inline-block">
-              <div className="w-[180px] h-[180px] rounded-full overflow-hidden border-4 border-accent-web
+            <div className="relative mb-6 inline-block">
+              <div className="w-[140px] h-[140px] rounded-full overflow-hidden border-4 border-accent-web
                             shadow-lg shadow-accent-web/20">
                 <ImageWithFallback
                   src="/images/profile.jpeg"
                   fallbackSrc="/images/profile.jpeg"
                   alt="Abdul Wahab"
-                  width={180}
-                  height={180}
+                  width={140}
+                  height={140}
                   className="w-full h-full object-cover"
                   priority
                 />
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-accent-web text-white p-2 rounded-full
+              <div className="absolute -bottom-2 -right-2 bg-accent-web text-white p-1.5 rounded-full
                             shadow-lg shadow-accent-web/20">
-                <span className="text-xl">👋</span>
+                <span className="text-lg">👋</span>
               </div>
             </div>
 
-            <h1 className="text-5xl font-bold mb-6 text-white">
+            <motion.h1 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-shadow"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
               Hi, I'm Abdul Wahab
               <br />
-              <span className="text-accent-web">
+              <span className="text-accent-web inline-block min-h-[1.5em]">
                 <TypeAnimation
                   sequence={[
                     'Full Stack Developer',
@@ -77,11 +69,17 @@ export default function Hero() {
                   wrapper="span"
                   speed={50}
                   repeat={Infinity}
+                  className="inline-block"
+                  style={{ 
+                    fontSize: 'inherit',
+                    display: 'inline-block',
+                    minWidth: '280px'
+                  }}
                 />
               </span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-gray-200 text-lg mb-8 max-w-lg">
+            <p className="text-gray-200 text-base mb-6 max-w-md">
               I specialize in building intelligent web applications with modern technologies.
               Let's create something amazing together!
             </p>
@@ -119,21 +117,26 @@ export default function Hero() {
             className="relative"
           >
             <div className="absolute -top-6 left-4 bg-[#161B22]/80 backdrop-blur-sm px-4 py-2 
-                          rounded-full border border-[#808080] text-sm text-blue-500 font-bold">
+                          rounded-full border border-[#808080] text-sm text-blue-500 font-bold
+                          z-20">
               Ask me anything! 🤖
             </div>
-            <ChatDemo />
+            <div className="relative z-10">
+              <ChatDemo />
+            </div>
           </motion.div>
 
           {/* Terminal Command */}
           <motion.div
-            className="fixed bottom-8 right-8 cursor-pointer"
+            className="fixed bottom-20 right-4 md:bottom-8 md:right-8 cursor-pointer z-[100]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
             onClick={handleCopy}
+            whileTap={{ scale: 0.95 }}
           >
-            <div className="bg-[#0D1117] rounded-lg p-4 shadow-xl border border-[#30363D] hover:border-accent-web transition-colors">
+            <div className="bg-[#0D1117] rounded-lg p-4 shadow-xl border border-[#30363D] hover:border-accent-web 
+                          transition-colors relative z-[100]">
               <div className="flex items-center gap-2 mb-2">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
@@ -152,7 +155,7 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
