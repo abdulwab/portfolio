@@ -1,6 +1,9 @@
+// MQTTDashboard.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiThermometer, FiDroplet, FiSun } from 'react-icons/fi';
+import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 type SensorData = {
   id: string;
@@ -8,30 +11,33 @@ type SensorData = {
   value: number;
   unit: string;
   timestamp: Date;
+  history: number[];
 };
 
-// Simulated sensor data
 const generateMockData = (): SensorData[] => [
   {
     id: 'temp-1',
     type: 'Temperature',
-    value: 22 + Math.random() * 2,
+    value: 22 + Math.random() * 5,
     unit: '°C',
     timestamp: new Date(),
+    history: Array.from({ length: 10 }, () => 20 + Math.random() * 8)
   },
   {
     id: 'humid-1',
     type: 'Humidity',
-    value: 45 + Math.random() * 5,
+    value: 45 + Math.random() * 10,
     unit: '%',
     timestamp: new Date(),
+    history: Array.from({ length: 10 }, () => 40 + Math.random() * 15)
   },
   {
     id: 'light-1',
     type: 'Light',
-    value: 500 + Math.random() * 100,
+    value: 500 + Math.random() * 200,
     unit: 'lux',
     timestamp: new Date(),
+    history: Array.from({ length: 10 }, () => 300 + Math.random() * 400)
   },
 ];
 
@@ -40,49 +46,81 @@ export default function MQTTDashboard() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setData(generateMockData());
+      setData(prev => prev.map(sensor => ({
+        ...sensor,
+        value: getNewValue(sensor.type, sensor.value),
+        timestamp: new Date(),
+        history: [...sensor.history.slice(1), sensor.value]
+      })));
     }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
+  const getNewValue = (type: string, current: number) => {
+    const variance = {
+      Temperature: () => current + (Math.random() * 2 - 1),
+      Humidity: () => current + (Math.random() * 3 - 1.5),
+      Light: () => current + (Math.random() * 50 - 25)
+    }[type];
+    return Math.max(0, variance());
+  };
+
+  const getStatusColor = (type: string, value: number) => {
+    const thresholds = {
+      Temperature: { warn: 25, critical: 28 },
+      Humidity: { warn: 60, critical: 75 },
+      Light: { warn: 800, critical: 1000 }
+    }[type];
+
+    return value > thresholds.critical ? '#dc2626' :
+           value > thresholds.warn ? '#f59e0b' :
+           '#16a34a';
+  };
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <AnimatePresence mode="sync">
         {data.map((sensor) => (
           <motion.div
             key={sensor.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.2 }}
-            className="bg-[#161B22] p-4 rounded-lg border border-[#30363D]"
+            transition={{ duration: 0.3 }}
+            className="bg-[#161B22] p-4 rounded-xl border border-[#30363D] relative"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">{sensor.type}</h3>
-              <span className="text-sm text-github-text">
-                {new Date(sensor.timestamp).toLocaleTimeString()}
-              </span>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-[#58A6FF]/10 text-[#58A6FF]">
+                  {sensor.type === 'Temperature' && <FiThermometer className="w-5 h-5" />}
+                  {sensor.type === 'Humidity' && <FiDroplet className="w-5 h-5" />}
+                  {sensor.type === 'Light' && <FiSun className="w-5 h-5" />}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-[#C9D1D9]">{sensor.type}</h3>
+                  <p className="text-sm text-[#8B949E]">
+                    Updated {Math.floor((new Date().getTime() - sensor.timestamp.getTime()) / 1000)}s ago
+                  </p>
+                </div>
+              </div>
             </div>
-            
-            <div className="relative h-2 bg-[#30363D] rounded-full mb-2">
-              <motion.div
-                className="absolute top-0 left-0 h-full rounded-full bg-accent-iot"
-                initial={{ width: 0 }}
-                animate={{ 
-                  width: `${(sensor.value / getMaxValue(sensor.type)) * 100}%` 
-                }}
-                transition={{ duration: 0.5 }}
-              />
+
+            <div className="mb-4">
+              <Sparklines data={sensor.history} width={200} height={40}>
+                <SparklinesLine color={getStatusColor(sensor.type, sensor.value)} />
+              </Sparklines>
             </div>
-            
+
             <div className="flex items-center justify-between">
-              <span className="text-2xl font-bold">
-                {sensor.value}
-                <span className="text-sm ml-1 text-github-text">
-                  {sensor.unit}
-                </span>
+              <span className="text-3xl font-bold text-[#C9D1D9]">
+                {sensor.value.toFixed(1)}
+                <span className="text-sm ml-1 text-[#8B949E]">{sensor.unit}</span>
               </span>
+              <div 
+                className="w-3 h-3 rounded-full animate-pulse"
+                style={{ backgroundColor: getStatusColor(sensor.type, sensor.value) }}
+              />
             </div>
           </motion.div>
         ))}
@@ -90,16 +128,3 @@ export default function MQTTDashboard() {
     </div>
   );
 }
-
-function getMaxValue(type: string): number {
-  switch (type) {
-    case 'Temperature':
-      return 30;
-    case 'Humidity':
-      return 100;
-    case 'Light':
-      return 1000;
-    default:
-      return 100;
-  }
-} 
