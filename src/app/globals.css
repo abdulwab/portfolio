@@ -4,19 +4,20 @@
 
 /* Base colors that don't change with theme */
 :root {
-  --accent-web: #2ea043;
-  --accent-ai: #7c3aed;
-  --accent-iot: #3b82f6;
-  --accent-mobile: #ec4899;
+  --accent-web: #F59E0B;
+  --accent-ai: #10B981;
+  --accent-iot: #8B5CF6;
+  --accent-mobile: #F43F5E;
 }
 
 /* Dark theme (default) */
 :root {
   --bg-primary: #0D1117;
-  --bg-secondary: #161B22;
-  --text-primary: #ffffff;
-  --text-secondary: #8b949e;
+  --bg-secondary: #1E242D;
+  --text-primary: #E5E7EB;
+  --text-secondary: #A1A6B3;
   --border-primary: #30363D;
+  --border-secondary: #A3A3A3;
 }
 
 /* Light theme colors */
@@ -201,4 +202,21 @@ img {
 
 .lazy-loaded {
   @apply opacity-100;
+}
+
+/* Update proficiency colors */
+.proficiency-expert {
+  background-color: #16A34A;
+}
+
+.proficiency-advanced {
+  background-color: #2563EB;
+}
+
+.proficiency-intermediate {
+  background-color: #9333EA;
+}
+
+.proficiency-beginner {
+  background-color: #DB2777;
 }
