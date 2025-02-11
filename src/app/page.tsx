@@ -1,16 +1,15 @@
 import Hero from '@/components/Hero';
 import Skills from '@/components/Skills';
-import Projects from '@/components/Projects';
-import AIAgent from '@/components/AIAgent';
+import Projects from '@/components/Projects'
 import IoTSolutions from '@/components/IoTSolutions';
 import Experience from '@/components/Experience';
 import Navigation from '@/components/Navigation';
 import Contact from '@/components/Contact';
 import WebDevelopment from '@/components/WebDevelopment';
-
+import { AIAgent } from '@/components/AIAgent';
 export default function Home() {
   return (
-    <main className="relative">
+    <main>
       <Navigation />
       <section id="home">
         <Hero />
@@ -20,6 +19,9 @@ export default function Home() {
       </section>
       <section id="web">
         <WebDevelopment />
+      </section>
+      <section id="ai">
+        <AIAgent />
       </section>
       <section id="iot">
         <IoTSolutions />
