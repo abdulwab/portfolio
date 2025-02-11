@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { FiGithub, FiExternalLink, FiStar, FiZap } from 'react-icons/fi';
 import { useMagneticEffect } from '@/hooks/useMagneticEffect';
 
 type Project = {
@@ -13,153 +14,200 @@ type Project = {
   category: 'ai' | 'iot' | 'web' | 'mobile';
   github?: string;
   demo?: string;
+  metrics?: {
+    performance?: string;
+    complexity?: number;
+    deployment?: string;
+  };
 };
 
 const projects: Project[] = [
   {
     id: 'smart-home',
-    title: 'Smart Home Hub',
-    description: 'IoT-based home automation system using ESP32 and MQTT',
+    title: 'Smart Home Automation Hub',
+    description: 'Distributed IoT system managing 50+ devices with real-time control and energy optimization',
     image: '/projects/smart-home.jpg',
-    tags: ['ESP32', 'MQTT', 'React', 'Node.js'],
+    tags: ['ESP32', 'MQTT', 'React', 'Node.js', 'TimescaleDB'],
     category: 'iot',
-    github: 'https://github.com/yourusername/smart-home',
-    demo: 'https://smart-home.demo.com'
+    github: '#',
+    demo: '#',
+    metrics: {
+      performance: '98.7% uptime',
+      complexity: 4,
+      deployment: 'Kubernetes Cluster'
+    }
   },
   {
-    id: 'gpt-assistant',
-    title: 'AI Research Assistant',
-    description: 'Custom GPT-4 powered research assistant with RAG',
+    id: 'gpt-research',
+    title: 'Enterprise Research Assistant',
+    description: 'RAG-powered knowledge management system processing 10k+ documents',
     image: '/projects/ai-assistant.jpg',
-    tags: ['GPT-4', 'LangChain', 'Python'],
+    tags: ['GPT-4', 'LangChain', 'Pinecone', 'FastAPI'],
     category: 'ai',
-    github: 'https://github.com/yourusername/ai-assistant'
+    github: '#',
+    metrics: {
+      performance: '2.3s avg response',
+      complexity: 5,
+      deployment: 'AWS ECS Fargate'
+    }
   },
   // Add more projects...
 ];
 
 const categories = [
-  { id: 'all', label: 'All Projects' },
-  { id: 'ai', label: 'AI & ML' },
-  { id: 'iot', label: 'IoT' },
-  { id: 'web', label: 'Web' },
-  { id: 'mobile', label: 'Mobile' }
+  { id: 'all', label: 'All Projects', icon: <FiZap /> },
+  { id: 'ai', label: 'AI Systems', color: '#10B981' },
+  { id: 'iot', label: 'IoT Solutions', color: '#3B82F6' },
+  { id: 'web', label: 'Web Platforms', color: '#EC4899' },
+  { id: 'mobile', label: 'Mobile Apps', color: '#8B5CF6' }
 ];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('all');
-
   const filteredProjects = projects.filter(
     project => activeCategory === 'all' || project.category === activeCategory
   );
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0D1117]">
       <div className="max-w-7xl mx-auto">
         <motion.h2 
-          className="text-3xl font-bold mb-12 text-center"
+          className="text-3xl font-bold mb-12 text-center bg-gradient-to-r from-[#58A6FF] to-[#3B82F6] bg-clip-text text-transparent"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          Featured Projects
+          Technical Projects
         </motion.h2>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Animated Filter Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`px-4 py-2 rounded-full transition-all
+              className={`relative px-4 py-2 rounded-full text-sm flex items-center gap-2
                 ${activeCategory === category.id 
-                  ? 'bg-accent-web text-white' 
-                  : 'text-github-text hover:text-white hover:bg-accent-web/10'}`}
+                  ? 'text-white' 
+                  : 'text-[#8B949E] hover:text-[#C9D1D9]'}`}
+              whileHover={{ scale: 1.05 }}
+              style={{
+                background: activeCategory === category.id ? 
+                  `linear-gradient(45deg, ${category.color} 0%, ${category.color}88 100%)` : '#161B22'
+              }}
             >
+              {category.id === 'all' && category.icon}
               {category.label}
-            </button>
+              {activeCategory === category.id && (
+                <motion.div 
+                  className="absolute inset-0 border border-[#58A6FF] rounded-full"
+                  layoutId="filter-active"
+                  transition={{ type: 'spring', stiffness: 300 }}
+                />
+              )}
+            </motion.button>
           ))}
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="sync">
             {filteredProjects.map((project) => {
-              const magneticRef = useMagneticEffect(0.2);
+              const magneticRef = useMagneticEffect(0.15);
               
               return (
                 <motion.div
                   key={project.id}
                   ref={magneticRef}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  className="group relative transition-all duration-300"
+                  transition={{ duration: 0.3, type: 'spring' }}
+                  className="group relative"
                   whileHover={{ scale: 1.02 }}
-                  data-aos="fade-up"
-                  data-aos-duration="800"
                 >
-                  <div className="relative overflow-hidden rounded-lg bg-[#0D1117] border border-[#30363D]
-                                transition-all duration-300 hover:border-accent-web
-                                hover:shadow-lg hover:shadow-accent-web/10">
-                    {/* Project Image */}
+                  <div className="relative overflow-hidden rounded-xl bg-[#161B22] border border-[#30363D]
+                                hover:border-[#58A6FF] transition-all duration-300 h-full flex flex-col">
+                    {/* Image Section */}
                     <div className="aspect-video relative overflow-hidden">
                       <Image
                         src={project.image}
                         alt={project.title}
                         fill
-                        className="object-cover transform transition-transform duration-500
-                                 group-hover:scale-110"
+                        className="object-cover transform transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent" />
                     </div>
 
-                    {/* Project Info */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                      <p className="text-github-text mb-4">{project.description}</p>
+                    {/* Content Section */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-xl font-semibold text-[#C9D1D9]">{project.title}</h3>
+                        {project.metrics?.complexity && (
+                          <div className="flex items-center gap-1 text-[#8B949E]">
+                            <FiStar className="text-[#FFD700]" />
+                            <span>{project.metrics.complexity}/5</span>
+                          </div>
+                        )}
+                      </div>
                       
-                      {/* Tags */}
+                      <p className="text-[#8B949E] mb-4 flex-1">{project.description}</p>
+                      
+                      {/* Tech Stack */}
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className={`tag tag-${project.category} text-xs`}
+                            className="px-2 py-1 text-xs rounded-full bg-[#0D1117] border border-[#30363D]
+                                     text-[#58A6FF] font-mono"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
+
+                      {/* Metrics */}
+                      {project.metrics && (
+                        <div className="mt-auto pt-4 border-t border-[#30363D]">
+                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-[#58A6FF]" />
+                              <span className="text-[#8B949E]">{project.metrics.performance}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-[#58A6FF]" />
+                              <span className="text-[#8B949E]">{project.metrics.deployment}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Hover Links */}
-                    <div className="absolute inset-0 bg-[#0D1117]/80 opacity-0 group-hover:opacity-100
-                                  transition-opacity duration-300 flex items-center justify-center gap-4">
+                    {/* Action Buttons */}
+                    <div className="absolute top-4 right-4 flex gap-2">
                       {project.github && (
-                        <a
+                        <motion.a
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full bg-[#161B22] hover:bg-accent-web transition-colors"
+                          className="p-2 rounded-lg bg-[#0D1117] hover:bg-[#58A6FF] text-[#C9D1D9] hover:text-white transition-colors"
+                          whileHover={{ scale: 1.1 }}
                         >
-                          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                          </svg>
-                        </a>
+                          <FiGithub className="w-5 h-5" />
+                        </motion.a>
                       )}
                       {project.demo && (
-                        <a
+                        <motion.a
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-full bg-[#161B22] hover:bg-accent-web transition-colors"
+                          className="p-2 rounded-lg bg-[#0D1117] hover:bg-[#58A6FF] text-[#C9D1D9] hover:text-white transition-colors"
+                          whileHover={{ scale: 1.1 }}
                         >
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
+                          <FiExternalLink className="w-5 h-5" />
+                        </motion.a>
                       )}
                     </div>
                   </div>
@@ -171,4 +219,4 @@ export default function Projects() {
       </div>
     </section>
   );
-} 
+}
