@@ -15,186 +15,154 @@ type WebProject = {
 
 const webProjects: WebProject[] = [
   {
-    title: 'E-commerce Platform',
-    description: 'Full-stack e-commerce solution with real-time inventory and payments',
-    image: '/images/projects/ecommerce.jpg',
-    techStack: ['Next.js', 'TypeScript', 'Stripe', 'Prisma', 'PostgreSQL'],
-    demo: 'https://demo.store',
-    github: 'https://github.com/yourusername/ecommerce'
+    title: 'AI-Powered E-commerce Platform',
+    description: 'Next.js marketplace with GPT-4 product recommendations & real-time analytics',
+    image: '/images/project1.jpg',
+    techStack: ['Next.js 14', 'TypeScript', 'Stripe', 'LangChain', 'Redis'],
+    demo: '#',
+    github: '#'
   },
   {
-    title: 'Analytics Dashboard',
-    description: 'Real-time data visualization dashboard with dark mode',
-    image: '/projects/dashboard.jpg',
-    techStack: ['React', 'D3.js', 'TailwindCSS', 'Node.js', 'MongoDB'],
-    demo: 'https://dashboard.demo',
-    github: 'https://github.com/yourusername/dashboard'
+    title: 'Real-time Collaboration Suite',
+    description: 'Google Docs clone with multiplayer editing and version history',
+    image: '/images/project2.jpg',
+    techStack: ['React', 'WebSocket', 'CRDT', 'Node.js', 'PostgreSQL'],
+    demo: '#',
+    github: '#'
   },
   {
-    title: 'SaaS Platform',
-    description: 'Multi-tenant SaaS application with subscription management',
-    image: '/projects/saas.jpg',
-    techStack: ['Next.js', 'tRPC', 'Prisma', 'Auth.js', 'PostgreSQL'],
-    demo: 'https://saas.demo',
-    github: 'https://github.com/yourusername/saas'
+    title: 'DevOps Dashboard',
+    description: 'Kubernetes monitoring with real-time cluster visualization',
+    image: '/images/project3.jpg',
+    techStack: ['Next.js', 'Go', 'Prometheus', 'Grafana', 'AWS EKS'],
+    demo: '#',
+    github: '#'
+  },
+  {
+    title: 'AI Content Platform',
+    description: 'Headless CMS with GPT-4 content generation and workflow automation',
+    image: '/images/project4.jpg',
+    techStack: ['Next.js', 'NestJS', 'OpenAI', 'Tiptap', 'MongoDB'],
+    demo: '#',
+    github: '#'
   }
 ];
 
-const codeSnippet = `// pages/api/products/[id].ts
-import { prisma } from '@/lib/prisma'
-import type { NextApiRequest, NextApiResponse } from 'next'
+const codeSnippet = `// lib/ai.ts - GPT-4 Content Generator
+import OpenAI from 'openai';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { id } = req.query
-  
-  try {
-    const product = await prisma.product.findUnique({
-      where: { id: String(id) },
-      include: { 
-        category: true,
-        reviews: true 
-      }
-    })
-    
-    res.status(200).json(product)
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch product' })
-  }
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_KEY,
+});
+
+export async function generateContent(prompt: string) {
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4-turbo',
+    messages: [{
+      role: 'user',
+      content: \`Generate SEO-friendly content about: \${prompt}\`
+    }],
+    temperature: 0.7,
+    max_tokens: 2000
+  });
+
+  return completion.choices[0].message.content;
 }`;
 
 export default function WebDevelopment() {
   return (
-    <section id="web" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="web" className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0D1117]">
       <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl font-bold mb-12 text-shadow"
+          className="text-3xl font-bold mb-8 text-[#E5E7EB]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          Web Development
+          Web Development & AI Integration
         </motion.h2>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div>
-            <div className="grid md:grid-cols-2 gap-6">
-              {webProjects.map((project, i) => (
-                <motion.div
-                  key={project.title}
-                  className="relative group rounded-lg border-2 border-[var(--border-primary)] overflow-hidden
-                           bg-[var(--bg-secondary)] hover:border-[var(--accent-web)] transition-all duration-300"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <div className="aspect-video relative">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100
-                                  transition-opacity duration-300 p-4">
-                      <div className="flex flex-wrap gap-2">
-                        {project.techStack.map((tech) => (
-                          <span key={tech} className="text-xs bg-[#58A6FF]/20 text-[#58A6FF] 
-                                                    px-2 py-1 rounded">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Projects Grid */}
+          <div className="grid md:grid-cols-2 gap-4">
+            {webProjects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                className="group relative rounded-xl border border-[#30363D] bg-[#161B22] overflow-hidden"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.3 }}
+              >
+                <div className="aspect-video relative">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent" />
+                  
+                  {/* Tech Stack Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStack.map((tech) => (
+                        <span 
+                          key={tech}
+                          className="px-2 py-1 text-xs bg-[#58A6FF]/10 text-[#58A6FF] rounded-md"
+                        >
+                          {tech}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold mb-2">{project.title}</h3>
-                    <p className="text-sm text-github-text mb-4">{project.description}</p>
-                    <div className="flex gap-4">
-                      {project.demo && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-[#58A6FF] hover:text-white hover:bg-[#58A6FF]/20
-                                   px-3 py-1 rounded transition-all duration-300"
-                        >
-                          Live Demo →
-                        </a>
-                      )}
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-github-text hover:text-white hover:bg-[#30363D]
-                                   px-3 py-1 rounded transition-all duration-300"
-                        >
-                          GitHub →
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
 
-            <motion.div
-              className="mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-semibold mb-6 text-[var(--text-primary)]">Core Web Expertise</h3>
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h4 className="text-[var(--text-secondary)]">Frameworks & Libraries</h4>
-                  <ul className="space-y-2 text-[var(--text-primary)]">
-                    {['React', 'Next.js', 'Angular', 'Vue.js'].map((item) => (
-                      <li key={item} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent-web" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="p-4">
+                  <h3 className="font-semibold mb-2 text-[#E5E7EB]">{project.title}</h3>
+                  <p className="text-sm text-[#8B949E] mb-4">{project.description}</p>
+                  <div className="flex gap-3">
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        className="text-xs px-3 py-1.5 rounded-lg bg-[#58A6FF]/10 text-[#58A6FF] 
+                                 hover:bg-[#58A6FF]/20 transition-colors"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        className="text-xs px-3 py-1.5 rounded-lg bg-[#30363D] text-[#E5E7EB]
+                                 hover:bg-[#30363D]/80 transition-colors"
+                      >
+                        Source Code
+                      </a>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-4">
-                  <h4 className="text-[var(--text-secondary)]">Tools & Performance</h4>
-                  <ul className="space-y-2 text-[var(--text-primary)]">
-                    {[
-                      'Webpack & Vite',
-                      'Jest & Testing Library',
-                      'CI/CD Pipelines',
-                      '95+ Lighthouse Score'
-                    ].map((item) => (
-                      <li key={item} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent-web" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
 
-          <motion.div
-            className="lg:sticky lg:top-24 h-fit"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="rounded-lg border-2 border-[#30363D] overflow-hidden">
-              <div className="bg-[#161B22] p-2 border-b border-[#30363D] flex items-center gap-2">
+          {/* Code Preview & Expertise */}
+          <div className="space-y-8 lg:sticky lg:top-24 lg:h-fit">
+            {/* AI Integration Section */}
+            <motion.div
+              className="rounded-xl border border-[#30363D] bg-[#161B22] overflow-hidden"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="p-4 border-b border-[#30363D] flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                   <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
                 </div>
-                <span className="text-sm text-github-text">products/[id].ts</span>
+                <span className="text-sm text-[#8B949E]">lib/ai.ts</span>
               </div>
               <SyntaxHighlighter
                 language="typescript"
@@ -203,15 +171,50 @@ export default function WebDevelopment() {
                   background: '#0D1117',
                   padding: '1rem',
                   margin: 0,
-                  borderRadius: 0,
+                  fontSize: '0.875rem',
                 }}
               >
                 {codeSnippet}
               </SyntaxHighlighter>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            {/* Core Expertise */}
+            <motion.div
+              className="p-6 rounded-xl border border-[#30363D] bg-[#161B22]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-lg font-semibold mb-4 text-[#E5E7EB]">Web Development Stack</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <h4 className="text-sm text-[#8B949E]">Frameworks</h4>
+                  <ul className="space-y-2">
+                    {['Next.js 14', 'React 18', 'Node.js 20', 'Express', 'NestJS'].map((item) => (
+                      <li key={item} className="text-sm text-[#E5E7EB] flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-[#58A6FF]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="text-sm text-[#8B949E]">Tooling</h4>
+                  <ul className="space-y-2">
+                    {['TypeScript', 'Webpack 5', 'Jest', 'Cypress', 'Docker'].map((item) => (
+                      <li key={item} className="text-sm text-[#E5E7EB] flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-[#58A6FF]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
-} 
+}
