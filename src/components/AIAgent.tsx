@@ -23,53 +23,61 @@ const workflows = {
   `
 };
 
-export default function AIAgent() {
+export function AIAgent() {
   const [activeWorkflow, setActiveWorkflow] = useState('rag');
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 overflow-hidden relative z-10">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0D1117]">
       <div className="max-w-7xl mx-auto">
-        <motion.h2 
-          className="text-3xl font-bold mb-12 text-center bg-gradient-to-r from-accent-web to-accent-ai 
-                     bg-clip-text text-transparent animate-pulse relative z-10"
+        <motion.h2
+          className="text-4xl font-bold mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          AI Agent Development
+          <span className="bg-gradient-to-r from-[#58A6FF] to-[#10B981] bg-clip-text text-transparent">
+            AI Agent Development
+          </span>
         </motion.h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column: Workflow Diagrams */}
+          {/* Workflow Diagrams */}
           <motion.div
-            className="space-y-8 relative z-20"
+            className="space-y-8"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 mb-8">
               {['rag', 'agent'].map((type) => (
                 <button
                   key={type}
                   onClick={() => setActiveWorkflow(type)}
-                  className={`px-4 py-2 rounded-full transition-all
-                    ${activeWorkflow === type 
-                      ? 'bg-accent-ai text-white' 
-                      : 'text-github-text hover:text-white hover:bg-accent-ai/10'}`}
+                  className={`px-6 py-2 rounded-full transition-all ${
+                    activeWorkflow === type
+                      ? 'bg-[#58A6FF] text-white'
+                      : 'text-[#8B949E] hover:bg-[#58A6FF]/10'
+                  }`}
                 >
                   {type === 'rag' ? 'RAG Pipeline' : 'Agent Workflow'}
                 </button>
               ))}
             </div>
 
-            <div className="bg-[#0D1117] p-6 rounded-lg border border-[#30363D]">
-              <Mermaid chart={workflows[activeWorkflow as keyof typeof workflows]} />
-            </div>
+            <motion.div
+              className="bg-[#161B22] p-6 rounded-xl border border-[#30363D]"
+              whileHover={{ scale: 1.02 }}
+            >
+              {/* Mermaid diagram placeholder */}
+              <div className="aspect-video bg-[#0D1117] rounded-lg flex items-center justify-center text-[#8B949E]">
+                Workflow Diagram
+              </div>
+            </motion.div>
           </motion.div>
 
-          {/* Right Column: Chat Demo */}
+          {/* Chat Demo */}
           <motion.div
-            className="relative z-20"
+            className="bg-[#161B22] rounded-xl border border-[#30363D] p-6"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -80,4 +88,4 @@ export default function AIAgent() {
       </div>
     </section>
   );
-} 
+}
