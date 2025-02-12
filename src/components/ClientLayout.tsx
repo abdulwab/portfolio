@@ -1,13 +1,9 @@
 'use client';
 import { useEffect } from "react";
-import dynamic from 'next/dynamic';
 import AOS from "aos";
-import Navigation from './Navigation';
-
-// Keep the import but comment out the CustomCursor component
-const CustomCursor = dynamic(() => import('./CustomCursor'), {
-  ssr: false,
-});
+// Either use CustomCursor or remove the import
+// import dynamic from 'next/dynamic';
+// const CustomCursor = dynamic(() => import('./CustomCursor'), { ssr: false });
 
 export default function ClientLayout({
   children,
@@ -30,7 +26,6 @@ export default function ClientLayout({
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       {/* Temporarily comment out CustomCursor */}
       {/* <CustomCursor /> */}
-      <Navigation />
       {children}
     </body>
   );
