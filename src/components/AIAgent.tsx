@@ -1,27 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Mermaid from '@/components/Mermaid';
 import ChatDemo from '@/components/ChatDemo';
-
-const workflows = {
-  rag: `
-    graph TD
-      A[User Query] --> B[Query Analysis]
-      B --> C[Document Retrieval]
-      C --> D[Context Integration]
-      D --> E[LLM Response]
-      E --> F[User Interface]
-  `,
-  agent: `
-    graph TD
-      A[User Input] --> B[Task Planning]
-      B --> C[Tool Selection]
-      C --> D[Action Execution]
-      D --> E[Result Synthesis]
-      E --> F[Response Generation]
-  `
-};
 
 export function AIAgent() {
   const [activeWorkflow, setActiveWorkflow] = useState('rag');
