@@ -2,11 +2,10 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface ImageWithFallbackProps {
+interface ImageWithFallbackProps extends Omit<ImageProps, 'src' | 'alt'> {
   src: string;
   fallbackSrc: string;
   alt: string;
-  [key: string]: any; // For other Image props
 }
 
 export default function ImageWithFallback({
