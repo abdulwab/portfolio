@@ -1,4 +1,4 @@
 declare module 'aos/dist/aos.css' {
-  const content: any;
-  export default content;
+  const styles: { [key: string]: string };
+  export default styles;
 } 
