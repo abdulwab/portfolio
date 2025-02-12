@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { FiCpu, FiCode, FiCloud, FiZap } from 'react-icons/fi';
+import { FiCpu, FiCode, FiZap } from 'react-icons/fi';
 
 type Experience = {
   title: string;
