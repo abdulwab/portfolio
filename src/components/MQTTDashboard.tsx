@@ -42,29 +42,13 @@ const generateMockData = (): SensorData[] => [
 ];
 
 export default function MQTTDashboard() {
-  const [data, setData] = useState<SensorData[]>(generateMockData());
+  const [mounted, setMounted] = useState(false);
+  const [sensors, setSensors] = useState<SensorData[]>([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setData(prev => prev.map(sensor => ({
-        ...sensor,
-        value: getNewValue(sensor.type, sensor.value),
-        timestamp: new Date(),
-        history: [...sensor.history.slice(1), sensor.value]
-      })));
-    }, 3000);
-
-    return () => clearInterval(interval);
+    setMounted(true);
+    setSensors(generateMockData());
   }, []);
-
-  const getNewValue = (type: string, current: number) => {
-    const variance = {
-      Temperature: () => current + (Math.random() * 2 - 1),
-      Humidity: () => current + (Math.random() * 3 - 1.5),
-      Light: () => current + (Math.random() * 50 - 25)
-    }[type];
-    return Math.max(0, variance());
-  };
 
   const getStatusColor = (type: string, value: number) => {
     const thresholds = {
@@ -78,53 +62,59 @@ export default function MQTTDashboard() {
            '#16a34a';
   };
 
+  if (!mounted) {
+    return <div className="animate-pulse">Loading...</div>;
+  }
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <AnimatePresence mode="sync">
-        {data.map((sensor) => (
-          <motion.div
-            key={sensor.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
-            className="bg-[#161B22] p-4 rounded-xl border border-[#30363D] relative"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#58A6FF]/10 text-[#58A6FF]">
-                  {sensor.type === 'Temperature' && <FiThermometer className="w-5 h-5" />}
-                  {sensor.type === 'Humidity' && <FiDroplet className="w-5 h-5" />}
-                  {sensor.type === 'Light' && <FiSun className="w-5 h-5" />}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-[#C9D1D9]">{sensor.type}</h3>
-                  <p className="text-sm text-[#8B949E]">
-                    Updated {Math.floor((new Date().getTime() - sensor.timestamp.getTime()) / 1000)}s ago
-                  </p>
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <AnimatePresence mode="sync">
+          {sensors.map((sensor) => (
+            <motion.div
+              key={sensor.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="bg-[#161B22] p-4 rounded-xl border border-[#30363D] relative"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-[#58A6FF]/10 text-[#58A6FF]">
+                    {sensor.type === 'Temperature' && <FiThermometer className="w-5 h-5" />}
+                    {sensor.type === 'Humidity' && <FiDroplet className="w-5 h-5" />}
+                    {sensor.type === 'Light' && <FiSun className="w-5 h-5" />}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-[#C9D1D9]">{sensor.type}</h3>
+                    <p className="text-sm text-[#8B949E]">
+                      Updated {Math.floor((new Date().getTime() - sensor.timestamp.getTime()) / 1000)}s ago
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mb-4">
-              <Sparklines data={sensor.history} width={200} height={40}>
-                <SparklinesLine color={getStatusColor(sensor.type, sensor.value)} />
-              </Sparklines>
-            </div>
+              <div className="mb-4">
+                <Sparklines data={sensor.history} width={200} height={40}>
+                  <SparklinesLine color={getStatusColor(sensor.type, sensor.value)} />
+                </Sparklines>
+              </div>
 
-            <div className="flex items-center justify-between">
-              <span className="text-3xl font-bold text-[#C9D1D9]">
-                {sensor.value.toFixed(1)}
-                <span className="text-sm ml-1 text-[#8B949E]">{sensor.unit}</span>
-              </span>
-              <div 
-                className="w-3 h-3 rounded-full animate-pulse"
-                style={{ backgroundColor: getStatusColor(sensor.type, sensor.value) }}
-              />
-            </div>
-          </motion.div>
-        ))}
-      </AnimatePresence>
+              <div className="flex items-center justify-between">
+                <span className="text-3xl font-bold text-[#C9D1D9]">
+                  {sensor.value.toFixed(1)}
+                  <span className="text-sm ml-1 text-[#8B949E]">{sensor.unit}</span>
+                </span>
+                <div 
+                  className="w-3 h-3 rounded-full animate-pulse"
+                  style={{ backgroundColor: getStatusColor(sensor.type, sensor.value) }}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
