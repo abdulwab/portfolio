@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import DeviceMockup from './DeviceMockup';
 import MQTTDashboard from './MQTTDashboard';
@@ -102,6 +102,19 @@ const technicalPanels: Panel[] = [
 
 export default function IoTSolutions() {
   const [expandedPanel, setExpandedPanel] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [sensorValue, setSensorValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    // Only set the value after component is mounted on client
+    setSensorValue("41");
+  }, []);
+
+  // Don't render dynamic content until mounted
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0D1117]">
@@ -193,6 +206,7 @@ export default function IoTSolutions() {
             </motion.div>
           ))}
         </div>
+        {sensorValue && <span>{sensorValue}</span>}
       </div>
     </section>
   );
