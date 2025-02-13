@@ -132,9 +132,10 @@ export default function Projects() {
                     {/* Image Section */}
                     <div className="aspect-video relative overflow-hidden">
                       <Image
-                        src={project.image}
+                        src={`/images/${project.image}`}
                         alt={project.title}
-                        fill
+                        width={400}
+                        height={225}
                         className="object-cover transform transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
