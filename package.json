@@ -1,15 +1,17 @@
 {
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "my-portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@geist-ui/core": "^2.3.8",
     "@heroicons/react": "^2.2.0",
     "@types/react-sparklines": "^1.7.5",
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -38,9 +40,12 @@
     "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
     "@typescript-eslint/parser": "^7.0.1",
+    "autoprefixer": "^10.4.17",
+    "css-loader": "^6.10.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
-    "postcss": "^8",
+    "postcss": "^8.4.35",
+    "style-loader": "^3.3.4",
     "tailwindcss": "^3.4.1",
     "typescript": "~5.5.0"
   }
