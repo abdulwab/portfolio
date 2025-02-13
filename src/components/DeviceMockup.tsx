@@ -1,9 +1,22 @@
 // DeviceMockup.tsx
 'use client';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiWifi, FiZap } from 'react-icons/fi';
 
 export default function DeviceMockup() {
+  const [mounted, setMounted] = useState(false);
+  const [value, setValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    setValue("41"); // Set the consistent value after mounting
+  }, []);
+
+  if (!mounted) {
+    return <div className="h-full bg-[#161B22]" />; // Loading state
+  }
+
   return (
     <div className="relative w-full h-full flex items-center justify-center p-8">
       <motion.div 
@@ -79,6 +92,7 @@ export default function DeviceMockup() {
           ))}
         </div>
       </motion.div>
+      {value && <span>{value}</span>}
     </div>
   );
 }
