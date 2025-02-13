@@ -28,8 +28,11 @@ export default function SkillCard({ group, isExpanded, onToggle, searchTerm }: S
         y: 0,
         scale: hasMatchingSkills ? 1 : 0.95
       }}
-      className="relative perspective-1000"
-      style={{ perspective: '1000px' }}
+      className="bg-[#161B22] rounded-xl border border-[#30363D] overflow-hidden"
+      style={{ 
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale'
+      }}
     >
       <motion.div
         className={`w-full h-full cursor-pointer transition-all duration-500
@@ -118,6 +121,15 @@ export default function SkillCard({ group, isExpanded, onToggle, searchTerm }: S
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div className="p-6">
+        <h3 className="text-xl font-semibold mb-2 text-[var(--text-primary)]">
+          {group.title}
+        </h3>
+        <p className="text-[var(--text-secondary)] text-sm">
+          {group.description}
+        </p>
+      </div>
     </motion.div>
   );
 } 
