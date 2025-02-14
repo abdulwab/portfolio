@@ -6,6 +6,7 @@ import Experience from '@/components/Experience';
 import Navigation from '@/components/Navigation';
 import Contact from '@/components/Contact';
 import WebDevelopment from '@/components/WebDevelopment';
+
 import { AIAgent } from '@/components/AIAgent';
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <section id="home">
         <Hero />
       </section>
+     
       <section id="skills">
         <Skills />
       </section>
