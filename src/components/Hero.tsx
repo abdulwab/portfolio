@@ -55,7 +55,7 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <span className="block mb-2 text-[#C9D1D9]">Hi, I'm</span>
+              <span className="block mb-2 text-[#C9D1D9]">Hi, I&apos;m</span>
               <span className="bg-gradient-to-r from-[#58A6FF] to-[#10B981] bg-clip-text text-transparent">
                 Abdul Wahab
               </span>
