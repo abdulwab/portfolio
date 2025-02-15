@@ -41,6 +41,45 @@ const generateMockData = (): SensorData[] => [
   },
 ];
 
+// Add type definition for thresholds
+type ThresholdConfig = {
+  warn: number;
+  critical: number;
+};
+
+type ThresholdMap = {
+  temperature: ThresholdConfig;
+  humidity: ThresholdConfig;
+  co2: ThresholdConfig;
+  [key: string]: ThresholdConfig;  // Allow other types with the same structure
+};
+
+const thresholds: ThresholdMap = {
+  temperature: {
+    warn: 30,
+    critical: 35
+  },
+  humidity: {
+    warn: 70,
+    critical: 80
+  },
+  co2: {
+    warn: 1000,
+    critical: 2000
+  }
+};
+
+const getStatusColor = (value: number, type: keyof ThresholdMap) => {
+  const typeThresholds = thresholds[type] || {
+    warn: 0,
+    critical: 0
+  };
+
+  return value > typeThresholds.critical ? '#dc2626' :
+         value > typeThresholds.warn ? '#f59e0b' :
+         '#16a34a';
+};
+
 export default function MQTTDashboard() {
   const [mounted, setMounted] = useState(false);
   const [sensors, setSensors] = useState<SensorData[]>([]);
@@ -49,18 +88,6 @@ export default function MQTTDashboard() {
     setMounted(true);
     setSensors(generateMockData());
   }, []);
-
-  const getStatusColor = (type: string, value: number) => {
-    const thresholds = {
-      Temperature: { warn: 25, critical: 28 },
-      Humidity: { warn: 60, critical: 75 },
-      Light: { warn: 800, critical: 1000 }
-    }[type];
-
-    return value > thresholds.critical ? '#dc2626' :
-           value > thresholds.warn ? '#f59e0b' :
-           '#16a34a';
-  };
 
   if (!mounted) {
     return <div className="animate-pulse">Loading...</div>;
@@ -97,7 +124,7 @@ export default function MQTTDashboard() {
 
               <div className="mb-4">
                 <Sparklines data={sensor.history} width={200} height={40}>
-                  <SparklinesLine color={getStatusColor(sensor.type, sensor.value)} />
+                  <SparklinesLine color={getStatusColor(sensor.value, sensor.type.toLowerCase() as keyof ThresholdMap)} />
                 </Sparklines>
               </div>
 
@@ -108,7 +135,7 @@ export default function MQTTDashboard() {
                 </span>
                 <div 
                   className="w-3 h-3 rounded-full animate-pulse"
-                  style={{ backgroundColor: getStatusColor(sensor.type, sensor.value) }}
+                  style={{ backgroundColor: getStatusColor(sensor.value, sensor.type.toLowerCase() as keyof ThresholdMap) }}
                 />
               </div>
             </motion.div>
