@@ -43,9 +43,9 @@ const particlesConfig = {
     },
   },
   interactivity: {
-    detect_on: "canvas",
+    detect_on: "canvas" as const,
     events: {
-      onhover: { enable: true, mode: "repulse" },
+      onhover: { enable: true, mode: "repulse" as const },
       resize: true
     },
     modes: {
@@ -53,7 +53,7 @@ const particlesConfig = {
     }
   },
   retina_detect: true
-};
+} as const;
 
 const predefinedResponses = {
   greetings: {
