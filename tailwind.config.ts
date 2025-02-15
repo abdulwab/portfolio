@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from 'tailwindcss/plugin';
 
 export default {
   content: [
@@ -54,7 +55,7 @@ export default {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    function ({ addUtilities }) {
+    plugin(function({ addUtilities }) {
       addUtilities({
         '.perspective-1000': {
           perspective: '1000px',
@@ -72,6 +73,6 @@ export default {
           backfaceVisibility: 'hidden',
         },
       });
-    },
+    }),
   ],
 } satisfies Config;
