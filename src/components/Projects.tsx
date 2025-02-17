@@ -23,12 +23,12 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: 'smart-home',
-    title: 'Smart Home Automation Hub',
+    id: 'mobile-app',
+    title: 'Mobile App for Smart Home Automation',
     description: 'Distributed IoT system managing 50+ devices with real-time control and energy optimization',
-    image: '/projects/smart-home.png',
+    image: '/projects/smart-home2.png',
     tags: ['ESP32', 'MQTT', 'React', 'Node.js', 'TimescaleDB'],
-    category: 'iot',
+    category: 'mobile',
     github: '#',
     demo: '#',
     metrics: {
@@ -42,7 +42,7 @@ const projects: Project[] = [
     title: 'Smart Home Automation Hub',
     description: 'Distributed IoT system managing 50+ devices with real-time control and energy optimization',
     image: '/projects/smart-home.png',
-    tags: ['ESP32', 'MQTT', 'React', 'Node.js', 'TimescaleDB'],
+    tags: ['ESP32', 'MQTT', 'React', 'Node.js', 'MongoDB', 'Arduino', 'AWS', 'IOT', 'Websocket'],
     category: 'mobile',
     github: '#',
     demo: '#',
