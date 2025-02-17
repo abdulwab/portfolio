@@ -26,7 +26,7 @@ const projects: Project[] = [
     id: 'smart-home',
     title: 'Smart Home Automation Hub',
     description: 'Distributed IoT system managing 50+ devices with real-time control and energy optimization',
-    image: '/projects/smart-home.jpg',
+    image: '/projects/smart-home.png',
     tags: ['ESP32', 'MQTT', 'React', 'Node.js', 'TimescaleDB'],
     category: 'iot',
     github: '#',
