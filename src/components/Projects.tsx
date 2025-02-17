@@ -38,13 +38,29 @@ const projects: Project[] = [
     }
   },
   {
+    id: 'smart-home',
+    title: 'Smart Home Automation Hub',
+    description: 'Distributed IoT system managing 50+ devices with real-time control and energy optimization',
+    image: '/projects/smart-home.png',
+    tags: ['ESP32', 'MQTT', 'React', 'Node.js', 'TimescaleDB'],
+    category: 'mobile',
+    github: '#',
+    demo: '#',
+    metrics: {
+      performance: '98.7% uptime',
+      complexity: 4,
+      deployment: 'Kubernetes Cluster'
+    }
+  },
+  {
     id: 'gpt-research',
     title: 'Enterprise Research Assistant',
     description: 'RAG-powered knowledge management system processing 10k+ documents',
-    image: '/projects/ai-assistant.jpg',
-    tags: ['GPT-4', 'LangChain', 'Pinecone', 'FastAPI'],
+    image: '/projects/ai-assistant.png',
+    tags: ['GPT-4', 'LangChain', 'Python', 'Firebase', 'Vue.js', 'TailwindCSS', 'javascript'],
     category: 'ai',
-    github: '#',
+    github: 'https://teacheasy.ai/',
+    demo: 'https://teacheasy.ai/',
     metrics: {
       performance: '2.3s avg response',
       complexity: 5,
@@ -82,7 +98,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         {/* Image Section */}
         <div className="aspect-video relative overflow-hidden">
           <Image
-            src={`/images/${project.image}`}
+            src={project.image}
             alt={project.title}
             width={400}
             height={225}
