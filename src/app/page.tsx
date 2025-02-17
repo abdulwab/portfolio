@@ -19,9 +19,6 @@ export default function Home() {
       <section id="skills">
         <Skills />
       </section>
-      <section id="web">
-        <WebDevelopment />
-      </section>
       <section id="ai">
         <AIAgent />
       </section>
