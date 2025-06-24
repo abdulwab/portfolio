@@ -111,16 +111,16 @@ const ProjectCard = ({ project }: { project: Project }) => {
         {/* Content Section */}
         <div className="p-5 flex flex-col flex-1">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xl font-semibold text-[#C9D1D9]">{project.title}</h3>
+                          <h3 className="text-xl font-semibold text-theme-primary">{project.title}</h3>
             {project.metrics?.complexity && (
-              <div className="flex items-center gap-1 text-[#8B949E]">
+                              <div className="flex items-center gap-1 text-theme-secondary">
                 <FiStar className="text-[#FFD700]" />
                 <span>{project.metrics.complexity}/5</span>
               </div>
             )}
           </div>
           
-          <p className="text-[#8B949E] mb-4 flex-1">{project.description}</p>
+                        <p className="text-theme-secondary mb-4 flex-1">{project.description}</p>
           
           {/* Tech Stack */}
           <div className="flex flex-wrap gap-2 mb-4">

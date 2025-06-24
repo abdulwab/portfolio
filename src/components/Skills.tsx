@@ -130,14 +130,14 @@ export default function Skills() {
               style={{
                 boxShadow: activeTab === category.id ? `0 8px 32px ${category.color}40` : 'none',
                 borderColor: activeTab === category.id ? category.color : 'transparent',
-                color: activeTab === category.id ? category.color : '#8B949E'
+                color: activeTab === category.id ? category.color : 'var(--text-secondary)'
               }}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
               <category.icon 
                 className="w-5 h-5"
-                style={{ color: activeTab === category.id ? category.color : '#8B949E' }} 
+                style={{ color: activeTab === category.id ? category.color : 'var(--text-secondary)' }} 
               />
               {category.label}
             </motion.button>

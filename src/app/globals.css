@@ -94,4 +94,23 @@
   .bg-theme-card {
     @apply bg-[var(--card-bg)] border-[var(--card-border)] transition-colors duration-300;
   }
+  
+  /* Ensure proper contrast for all interactive elements */
+  .theme-text-contrast {
+    color: var(--text-primary) !important;
+  }
+  
+  .theme-text-muted {
+    color: var(--text-secondary) !important;
+  }
+  
+  /* Fix any potential visibility issues */
+  .text-inherit {
+    color: inherit;
+  }
+  
+  /* Smooth section transitions */
+  .section-transition {
+    @apply transition-all duration-500 ease-in-out;
+  }
 }
