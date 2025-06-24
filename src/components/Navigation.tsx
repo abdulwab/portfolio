@@ -103,70 +103,9 @@ export default function Navigation({ onOpenAssistant }: NavigationProps = {}) {
             <a 
               href="#home"
               onClick={(e) => handleNavClick(e, '#home')}
-              className="flex items-center gap-3 hover:scale-105 transition-transform duration-300"
+              className="flex items-center hover:scale-105 transition-transform duration-300"
             >
-              <div className="w-10 h-10 rounded-lg bg-[var(--background)] border border-[var(--border-primary)]/30
-                            flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300
-                            hover:border-[var(--accent-ai)]/50">
-                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="navLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'var(--accent-ai)', stopOpacity:1}} />
-                      <stop offset="50%" style={{stopColor:'var(--accent-iot)', stopOpacity:1}} />
-                      <stop offset="100%" style={{stopColor:'var(--accent-ai)', stopOpacity:1}} />
-                    </linearGradient>
-                    
-                    <linearGradient id="navLogoSecondary" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" style={{stopColor:'var(--accent-ai)', stopOpacity:0.6}} />
-                      <stop offset="100%" style={{stopColor:'var(--accent-iot)', stopOpacity:0.6}} />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Central AI core */}
-                  <polygon points="16,6 22,9 22,17 16,20 10,17 10,9" 
-                           fill="none" 
-                           stroke="url(#navLogoGradient)" 
-                           strokeWidth="1.5"/>
-                  
-                  {/* Inner core */}
-                  <circle cx="16" cy="13" r="2.5" fill="url(#navLogoSecondary)" opacity="0.7"/>
-                  <circle cx="16" cy="13" r="1.5" fill="url(#navLogoGradient)"/>
-                  
-                  {/* Data flow */}
-                  <rect x="2" y="10" width="6" height="2" rx="1" fill="url(#navLogoSecondary)" opacity="0.6"/>
-                  <rect x="2" y="14" width="6" height="2" rx="1" fill="url(#navLogoSecondary)" opacity="0.6"/>
-                  
-                  <rect x="24" y="10" width="6" height="2" rx="1" fill="url(#navLogoSecondary)" opacity="0.6"/>
-                  <rect x="24" y="14" width="6" height="2" rx="1" fill="url(#navLogoSecondary)" opacity="0.6"/>
-                  
-                  {/* Connection lines */}
-                  <path d="M8 11 L10 11" stroke="url(#navLogoGradient)" strokeWidth="1" opacity="0.8"/>
-                  <path d="M8 15 L10 13" stroke="url(#navLogoGradient)" strokeWidth="1" opacity="0.8"/>
-                  
-                  <path d="M22 11 L24 11" stroke="url(#navLogoGradient)" strokeWidth="1" opacity="0.8"/>
-                  <path d="M22 13 L24 15" stroke="url(#navLogoGradient)" strokeWidth="1" opacity="0.8"/>
-                  
-                  {/* Network nodes */}
-                  <circle cx="8" cy="4" r="1" fill="url(#navLogoGradient)" opacity="0.8"/>
-                  <circle cx="16" cy="3" r="1" fill="url(#navLogoGradient)" opacity="0.8"/>
-                  <circle cx="24" cy="4" r="1" fill="url(#navLogoGradient)" opacity="0.8"/>
-                  
-                  <circle cx="8" cy="28" r="1" fill="url(#navLogoGradient)" opacity="0.8"/>
-                  <circle cx="16" cy="29" r="1" fill="url(#navLogoGradient)" opacity="0.8"/>
-                  <circle cx="24" cy="28" r="1" fill="url(#navLogoGradient)" opacity="0.8"/>
-                  
-                  {/* Network connections */}
-                  <path d="M8 4 L16 3 L24 4" stroke="url(#navLogoSecondary)" strokeWidth="0.5" opacity="0.6" fill="none"/>
-                  <path d="M8 28 L16 29 L24 28" stroke="url(#navLogoSecondary)" strokeWidth="0.5" opacity="0.6" fill="none"/>
-                  
-                  {/* Bottom workflow */}
-                  <rect x="6" y="24" width="3" height="2" rx="0.5" fill="url(#navLogoGradient)" opacity="0.6"/>
-                  <rect x="11" y="24" width="3" height="2" rx="0.5" fill="url(#navLogoGradient)" opacity="0.6"/>
-                  <rect x="16" y="24" width="3" height="2" rx="0.5" fill="url(#navLogoGradient)" opacity="0.6"/>
-                  <rect x="21" y="24" width="3" height="2" rx="0.5" fill="url(#navLogoGradient)" opacity="0.6"/>
-                </svg>
-              </div>
-              <span className="text-xl font-bold text-theme-primary hidden sm:block">Abdul Wahab</span>
+              <span className="text-xl font-bold text-theme-primary">Abdul Wahab</span>
             </a>
             
             <div className="hidden md:flex items-center space-x-1">
