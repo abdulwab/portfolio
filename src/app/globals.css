@@ -47,14 +47,32 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* Account for fixed navigation */
   }
   
   body {
     @apply bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
   
   section {
     @apply relative;
+  }
+  
+  /* Prevent unwanted scrolling on page load */
+  body:not(.loaded) {
+    overflow: hidden;
+  }
+  
+  /* Ensure page loads at top */
+  body.loaded {
+    overflow: visible;
   }
 }
 
@@ -113,4 +131,11 @@
   .section-transition {
     @apply transition-all duration-500 ease-in-out;
   }
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

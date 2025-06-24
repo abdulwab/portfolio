@@ -85,17 +85,17 @@ export default function Hero() {
               transition={{ delay: 0.4 }}
             >
               {[
-                { href: 'https://www.linkedin.com/in/abdul-wahab-7bb7b490/', label: 'LinkedIn', icon: '💼', color: 'from-[#0077B5] to-[#0077B5]' },
-                { href: 'mailto:abdulwahabawan82@gmail.com', label: 'Email', icon: '📧', color: 'from-[#EA4335] to-[#FBBC04]' },
-                { href: 'https://github.com/abdulwab', label: 'GitHub', icon: '🐙', color: 'from-[#333] to-[#666]' },
-                { href: 'https://wa.me/923219424726', label: 'WhatsApp', icon: '💬', color: 'from-[#25D366] to-[#128C7E]' },
-                { href: 'https://discord.com/users/abdulwahab726', label: 'Discord', icon: '🎮', color: 'from-[#5865F2] to-[#7289DA]' },
+                { href: 'https://www.linkedin.com/in/abdul-wahab-7bb7b490/', label: 'LinkedIn', icon: '💼', color: 'from-[#0077B5] to-[#0077B5]', external: true },
+                { href: 'mailto:abdulwahabawan82@gmail.com', label: 'Email', icon: '📧', color: 'from-[#EA4335] to-[#FBBC04]', external: true },
+                { href: 'https://github.com/abdulwab', label: 'GitHub', icon: '🐙', color: 'from-[#333] to-[#666]', external: true },
+                { href: 'https://wa.me/923219424726', label: 'WhatsApp', icon: '💬', color: 'from-[#25D366] to-[#128C7E]', external: true },
+                { href: 'https://discord.com/users/abdulwahab726', label: 'Discord', icon: '🎮', color: 'from-[#5865F2] to-[#7289DA]', external: true },
               ].map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   className="group p-4 rounded-xl bg-theme-card border border-[var(--card-border)] 
                            hover:border-[var(--accent-ai)] transition-all duration-300 flex items-center gap-3 
                            text-theme-primary hover:text-[var(--accent-ai)]

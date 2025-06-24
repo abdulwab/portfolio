@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 interface NavItem {
@@ -69,6 +68,22 @@ const navItems: NavItem[] = [
 export default function Navigation() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    // Update URL without triggering scroll
+    window.history.pushState(null, '', href);
+    
+    // Smooth scroll to target
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <>
       {/* Desktop Navigation */}
@@ -81,19 +96,21 @@ export default function Navigation() {
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <Link 
-              href="/" 
+            <a 
+              href="#home"
+              onClick={(e) => handleNavClick(e, '#home')}
               className="text-2xl font-bold bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] 
                        bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
             >
               AW
-            </Link>
+            </a>
             
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
-                <Link
+                <a
                   key={item.href}
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="group relative px-4 py-2 rounded-xl text-theme-secondary 
                            hover:text-theme-primary transition-all duration-300 
                            hover:bg-[var(--hover-bg)]"
@@ -112,13 +129,14 @@ export default function Navigation() {
                       transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
                     />
                   )}
-                </Link>
+                </a>
               ))}
             </div>
 
             {/* CTA Button */}
             <motion.a
               href="#contact"
+              onClick={(e) => handleNavClick(e, '#contact')}
               className="hidden lg:flex items-center gap-2 px-6 py-2 bg-gradient-to-r 
                        from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-xl text-white 
                        font-medium hover:shadow-lg hover:shadow-[var(--accent-ai)]/30
@@ -143,15 +161,16 @@ export default function Navigation() {
       >
         <div className="flex justify-around py-2">
           {navItems.slice(0, 5).map((item) => (
-            <Link
+            <a
               key={item.href}
               href={item.href}
+              onClick={(e) => handleNavClick(e, item.href)}
               className="flex flex-col items-center p-2 text-theme-secondary 
                        hover:text-[var(--accent-ai)] transition-colors duration-300"
             >
               <item.icon className="w-5 h-5 mb-1" />
               <span className="text-xs font-medium">{item.label}</span>
-            </Link>
+            </a>
           ))}
         </div>
       </motion.nav>
