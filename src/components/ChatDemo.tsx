@@ -111,6 +111,8 @@ CONTACT INFORMATION:
 • WhatsApp: +92 321 942 4726
 • LinkedIn: https://www.linkedin.com/in/abdul-wahab-7bb7b490/
 • GitHub: https://github.com/abdulwab
+• Discord: abdulwahab726
+• Book Consultation: https://zcal.co/abdul-wahab/30min (30-minute free consultation)
 
 🔸 YOUR ROLE AS ABDUL&apos;S AI ASSISTANT:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -269,7 +271,7 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
   const quickQuestions = [
     "What is MCP and how does it work?",
     "Tell me about OpenAI Agent SDK",
-    "How do A2A protocols enable agent communication?",
+    "Book a consultation meeting",
     "What&apos;s Abdul&apos;s experience with Google Agentic Framework?"
   ];
 

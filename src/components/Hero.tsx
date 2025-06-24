@@ -107,6 +107,37 @@ export default function Hero() {
               ))}
             </motion.div>
 
+            {/* CTA Consultation Button */}
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <motion.a
+                href="https://zcal.co/abdul-wahab/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r 
+                         from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-xl text-white 
+                         font-semibold text-lg hover:shadow-xl hover:shadow-[var(--accent-ai)]/40
+                         transition-all duration-300 group"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <svg className="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4h6m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Book Free Consultation</span>
+                <div className="px-2 py-1 bg-white/20 rounded-full text-sm">
+                  30 min
+                </div>
+              </motion.a>
+              <p className="text-theme-secondary text-sm mt-2 max-w-md">
+                🚀 Let&apos;s discuss your AI agent project and explore how we can transform your ideas into reality
+              </p>
+            </motion.div>
+
             {/* Tech Stack Pills */}
             <motion.div
               className="flex flex-wrap gap-2 mb-8"

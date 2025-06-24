@@ -135,8 +135,9 @@ export default function Navigation() {
 
             {/* CTA Button */}
             <motion.a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, '#contact')}
+              href="https://zcal.co/abdul-wahab/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hidden lg:flex items-center gap-2 px-6 py-2 bg-gradient-to-r 
                        from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-xl text-white 
                        font-medium hover:shadow-lg hover:shadow-[var(--accent-ai)]/30
@@ -144,8 +145,8 @@ export default function Navigation() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>🤖</span>
-              <span>Let&apos;s Build AI</span>
+              <span>📅</span>
+              <span>Book Consultation</span>
             </motion.a>
           </div>
         </nav>
