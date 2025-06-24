@@ -58,7 +58,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section-spacing bg-[var(--background)]">
+    <section id="contact" className="section-spacing bg-[var(--background-secondary)]">
       <div className="container-center">
         <motion.h2
           className="text-5xl font-bold mb-12 text-center gradient-text"

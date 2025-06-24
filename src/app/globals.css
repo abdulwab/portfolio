@@ -5,9 +5,9 @@
 :root {
   --background: #ffffff;
   --background-secondary: #f8fafc;
-  --foreground: #1e293b;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
+  --foreground: #0f172a;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
   --border-primary: #e2e8f0;
   --border-secondary: #cbd5e1;
   --accent-web: #0ea5e9;
@@ -18,14 +18,17 @@
   --card-bg: #ffffff;
   --card-border: #e2e8f0;
   --hover-bg: #f1f5f9;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
 }
 
 .dark {
   --background: #0D1117;
   --background-secondary: #161B22;
-  --foreground: #C9D1D9;
-  --text-primary: #C9D1D9;
-  --text-secondary: #8B949E;
+  --foreground: #f0f6fe;
+  --text-primary: #f0f6fe;
+  --text-secondary: #9ca3af;
   --border-primary: #30363D;
   --border-secondary: #21262D;
   --accent-web: #7DD3FC;
@@ -36,6 +39,9 @@
   --card-bg: #161B22;
   --card-border: #30363D;
   --hover-bg: #21262D;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
 }
 
 @layer base {
@@ -62,7 +68,11 @@
   }
   
   .section-spacing {
-    @apply py-20 px-4 sm:px-6 lg:px-8;
+    @apply py-16 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-spacing-small {
+    @apply py-12 px-4 sm:px-6 lg:px-8;
   }
   
   .container-center {
@@ -71,5 +81,17 @@
   
   .gradient-text {
     @apply bg-gradient-to-r from-[var(--accent-ai)] via-[var(--accent-iot)] to-[var(--accent-web)] bg-clip-text text-transparent;
+  }
+  
+  .text-theme-primary {
+    @apply text-[var(--text-primary)] transition-colors duration-300;
+  }
+  
+  .text-theme-secondary {
+    @apply text-[var(--text-secondary)] transition-colors duration-300;
+  }
+  
+  .bg-theme-card {
+    @apply bg-[var(--card-bg)] border-[var(--card-border)] transition-colors duration-300;
   }
 }

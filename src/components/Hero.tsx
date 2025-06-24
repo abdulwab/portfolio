@@ -18,7 +18,7 @@ export default function Hero() {
   return (
     <section className="section-spacing bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background)]">
       <div className="container-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-5rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
           {/* Left Column */}
           <motion.div
             className="flex flex-col justify-center"
@@ -50,11 +50,11 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <span className="block mb-2 text-[var(--text-primary)]">Hi, I&apos;m</span>
+              <span className="block mb-2 text-theme-primary">Hi, I&apos;m</span>
               <span className="gradient-text">
                 Abdul Wahab
               </span>
-              <div className="min-h-[1.5em] mt-4 text-[var(--text-secondary)] text-2xl md:text-3xl">
+              <div className="min-h-[1.5em] mt-4 text-theme-secondary text-2xl md:text-3xl">
                 <TypeAnimation
                   sequence={[
                     'AI Agent Developer',
@@ -74,7 +74,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="text-[var(--text-secondary)] text-lg mb-8 max-w-xl leading-relaxed"
+              className="text-theme-secondary text-lg mb-8 max-w-xl leading-relaxed"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -98,9 +98,9 @@ export default function Hero() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="group p-4 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] 
+                  className="group p-4 rounded-xl bg-theme-card border border-[var(--card-border)] 
                            hover:border-[var(--accent-ai)] transition-all duration-300 flex items-center gap-3 
-                           text-[var(--text-primary)] hover:text-[var(--accent-ai)]
+                           text-theme-primary hover:text-[var(--accent-ai)]
                            hover:shadow-lg hover:shadow-[var(--accent-ai)]/20 hover:scale-105"
                 >
                   <span className="text-xl group-hover:scale-110 transition-transform">{link.icon}</span>
@@ -136,7 +136,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="relative bg-[var(--card-bg)] rounded-2xl border border-[var(--card-border)] p-6 shadow-2xl"
+            className="relative bg-theme-card rounded-2xl border border-[var(--card-border)] p-6 shadow-2xl"
           >
             <div className="absolute -top-3 left-4 bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] 
                           px-4 py-1 rounded-full text-sm font-medium text-white">
@@ -152,12 +152,12 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
           >
-            <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--card-border)] p-6 shadow-xl">
+            <div className="bg-theme-card rounded-xl border border-[var(--card-border)] p-6 shadow-xl">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
                 <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
                 <div className="w-3 h-3 rounded-full bg-[#27CA3F]"></div>
-                <span className="ml-4 text-[var(--text-secondary)] text-sm">bash</span>
+                <span className="ml-4 text-theme-secondary text-sm">bash</span>
               </div>
               <div className="font-mono text-sm">
                 <div className="flex items-center gap-2 mb-2">
@@ -174,7 +174,7 @@ export default function Hero() {
                     wrapper="span"
                     speed={75}
                     repeat={Infinity}
-                    className="text-[var(--text-primary)]"
+                    className="text-theme-primary"
                   />
                 </div>
               </div>

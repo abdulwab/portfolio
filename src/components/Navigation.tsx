@@ -94,8 +94,8 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group relative px-4 py-2 rounded-xl text-[var(--text-secondary)] 
-                           hover:text-[var(--text-primary)] transition-all duration-300 
+                  className="group relative px-4 py-2 rounded-xl text-theme-secondary 
+                           hover:text-theme-primary transition-all duration-300 
                            hover:bg-[var(--hover-bg)]"
                   onMouseEnter={() => setHoveredItem(item.href)}
                   onMouseLeave={() => setHoveredItem(null)}
@@ -146,8 +146,8 @@ export default function Navigation() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex flex-col items-center p-2 text-[var(--text-secondary)] 
-                       hover:text-[var(--accent-ai)] transition-colors duration-300"
+                             className="flex flex-col items-center p-2 text-theme-secondary 
+                        hover:text-[var(--accent-ai)] transition-colors duration-300"
             >
               <item.icon className="w-5 h-5 mb-1" />
               <span className="text-xs font-medium">{item.label}</span>

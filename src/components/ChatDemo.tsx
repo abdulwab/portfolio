@@ -175,13 +175,13 @@ export default function ChatDemo() {
               <div className="w-3 h-3 rounded-full bg-[#10B981] animate-pulse" />
               <div className="absolute inset-0 w-3 h-3 rounded-full bg-[#10B981] animate-ping opacity-30" />
             </div>
-            <h3 className="text-lg font-semibold bg-gradient-to-r from-[#58A6FF] to-[#10B981] bg-clip-text text-transparent">
+            <h3 className="text-lg font-semibold gradient-text">
               AI Agent Assistant
             </h3>
           </div>
-          <div className="flex items-center gap-2 text-xs text-[#8B949E]">
-            <span className="px-2 py-1 rounded-full bg-[#58A6FF]/20 text-[#58A6FF]">GPT-4</span>
-            <span className="px-2 py-1 rounded-full bg-[#10B981]/20 text-[#10B981]">LangChain</span>
+          <div className="flex items-center gap-2 text-xs text-theme-secondary">
+            <span className="px-2 py-1 rounded-full bg-[var(--accent-iot)]/20 text-[var(--accent-iot)]">GPT-4</span>
+            <span className="px-2 py-1 rounded-full bg-[var(--accent-ai)]/20 text-[var(--accent-ai)]">LangChain</span>
           </div>
         </div>
       </div>

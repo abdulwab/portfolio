@@ -11,27 +11,27 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Navigation />
-      <section id="home" className="pt-20">
+      <section id="home" className="pt-16">
         <Hero />
       </section>
      
-      <section id="ai-agents" className="py-20">
+      <section id="ai-agents">
         <AIAgent />
       </section>
       
-      <section id="skills" className="py-20">
+      <section id="skills">
         <Skills />
       </section>
       
-      <section id="iot" className="py-20">
+      <section id="iot">
         <IoTSolutions />
       </section>
       
-      <section id="projects" className="py-20">
+      <section id="projects">
         <Projects />
       </section>
       
-      <section id="contact" className="py-20">
+      <section id="contact">
         <Contact />
       </section>
     </main>

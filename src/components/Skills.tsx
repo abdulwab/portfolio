@@ -106,7 +106,7 @@ export default function Skills() {
               Technical Expertise
             </span>
           </h2>
-          <p className="text-[var(--text-secondary)] text-xl max-w-3xl mx-auto leading-relaxed">
+          <p className="text-theme-secondary text-xl max-w-3xl mx-auto leading-relaxed">
             Comprehensive technology stack spanning AI agents, modern web development, 
             IoT solutions, and cloud infrastructure.
           </p>

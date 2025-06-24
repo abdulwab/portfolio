@@ -83,7 +83,7 @@ export function AIAgent() {
             </span>
           </motion.h2>
           <motion.p
-            className="text-[var(--text-secondary)] text-xl max-w-3xl mx-auto leading-relaxed"
+            className="text-theme-secondary text-xl max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
