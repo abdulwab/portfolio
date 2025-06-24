@@ -416,16 +416,7 @@ export default function Contact() {
           viewport={{ once: true }}
         >
           <p className="text-theme-secondary">
-            Built with ❤️ using{' '}
-            <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" 
-               className="text-[var(--accent-ai)] hover:underline">
-              Next.js
-            </a>
-            {' & '}
-            <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer"
-               className="text-[var(--accent-iot)] hover:underline">
-              Tailwind CSS
-            </a>
+            © {new Date().getFullYear()} Abdul Wahab. Crafted with passion for AI innovation and automation excellence.
           </p>
         </motion.footer>
       </div>

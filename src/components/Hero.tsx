@@ -129,41 +129,6 @@ export default function Hero() {
                 </motion.span>
               ))}
             </motion.div>
-
-            {/* Terminal - Compact */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-            >
-              <div className="bg-theme-card rounded-lg border border-[var(--card-border)] p-4 shadow-xl">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 rounded-full bg-[#FF5F56]"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#FFBD2E]"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#27CA3F]"></div>
-                  <span className="ml-3 text-theme-secondary text-xs">bash</span>
-                </div>
-                <div className="font-mono text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[var(--accent-ai)]">$</span>
-                    <TypeAnimation
-                      sequence={[
-                        'npm create @abdulwahab/ai-agent',
-                        1000,
-                        'npm create @abdulwahab/ai-agent\n✨ Setting up your AI agent...',
-                        1000,
-                        'npm create @abdulwahab/ai-agent\n✨ Setting up your AI agent...\n🚀 Ready to revolutionize automation!',
-                        2000,
-                      ]}
-                      wrapper="span"
-                      speed={75}
-                      repeat={Infinity}
-                      className="text-theme-primary"
-                    />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Right Column - Chat Interface + CTA */}
