@@ -85,13 +85,16 @@ export default function Hero() {
               transition={{ delay: 0.4 }}
             >
               {[
-                { href: 'https://linkedin.com/in/abdul-wahab', label: 'LinkedIn', icon: '💼', color: 'from-[#0077B5] to-[#0077B5]' },
+                { href: 'https://www.linkedin.com/in/abdul-wahab-7bb7b490/', label: 'LinkedIn', icon: '💼', color: 'from-[#0077B5] to-[#0077B5]' },
                 { href: 'mailto:abdulwahabawan82@gmail.com', label: 'Email', icon: '📧', color: 'from-[#EA4335] to-[#FBBC04]' },
-                { href: 'https://github.com/abdul-wahab-dev', label: 'GitHub', icon: '🐙', color: 'from-[#333] to-[#666]' },
+                { href: 'https://github.com/abdulwab', label: 'GitHub', icon: '🐙', color: 'from-[#333] to-[#666]' },
+                { href: 'https://wa.me/923219424726', label: 'WhatsApp', icon: '💬', color: 'from-[#25D366] to-[#128C7E]' },
               ].map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group p-4 rounded-xl bg-theme-card border border-[var(--card-border)] 
                            hover:border-[var(--accent-ai)] transition-all duration-300 flex items-center gap-3 
                            text-theme-primary hover:text-[var(--accent-ai)]
