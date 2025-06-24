@@ -1,47 +1,57 @@
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.OPENROUTER_API_KEY) {
       return NextResponse.json(
-        { error: 'OpenAI API key not configured' },
+        { error: 'OpenRouter API key not configured' },
         { status: 500 }
       );
     }
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini', // Using the more cost-effective model
-      messages: messages,
-      max_tokens: 500,
-      temperature: 0.7,
-      presence_penalty: 0.1,
-      frequency_penalty: 0.1,
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        'X-Title': 'Abdul Wahab Portfolio AI Assistant',
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-3.5-turbo', // Using GPT-3.5-turbo via OpenRouter
+        messages: messages,
+        max_tokens: 500,
+        temperature: 0.7,
+        presence_penalty: 0.1,
+        frequency_penalty: 0.1,
+        stream: false,
+      }),
     });
 
-    const assistantMessage = completion.choices[0]?.message?.content;
+    if (!response.ok) {
+      throw new Error(`OpenRouter API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const assistantMessage = data.choices[0]?.message?.content;
 
     if (!assistantMessage) {
-      throw new Error('No response from OpenAI');
+      throw new Error('No response from OpenRouter');
     }
 
     return NextResponse.json({
       message: assistantMessage,
-      usage: completion.usage,
+      usage: data.usage,
     });
 
   } catch (error) {
-    console.error('OpenAI API Error:', error);
+    console.error('OpenRouter API Error:', error);
     
-    // Return a fallback response
+    // Return a fallback response with Abdul's context
     return NextResponse.json({
-      message: "I'm Abdul Wahab's AI Assistant! I'd love to help you learn about AI agent development and IoT solutions. While I'm having technical difficulties right now, feel free to contact Abdul directly at abdulwahabawan82@gmail.com or WhatsApp +92 321 942 4726 for immediate assistance with your projects! 🚀",
+      message: "Hi! I'm Abdul Wahab's AI Assistant! 🤖 While I'm having technical difficulties, I'd love to help you learn about Abdul's expertise in AI agent development and IoT solutions. Abdul specializes in:\n\n🔹 AI Agents with LangChain, LangGraph, CrewAI\n🔹 IoT Solutions with ESP32, MQTT, LoRaWAN\n🔹 Automation with N8N, Make.com, Zapier\n🔹 Full-stack development with Next.js, React\n\nFeel free to contact Abdul directly:\n📧 abdulwahabawan82@gmail.com\n📱 WhatsApp: +92 321 942 4726\n\nWhat specific project can Abdul help you with? 🚀",
     });
   }
 } 
