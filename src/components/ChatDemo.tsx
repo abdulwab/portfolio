@@ -2,93 +2,55 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type Message = {
+interface Message {
   id: string;
-  text: string;
-  sender: 'user' | 'bot';
+  content: string;
+  role: 'user' | 'assistant' | 'system';
   timestamp: Date;
   typing?: boolean;
-};
+}
 
-// Removed unused particlesConfig since we're no longer using particles
+interface ChatDemoProps {
+  className?: string;
+}
 
-const aiResponses = {
-  greetings: {
-    patterns: [/^(hello|hi|hey|greetings)/i],
-    responses: [
-      "Hello! I'm an AI agent built with LangChain and GPT-4. I can help you with complex workflows, data analysis, and autonomous task execution. What would you like to explore?",
-      "Hi there! I'm powered by advanced AI technologies including LangGraph for multi-agent orchestration. How can I assist you today?",
-      "Greetings! I'm an agentic AI system that can reason, plan, and execute complex tasks. What challenge shall we tackle together?"
-    ]
-  },
-  aiQuestions: {
-    patterns: [/(ai|artificial intelligence|agent|langchain|gpt)/i],
-    responses: [
-      "I'm built using LangChain for orchestration, GPT-4 for reasoning, and vector databases for knowledge retrieval. I can demonstrate RAG pipelines, multi-agent workflows, and autonomous decision-making.",
-      "As an AI agent, I combine multiple AI technologies: LangGraph for state management, CrewAI for collaboration, and advanced reasoning models like Claude and GPT-4. Want to see a specific workflow?",
-      "I leverage agentic patterns including tool use, memory, and planning. I can show you how I process complex queries through retrieval-augmented generation and multi-step reasoning."
-    ]
-  },
-  technical: {
-    patterns: [/(code|programming|development|tech|stack)/i],
-    responses: [
-      "I work with modern tech stacks: Next.js, TypeScript, Python for AI backends, and cloud infrastructure. I can help with everything from API design to AI model deployment.",
-      "My technical expertise spans full-stack development, AI/ML pipelines, IoT solutions, and cloud architecture. I use technologies like Docker, Kubernetes, and serverless functions.",
-      "I'm experienced with automation tools like N8N, Make.com, and GitHub Actions. I can create end-to-end workflows that integrate AI with existing systems."
-    ]
-  },
-  iot: {
-    patterns: [/(iot|internet of things|sensor|device|mqtt|esp32)/i],
-    responses: [
-      "I work extensively with IoT: ESP32 microcontrollers, MQTT messaging, LoRaWAN networks, and edge AI processing. I can demonstrate sensor data processing and device orchestration.",
-      "My IoT expertise includes Raspberry Pi edge computing, Zigbee mesh networks, and real-time data streaming. I bridge the gap between physical devices and AI systems.",
-      "I create intelligent IoT solutions that combine sensor data with AI analysis, enabling predictive maintenance, smart automation, and real-time decision making."
-    ]
-  },
-  projects: {
-    patterns: [/(project|work|portfolio|example|demo)/i],
-    responses: [
-      "I've built AI-powered dashboards, autonomous agent systems, and intelligent IoT networks. Each project demonstrates different aspects of modern AI development.",
-      "My recent work includes multi-agent systems for data analysis, RAG implementations for knowledge retrieval, and IoT platforms with AI-driven insights.",
-      "I specialize in creating production-ready AI solutions: from chatbots and virtual assistants to complex automation workflows and intelligent monitoring systems."
-    ]
-  },
-  automation: {
-    patterns: [/(automation|workflow|n8n|make|zapier)/i],
-    responses: [
-      "I excel at creating intelligent automation with N8N, Make.com, and custom solutions. I can design workflows that adapt and learn from data patterns.",
-      "My automation expertise includes agentic workflows that can make decisions, handle exceptions, and optimize themselves based on performance metrics.",
-      "I build end-to-end automation pipelines that integrate AI reasoning with business processes, creating truly intelligent and adaptive systems."
-    ]
-  },
-  default: {
-    patterns: [/.*/],
-    responses: [
-      "That's an interesting question! As an AI agent, I can help with complex reasoning, data analysis, and task automation. Could you be more specific about what you'd like to explore?",
-      "I'm designed to handle multifaceted challenges. Whether it's AI development, IoT solutions, or workflow automation, I can provide detailed insights and practical solutions.",
-      "I'd be happy to dive deeper into that topic. My capabilities span AI development, system architecture, and intelligent automation. What specific aspect interests you most?"
-    ]
-  }
-};
+const ABDUL_CONTEXT = `You are Abdul Wahab's AI Assistant, a helpful and knowledgeable AI agent representing Abdul Wahab, an expert AI Agent Developer and IoT Solutions Engineer from Pakistan.
 
-const quickActions = [
-  { text: "Show AI workflow demo", icon: "🤖" },
-  { text: "Explain RAG pipeline", icon: "🔍" },
-  { text: "IoT project examples", icon: "📡" },
-  { text: "Automation solutions", icon: "⚙️" }
-];
+About Abdul Wahab:
+- Expert in AI Agent Development with LangChain, LangGraph, CrewAI, and OpenAI
+- Specializes in agentic workflows and autonomous systems
+- IoT Solutions Engineer with ESP32, MQTT, LoRaWAN, Raspberry Pi expertise
+- Full-stack developer with Next.js, React, TypeScript, Node.js
+- Experience with automation platforms like N8N, Make.com, Zapier
+- Cloud platforms: AWS, Vercel, Docker, Kubernetes
+- Based in Lahore, Pakistan
+- Available for AI agent development, IoT solutions, and consulting projects
+- Contact: abdulwahabawan82@gmail.com, WhatsApp: +92 321 942 4726
+- LinkedIn: https://www.linkedin.com/in/abdul-wahab-7bb7b490/
+- GitHub: https://github.com/abdulwab
 
-export default function ChatDemo() {
+Your role:
+- Welcome visitors and offer to help with questions about Abdul's expertise
+- Provide detailed information about AI agents, LangChain, IoT solutions
+- Explain complex technical concepts in simple terms
+- Help potential clients understand how Abdul can solve their problems
+- Be professional, friendly, and knowledgeable
+- Always mention Abdul's availability for projects and consultations
+
+Keep responses concise but informative. Use emojis appropriately to make conversations engaging.`;
+
+export default function ChatDemo({ className = "" }: ChatDemoProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "👋 Hello! I'm an AI agent powered by LangChain, GPT-4, and modern automation tools. I can demonstrate agentic workflows, RAG pipelines, and intelligent IoT solutions. What would you like to explore?",
-      sender: 'bot',
-      timestamp: new Date(),
-    },
+      content: "👋 Hello! I'm Abdul Wahab's AI Assistant. I can help you learn about AI agent development, IoT solutions, and how Abdul can assist with your projects. What would you like to know?",
+      role: 'assistant',
+      timestamp: new Date()
+    }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -99,36 +61,16 @@ export default function ChatDemo() {
     scrollToBottom();
   }, [messages]);
 
-  const getAIResponse = (userInput: string) => {
-    const lowerInput = userInput.toLowerCase();
-    
-    // Find the best matching response category
-    const responseCategory = Object.entries(aiResponses).find(([_, { patterns }]) => 
-      patterns.some(pattern => pattern.test(lowerInput))
-    );
-
-    if (responseCategory) {
-      const responses = responseCategory[1].responses;
-      return responses[Math.floor(Math.random() * responses.length)];
-    }
-
-    return aiResponses.default.responses[Math.floor(Math.random() * aiResponses.default.responses.length)];
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
-    sendMessage(input);
-  };
-
-  const sendMessage = async (text: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
-      text,
-      sender: 'user',
-      timestamp: new Date(),
+      content: input.trim(),
+      role: 'user',
+      timestamp: new Date()
     };
+
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
@@ -136,101 +78,160 @@ export default function ChatDemo() {
     // Add typing indicator
     const typingMessage: Message = {
       id: 'typing',
-      text: '',
-      sender: 'bot',
+      content: '',
+      role: 'assistant',
       timestamp: new Date(),
       typing: true
     };
     setMessages(prev => [...prev, typingMessage]);
 
-    // Simulate realistic AI response time
-    setTimeout(() => {
-      const response = getAIResponse(text);
-      setMessages(prev => prev.filter(m => m.id !== 'typing'));
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [
+            { role: 'system', content: ABDUL_CONTEXT },
+            ...messages.filter(m => !m.typing).map(m => ({ 
+              role: m.role, 
+              content: m.content 
+            })),
+            { role: 'user', content: input.trim() }
+          ]
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await response.json();
       
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: response,
-        sender: 'bot',
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, botMessage]);
-      setIsLoading(false);
-    }, 1200 + Math.random() * 800); // 1.2-2s response time
+      // Remove typing indicator and add real response
+      setMessages(prev => {
+        const filtered = prev.filter(m => m.id !== 'typing');
+        return [...filtered, {
+          id: Date.now().toString(),
+          content: data.message,
+          role: 'assistant',
+          timestamp: new Date()
+        }];
+      });
+
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => {
+        const filtered = prev.filter(m => m.id !== 'typing');
+        return [...filtered, {
+          id: Date.now().toString(),
+          content: "I apologize, but I'm having trouble connecting right now. Please try again or contact Abdul directly at abdulwahabawan82@gmail.com",
+          role: 'assistant',
+          timestamp: new Date()
+        }];
+      });
+      setIsOnline(false);
+    }
+
+    setIsLoading(false);
   };
 
-  const handleQuickAction = (action: string) => {
-    sendMessage(action);
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
   };
 
+  const quickQuestions = [
+    "What AI frameworks does Abdul use?",
+    "How can Abdul help with IoT projects?",
+    "What is an agentic workflow?",
+    "Tell me about Abdul's experience"
+  ];
 
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
 
   return (
-    <div className="flex flex-col h-[500px] bg-gradient-to-br from-[var(--background)] to-[var(--background-secondary)] rounded-2xl border border-[var(--card-border)] shadow-2xl overflow-hidden">
-      {/* Header */}
-      <div className="p-4 border-b border-[#30363D] bg-[#161B22]/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-3 h-3 rounded-full bg-[#10B981] animate-pulse" />
-              <div className="absolute inset-0 w-3 h-3 rounded-full bg-[#10B981] animate-ping opacity-30" />
+    <div className={`flex flex-col h-full bg-[var(--background)] rounded-xl border border-[var(--card-border)] ${className}`}>
+      {/* Chat Header */}
+      <div className="flex items-center justify-between p-4 border-b border-[var(--card-border)]">
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] flex items-center justify-center">
+              <span className="text-white text-sm font-bold">AW</span>
             </div>
-            <h3 className="text-lg font-semibold gradient-text">
-              AI Agent Assistant
-            </h3>
+            <div className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-[var(--background)] ${
+              isOnline ? 'bg-green-500' : 'bg-gray-400'
+            }`} />
           </div>
-          <div className="flex items-center gap-2 text-xs text-theme-secondary">
-            <span className="px-2 py-1 rounded-full bg-[var(--accent-iot)]/20 text-[var(--accent-iot)]">GPT-4</span>
-            <span className="px-2 py-1 rounded-full bg-[var(--accent-ai)]/20 text-[var(--accent-ai)]">LangChain</span>
+          <div>
+            <h3 className="text-sm font-semibold text-theme-primary">Abdul Wahab's AI Assistant</h3>
+            <p className="text-xs text-theme-secondary">
+              {isOnline ? '🟢 Online - Ready to help' : '🔴 Connection issues'}
+            </p>
           </div>
+        </div>
+        <div className="text-xs text-theme-secondary">
+          AI Agent v2.0
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[#30363D] scrollbar-track-transparent">
+      {/* Messages Container */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div
               key={message.id}
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`flex items-start gap-3 max-w-[85%] ${message.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                {/* Avatar */}
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
-                  message.sender === 'user' 
-                    ? 'bg-gradient-to-r from-[#58A6FF] to-[#3B82F6]' 
-                    : 'bg-gradient-to-r from-[#10B981] to-[#059669]'
-                }`}>
-                  {message.sender === 'user' ? '👤' : '🤖'}
-                </div>
-                
-                {/* Message */}
-                <motion.div
-                  className={`p-4 rounded-2xl text-sm leading-relaxed ${
-                    message.sender === 'user'
-                      ? 'bg-gradient-to-r from-[#58A6FF] to-[#3B82F6] text-white rounded-tr-sm'
-                      : 'bg-[#161B22] text-[#E5E7EB] border border-[#30363D] rounded-tl-sm'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  {message.typing ? (
-                    <div className="flex items-center gap-2">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 rounded-full bg-[#58A6FF] animate-bounce" />
-                        <div className="w-2 h-2 rounded-full bg-[#58A6FF] animate-bounce delay-100" />
-                        <div className="w-2 h-2 rounded-full bg-[#58A6FF] animate-bounce delay-200" />
-                      </div>
-                      <span className="text-[#8B949E]">AI thinking...</span>
+              <div className={`max-w-[80%] ${
+                message.role === 'user' 
+                  ? 'bg-[var(--accent-ai)] text-white rounded-l-xl rounded-tr-xl' 
+                  : 'bg-theme-card border border-[var(--card-border)] rounded-r-xl rounded-tl-xl'
+              } p-3`}>
+                {message.typing ? (
+                  <div className="flex items-center gap-1">
+                    <div className="flex gap-1">
+                      {[0, 1, 2].map((i) => (
+                        <motion.div
+                          key={i}
+                          className="w-2 h-2 bg-theme-secondary rounded-full"
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ 
+                            duration: 0.6, 
+                            repeat: Infinity, 
+                            delay: i * 0.2 
+                          }}
+                        />
+                      ))}
                     </div>
-                  ) : (
-                    message.text
-                  )}
-                </motion.div>
+                    <span className="text-theme-secondary text-sm ml-2">typing...</span>
+                  </div>
+                ) : (
+                  <>
+                    <p className={`text-sm whitespace-pre-wrap ${
+                      message.role === 'user' ? 'text-white' : 'text-theme-primary'
+                    }`}>
+                      {message.content}
+                    </p>
+                    <div className={`text-xs mt-1 ${
+                      message.role === 'user' ? 'text-white/70' : 'text-theme-secondary'
+                    }`}>
+                      {formatTime(message.timestamp)}
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
           ))}
@@ -238,57 +239,55 @@ export default function ChatDemo() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Actions */}
-      <div className="px-4 py-2 border-t border-[#30363D]/50">
-        <div className="flex gap-2 overflow-x-auto scrollbar-none">
-          {quickActions.map((action, _index) => (
-            <motion.button
-              key={action.text}
-              onClick={() => handleQuickAction(action.text)}
-              className="flex items-center gap-2 px-3 py-2 rounded-full bg-[#161B22]/50 border border-[#30363D] 
-                       text-xs text-[#8B949E] hover:text-[#58A6FF] hover:border-[#58A6FF]/50 
-                       transition-all duration-200 whitespace-nowrap"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={isLoading}
-            >
-              <span>{action.icon}</span>
-              <span>{action.text}</span>
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* Input */}
-      <form onSubmit={handleSubmit} className="p-4 border-t border-[#30363D] bg-[#161B22]/30 backdrop-blur-sm">
-        <div className="flex gap-3 items-center">
-          <div className="flex-1 relative">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about AI agents, automation, or IoT solutions..."
-              className="w-full px-4 py-3 rounded-xl bg-[#0D1117] border border-[#30363D] 
-                       text-[#E5E7EB] placeholder-[#8B949E] focus:border-[#58A6FF] 
-                       focus:outline-none transition-colors"
-              disabled={isLoading}
-            />
+      {/* Quick Questions */}
+      {messages.length === 1 && (
+        <div className="px-4 pb-2">
+          <p className="text-xs text-theme-secondary mb-2">Quick questions:</p>
+          <div className="flex flex-wrap gap-2">
+            {quickQuestions.map((question) => (
+              <motion.button
+                key={question}
+                onClick={() => setInput(question)}
+                className="text-xs px-3 py-1 bg-theme-card border border-[var(--card-border)] 
+                         rounded-full hover:border-[var(--accent-ai)] hover:bg-[var(--accent-ai)]/10
+                         text-theme-secondary hover:text-[var(--accent-ai)] transition-all"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {question}
+              </motion.button>
+            ))}
           </div>
+        </div>
+      )}
+
+      {/* Input Area */}
+      <div className="p-4 border-t border-[var(--card-border)]">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Ask about AI agents, IoT solutions, or Abdul's expertise..."
+            className="flex-1 px-3 py-2 text-sm bg-[var(--background)] border border-[var(--card-border)]
+                     rounded-lg text-theme-primary placeholder-theme-secondary
+                     focus:border-[var(--accent-ai)] focus:outline-none transition-colors"
+            disabled={isLoading}
+          />
           <motion.button
-            type="submit"
-            className="p-3 rounded-xl bg-gradient-to-r from-[#58A6FF] to-[#10B981] 
-                     text-white hover:shadow-lg hover:shadow-[#58A6FF]/30 
-                     transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            onClick={sendMessage}
             disabled={!input.trim() || isLoading}
+            className="px-4 py-2 bg-[var(--accent-ai)] text-white rounded-lg text-sm font-medium
+                     disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--accent-ai)]/90
+                     transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
+            {isLoading ? '...' : '→'}
           </motion.button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
