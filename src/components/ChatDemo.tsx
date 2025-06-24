@@ -107,7 +107,7 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "👋 Hello! I'm Abdul Wahab's AI Assistant. I can help you learn about AI agent development, IoT solutions, and how Abdul can assist with your projects. What would you like to know?",
+      content: "👋 Hello! I&apos;m Abdul Wahab&apos;s AI Assistant. I can help you learn about AI agent development, IoT solutions, and how Abdul can assist with your projects. What would you like to know?",
       role: 'assistant',
       timestamp: new Date()
     }
@@ -190,7 +190,7 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
         const filtered = prev.filter(m => m.id !== 'typing');
         return [...filtered, {
           id: Date.now().toString(),
-          content: "I apologize, but I'm having trouble connecting right now. Please try again or contact Abdul directly at abdulwahabawan82@gmail.com",
+          content: "I apologize, but I&apos;m having trouble connecting right now. Please try again or contact Abdul directly at abdulwahabawan82@gmail.com",
           role: 'assistant',
           timestamp: new Date()
         }];
@@ -212,7 +212,7 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
     "What AI frameworks does Abdul use?",
     "How can Abdul help with IoT projects?",
     "What is an agentic workflow?",
-    "Tell me about Abdul's experience"
+    "Tell me about Abdul&apos;s experience"
   ];
 
   const formatTime = (date: Date) => {
@@ -237,7 +237,7 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
             }`} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-theme-primary">Abdul Wahab's AI Assistant</h3>
+            <h3 className="text-sm font-semibold text-theme-primary">Abdul Wahab&apos;s AI Assistant</h3>
             <p className="text-xs text-theme-secondary">
               {isOnline ? '🟢 Online - Ready to help' : '🔴 Connection issues'}
             </p>
@@ -333,7 +333,7 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about AI agents, IoT solutions, or Abdul's expertise..."
+            placeholder="Ask about AI agents, IoT solutions, or Abdul&apos;s expertise..."
             className="flex-1 px-3 py-2 text-sm bg-[var(--background)] border border-[var(--card-border)]
                      rounded-lg text-theme-primary placeholder-theme-secondary
                      focus:border-[var(--accent-ai)] focus:outline-none transition-colors"
