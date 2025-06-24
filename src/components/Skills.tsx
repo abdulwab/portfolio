@@ -43,6 +43,8 @@ const skills: Skill[] = [
   { name: 'DeepSeek', icon: '🔬', category: 'ai', tags: ['Reasoning', 'Math', 'Code'], details: 'Advanced reasoning capabilities', projects: 6, proficiency: 78 },
   { name: 'Vector Databases', icon: '📊', category: 'ai', tags: ['Pinecone', 'Chroma', 'Qdrant', 'Weaviate'], details: 'Semantic search and retrieval', projects: 12, proficiency: 88 },
   { name: 'HuggingFace', icon: '🤗', category: 'ai', tags: ['Transformers', 'Datasets', 'Inference'], details: 'Open-source ML platform', projects: 10, proficiency: 85 },
+  { name: 'Ollama', icon: '🦙', category: 'ai', tags: ['Local Models', 'Self-hosted', 'Privacy'], details: 'Run LLMs locally', projects: 7, proficiency: 82 },
+  { name: 'LlamaIndex', icon: '🦙', category: 'ai', tags: ['Data Framework', 'RAG', 'Indexing'], details: 'Data framework for LLMs', projects: 9, proficiency: 85 },
 
   // Automation & Workflows
   { name: 'N8N', icon: '🔄', category: 'automation', tags: ['Workflows', 'Self-hosted', 'Integrations'], details: 'Node-based automation platform', projects: 18, proficiency: 92 },
@@ -50,6 +52,7 @@ const skills: Skill[] = [
   { name: 'Zapier', icon: '⚡', category: 'automation', tags: ['Triggers', 'Actions', 'Multi-step'], details: 'App integration automation', projects: 12, proficiency: 85 },
   { name: 'Agentic Workflows', icon: '🤖', category: 'automation', tags: ['Self-directed', 'Autonomous', 'Planning'], details: 'Autonomous decision-making patterns', projects: 8, proficiency: 90 },
   { name: 'GitHub Actions', icon: '⚙️', category: 'automation', tags: ['CI/CD', 'Workflows', 'Automation'], details: 'DevOps automation platform', projects: 25, proficiency: 90 },
+  { name: 'Webhook.site', icon: '🪝', category: 'automation', tags: ['Testing', 'Debugging', 'Integration'], details: 'Webhook testing and debugging', projects: 14, proficiency: 88 },
 
   // Web Development
   { name: 'Next.js', icon: '🌐', category: 'web', tags: ['React', 'SSR', 'App Router', 'RSC'], details: 'Full-stack React framework', projects: 22, proficiency: 95 },
@@ -58,6 +61,8 @@ const skills: Skill[] = [
   { name: 'Node.js', icon: '🟢', category: 'web', tags: ['Express', 'API', 'Microservices'], details: 'Server-side JavaScript', projects: 18, proficiency: 88 },
   { name: 'PostgreSQL', icon: '🐘', category: 'web', tags: ['JSONB', 'Vector Ext', 'Performance'], details: 'Advanced relational database', projects: 15, proficiency: 85 },
   { name: 'Redis', icon: '🔴', category: 'web', tags: ['Caching', 'Pub/Sub', 'Sessions'], details: 'In-memory data structure', projects: 12, proficiency: 82 },
+  { name: 'Tailwind CSS', icon: '🎨', category: 'web', tags: ['Utility-first', 'Responsive', 'Components'], details: 'Utility-first CSS framework', projects: 22, proficiency: 92 },
+  { name: 'Framer Motion', icon: '🎭', category: 'web', tags: ['Animations', 'Gestures', 'SVG'], details: 'Production-ready motion library', projects: 18, proficiency: 88 },
 
   // IoT Solutions  
   { name: 'ESP32', icon: '⚡', category: 'iot', tags: ['WiFi', 'Bluetooth', 'FreeRTOS'], details: 'IoT microcontroller platform', projects: 21, proficiency: 90 },
@@ -66,6 +71,8 @@ const skills: Skill[] = [
   { name: 'Raspberry Pi', icon: '🍓', category: 'iot', tags: ['Linux', 'GPIO', 'Edge AI'], details: 'Edge computing platform', projects: 14, proficiency: 86 },
   { name: 'Arduino', icon: '🔄', category: 'iot', tags: ['Prototyping', 'Sensors', 'Actuators'], details: 'Rapid prototyping platform', projects: 16, proficiency: 88 },
   { name: 'Zigbee', icon: '🐝', category: 'iot', tags: ['Mesh', 'Home Assistant', 'Low Power'], details: 'Smart home mesh network', projects: 12, proficiency: 82 },
+  { name: 'Home Assistant', icon: '🏠', category: 'iot', tags: ['Automation', 'Integration', 'Open Source'], details: 'Open source home automation', projects: 10, proficiency: 85 },
+  { name: 'ESPHome', icon: '🏡', category: 'iot', tags: ['ESP32', 'YAML', 'Sensors'], details: 'ESP device configuration platform', projects: 13, proficiency: 87 },
 
   // Cloud & Infrastructure
   { name: 'AWS', icon: '☁️', category: 'cloud', tags: ['Lambda', 'S3', 'EC2', 'Bedrock'], details: 'Cloud infrastructure platform', projects: 15, proficiency: 88 },
@@ -73,6 +80,7 @@ const skills: Skill[] = [
   { name: 'Docker', icon: '🐳', category: 'cloud', tags: ['Containers', 'Compose', 'Multi-stage'], details: 'Containerization platform', projects: 18, proficiency: 85 },
   { name: 'Kubernetes', icon: '⚓', category: 'cloud', tags: ['Orchestration', 'Scaling', 'Services'], details: 'Container orchestration', projects: 10, proficiency: 80 },
   { name: 'Terraform', icon: '🏗️', category: 'cloud', tags: ['IaC', 'Modules', 'State'], details: 'Infrastructure as code', projects: 9, proficiency: 82 },
+  { name: 'Firebase', icon: '🔥', category: 'cloud', tags: ['Realtime DB', 'Auth', 'Functions'], details: 'Google cloud platform', projects: 12, proficiency: 85 },
 ];
 
 export default function Skills() {
