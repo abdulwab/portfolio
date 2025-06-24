@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 interface NavItem {
   label: string;
   href: string;
-  icon: (props: any) => JSX.Element;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
 }
 
 const navItems: NavItem[] = [
@@ -146,8 +146,8 @@ export default function Navigation() {
             <Link
               key={item.href}
               href={item.href}
-                             className="flex flex-col items-center p-2 text-theme-secondary 
-                        hover:text-[var(--accent-ai)] transition-colors duration-300"
+              className="flex flex-col items-center p-2 text-theme-secondary 
+                       hover:text-[var(--accent-ai)] transition-colors duration-300"
             >
               <item.icon className="w-5 h-5 mb-1" />
               <span className="text-xs font-medium">{item.label}</span>

@@ -54,9 +54,9 @@ export default function Contact() {
 
     try {
       // EmailJS configuration - you'll need to set these up
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "RoCBaJkmPMpS6Vdpw";
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_portfolio";
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_contact";
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "OnWT0IXouvLV_qiQ4";
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_l1ktpna";
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_9sc8d2j";
 
       // Initialize EmailJS
       emailjs.init(publicKey);
@@ -76,7 +76,7 @@ export default function Contact() {
       if (response.status === 200) {
         setStatus({
           type: 'success',
-          message: 'Message sent successfully! I\'ll get back to you soon.'
+          message: 'Message sent successfully! I&apos;ll get back to you soon.'
         });
         
         // Reset form
@@ -145,7 +145,7 @@ export default function Contact() {
           </h2>
           <p className="text-theme-secondary text-xl max-w-3xl mx-auto leading-relaxed">
             Ready to transform your ideas into intelligent AI solutions? 
-            Let's discuss your next project and bring innovation to life.
+            Let&apos;s discuss your next project and bring innovation to life.
           </p>
         </motion.div>
 
@@ -285,7 +285,7 @@ export default function Contact() {
             viewport={{ once: true }}
           >
             <div className="bg-theme-card rounded-2xl border border-[var(--card-border)] p-8 shadow-xl">
-              <h3 className="text-2xl font-bold text-theme-primary mb-6">Let's Connect</h3>
+              <h3 className="text-2xl font-bold text-theme-primary mb-6">Let&apos;s Connect</h3>
               
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
@@ -318,7 +318,7 @@ export default function Contact() {
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[var(--accent-web)] to-[var(--accent-mobile)]
                                 flex items-center justify-center">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c4.97 0 9-4.03 9-9s-4.03-9-9-9m0 18c-4.97 0-9-4.03-9-9s4.03-9 9-9m0 18V3" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9m0 9c4.97 0 9-4.03-9-9s4.03-9-9-9m0 18c-4.97 0-9-4.03-9-9s4.03-9 9-9m0 18V3" />
                     </svg>
                   </div>
                   <div>

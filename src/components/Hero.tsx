@@ -2,19 +2,10 @@
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import Image from 'next/image';
-import ChatDemo from '@/components/ChatDemo';
-import { useState } from 'react';
+import ChatDemo from './ChatDemo';
 
 // Hero Component
 export default function Hero() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText('npm create @abdulwahab/ai-agent');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <section className="section-spacing bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background)]">
       <div className="container-center">
@@ -36,10 +27,13 @@ export default function Hero() {
               <div className="relative w-32 h-32 rounded-full p-1 bg-gradient-to-r 
                             from-[var(--accent-ai)] via-[var(--accent-iot)] to-[var(--accent-web)]">
                 <div className="w-full h-full bg-[var(--background)] rounded-full p-1">
-                  <img
+                  <Image
                     src="/images/profile.jpeg"
                     alt="Abdul Wahab"
+                    width={128}
+                    height={128}
                     className="w-full h-full rounded-full object-cover shadow-2xl"
+                    priority
                   />
                 </div>
               </div>
@@ -92,7 +86,7 @@ export default function Hero() {
             >
               {[
                 { href: 'https://linkedin.com/in/abdul-wahab', label: 'LinkedIn', icon: '💼', color: 'from-[#0077B5] to-[#0077B5]' },
-                { href: 'mailto:hello@abdulwahab.dev', label: 'Email', icon: '📧', color: 'from-[#EA4335] to-[#FBBC04]' },
+                { href: 'mailto:abdulwahabawan82@gmail.com', label: 'Email', icon: '📧', color: 'from-[#EA4335] to-[#FBBC04]' },
                 { href: 'https://github.com/abdul-wahab-dev', label: 'GitHub', icon: '🐙', color: 'from-[#333] to-[#666]' },
               ].map((link) => (
                 <a
