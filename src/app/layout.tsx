@@ -15,9 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <ClientLayout geistSans={inter} geistMono={inter}>
-        {children}
-      </ClientLayout>
+      <body className={`${inter.variable} antialiased`}>
+        <ClientLayout>
+          {children}
+        </ClientLayout>
+      </body>
     </html>
   );
 }
