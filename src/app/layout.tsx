@@ -9,7 +9,7 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const siteUrl = 'https://abdulwahab.dev';
+const siteUrl = 'https://abdulwahab.live';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

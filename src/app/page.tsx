@@ -35,37 +35,37 @@ export default function Home() {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://abdulwahab.dev"
+        "item": "https://abdulwahab.live"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "AI Agents",
-        "item": "https://abdulwahab.dev#ai-agents"
+        "item": "https://abdulwahab.live#ai-agents"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": "Skills",
-        "item": "https://abdulwahab.dev#skills"
+        "item": "https://abdulwahab.live#skills"
       },
       {
         "@type": "ListItem",
         "position": 4,
         "name": "IoT Solutions",
-        "item": "https://abdulwahab.dev#iot"
+        "item": "https://abdulwahab.live#iot"
       },
       {
         "@type": "ListItem",
         "position": 5,
         "name": "Projects",
-        "item": "https://abdulwahab.dev#projects"
+        "item": "https://abdulwahab.live#projects"
       },
       {
         "@type": "ListItem",
         "position": 6,
         "name": "Contact",
-        "item": "https://abdulwahab.dev#contact"
+        "item": "https://abdulwahab.live#contact"
       }
     ]
   };

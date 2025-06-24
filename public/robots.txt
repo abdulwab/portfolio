@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://abdulwahab.dev/sitemap.xml
+Sitemap: https://abdulwahab.live/sitemap.xml
 
 # Block access to admin or private areas (if any)
 Disallow: /api/
