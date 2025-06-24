@@ -10,7 +10,9 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'standalone',
-  telemetry: false,
+  experimental: {
+    serverComponentsExternalPackages: ['langchain']
+  }
 };
 
 module.exports = nextConfig;

@@ -39,7 +39,7 @@ const skills: Skill[] = [
   { name: 'CrewAI', icon: '🤝', category: 'ai', tags: ['Multi-Agent', 'Collaboration', 'Roles'], details: 'Collaborative AI agent framework', projects: 10, proficiency: 88 },
   { name: 'OpenAI GPT-4', icon: '🧠', category: 'ai', tags: ['API', 'Function Calling', 'Vision', 'o1'], details: 'Advanced reasoning models', projects: 20, proficiency: 92 },
   { name: 'Anthropic Claude', icon: '🔮', category: 'ai', tags: ['Constitutional AI', 'Sonnet', 'Haiku'], details: 'Safe and helpful AI assistant', projects: 14, proficiency: 90 },
-  { name: 'Google Gemini', icon: '💎', category: 'ai', tags: ['Multimodal', 'Code', 'Pro'], details: 'Google's advanced AI model', projects: 8, proficiency: 82 },
+  { name: 'Google Gemini', icon: '💎', category: 'ai', tags: ['Multimodal', 'Code', 'Pro'], details: 'Google advanced AI model', projects: 8, proficiency: 82 },
   { name: 'DeepSeek', icon: '🔬', category: 'ai', tags: ['Reasoning', 'Math', 'Code'], details: 'Advanced reasoning capabilities', projects: 6, proficiency: 78 },
   { name: 'Vector Databases', icon: '📊', category: 'ai', tags: ['Pinecone', 'Chroma', 'Qdrant', 'Weaviate'], details: 'Semantic search and retrieval', projects: 12, proficiency: 88 },
   { name: 'HuggingFace', icon: '🤗', category: 'ai', tags: ['Transformers', 'Datasets', 'Inference'], details: 'Open-source ML platform', projects: 10, proficiency: 85 },
