@@ -10,48 +10,7 @@ type Message = {
   typing?: boolean;
 };
 
-const particlesConfig = {
-  particles: {
-    number: { value: 80, density: { enable: true, value_area: 800 } },
-    color: { value: '#58A6FF' },
-    shape: { type: 'circle' },
-    opacity: { 
-      value: 0.3,
-      random: true,
-      anim: { enable: true, speed: 1, opacity_min: 0.1 }
-    },
-    size: { 
-      value: 2,
-      random: true,
-      anim: { enable: true, speed: 2, size_min: 0.1 }
-    },
-    line_linked: {
-      enable: true,
-      distance: 150,
-      color: '#58A6FF',
-      opacity: 0.2,
-      width: 1
-    },
-    move: {
-      enable: true,
-      speed: 1,
-      direction: "none" as const,
-      out_mode: "out" as const,
-      attract: { enable: true, rotateX: 600, rotateY: 1200 }
-    },
-  },
-  interactivity: {
-    detect_on: "canvas" as const,
-    events: {
-      onhover: { enable: true, mode: "repulse" as const },
-      resize: true
-    },
-    modes: {
-      repulse: { distance: 100, duration: 0.4 }
-    }
-  },
-  retina_detect: true
-} as const;
+// Removed unused particlesConfig since we're no longer using particles
 
 const aiResponses = {
   greetings: {
@@ -282,7 +241,7 @@ export default function ChatDemo() {
       {/* Quick Actions */}
       <div className="px-4 py-2 border-t border-[#30363D]/50">
         <div className="flex gap-2 overflow-x-auto scrollbar-none">
-          {quickActions.map((action, index) => (
+          {quickActions.map((action, _index) => (
             <motion.button
               key={action.text}
               onClick={() => handleQuickAction(action.text)}

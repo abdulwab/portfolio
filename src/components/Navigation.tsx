@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 type NavItem = {
@@ -69,7 +69,7 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navigation() {
-  const pathname = usePathname();
+  // const pathname = usePathname(); // Currently unused, but available for future route highlighting
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
@@ -127,7 +127,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
             >
               <span>🤖</span>
-              <span>Let's Build AI</span>
+              <span>Let&apos;s Build AI</span>
             </motion.a>
           </div>
         </nav>
