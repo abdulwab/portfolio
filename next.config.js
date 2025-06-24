@@ -10,6 +10,7 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'standalone',
+  telemetry: false,
 };
 
 module.exports = nextConfig;

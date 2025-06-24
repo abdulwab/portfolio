@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CodeBracketIcon, CpuChipIcon, BeakerIcon, CloudIcon, CommandLineIcon } from '@heroicons/react/24/outline';
 
-type Category = 'web' | 'ai' | 'iot' | 'cloud' | 'tools';
+type Category = 'ai' | 'web' | 'iot' | 'cloud' | 'automation';
 
 interface Skill {
   name: string;
@@ -13,6 +13,7 @@ interface Skill {
   tags: string[];
   details: string;
   projects: number;
+  proficiency: number;
 }
 
 interface CategoryType {
@@ -23,208 +24,268 @@ interface CategoryType {
 }
 
 const categories: CategoryType[] = [
+  { id: 'ai', label: 'AI & Agents', icon: BeakerIcon, color: '#10B981' },
   { id: 'web', label: 'Web Stack', icon: CodeBracketIcon, color: '#58A6FF' },
-  { id: 'ai', label: 'AI & ML', icon: BeakerIcon, color: '#10B981' },
-  { id: 'iot', label: 'IoT', icon: CpuChipIcon, color: '#3B82F6' },
-  { id: 'cloud', label: 'Cloud', icon: CloudIcon, color: '#F59E0B' },
-  { id: 'tools', label: 'DevOps', icon: CommandLineIcon, color: '#8B5CF6' },
+  { id: 'iot', label: 'IoT Solutions', icon: CpuChipIcon, color: '#3B82F6' },
+  { id: 'cloud', label: 'Cloud & Infrastructure', icon: CloudIcon, color: '#F59E0B' },
+  { id: 'automation', label: 'Automation & Workflows', icon: CommandLineIcon, color: '#8B5CF6' },
 ];
 
 const skills: Skill[] = [
-  // Web Development (10 skills)
-  { name: 'Next.js', icon: '🌐', category: 'web', tags: ['SSR', 'API Routes', 'ISR'], details: 'Enterprise-scale applications', projects: 22 },
-  { name: 'React', icon: '⚛️', category: 'web', tags: ['Hooks', 'Context', 'Suspense'], details: '20+ production apps', projects: 28 },
-  { name: 'Node.js', icon: '🟢', category: 'web', tags: ['Express', 'GraphQL', 'WebSocket'], details: 'High-performance APIs', projects: 18 },
-  { name: 'TypeScript', icon: '📘', category: 'web', tags: ['Type Safety', 'Generics', 'Decorators'], details: 'Type-first development', projects: 25 },
-  { name: 'Firebase', icon: '🔥', category: 'web', tags: ['Auth', 'Firestore', 'Functions'], details: 'Realtime systems', projects: 14 },
-  { name: 'PostgreSQL', icon: '🐘', category: 'web', tags: ['JSONB', 'Indexing', 'Partitioning'], details: 'Database architecture', projects: 15 },
-  { name: 'Redis', icon: '🔴', category: 'web', tags: ['Caching', 'Pub/Sub', 'Streams'], details: 'Real-time systems', projects: 12 },
-  { name: 'Docker', icon: '🐳', category: 'web', tags: ['Containers', 'Swarm', 'Compose'], details: 'CI/CD pipelines', projects: 17 },
-  { name: 'AWS', icon: '☁️', category: 'web', tags: ['Lambda', 'S3', 'EC2'], details: 'Cloud infrastructure', projects: 14 },
-  { name: 'Jest', icon: '🃏', category: 'web', tags: ['Unit Testing', 'Mocks', 'Coverage'], details: 'Test-driven development', projects: 19 },
+  // AI & Agents (Priority Section)
+  { name: 'LangChain', icon: '⛓️', category: 'ai', tags: ['RAG', 'Agents', 'Tools', 'LCEL'], details: 'Advanced LLM application framework', projects: 15, proficiency: 95 },
+  { name: 'LangGraph', icon: '🕸️', category: 'ai', tags: ['State Management', 'Workflows', 'Multi-Agent'], details: 'Graph-based agent orchestration', projects: 12, proficiency: 90 },
+  { name: 'LangSmith', icon: '🔍', category: 'ai', tags: ['Observability', 'Debugging', 'Monitoring'], details: 'LLM application monitoring', projects: 8, proficiency: 85 },
+  { name: 'CrewAI', icon: '🤝', category: 'ai', tags: ['Multi-Agent', 'Collaboration', 'Roles'], details: 'Collaborative AI agent framework', projects: 10, proficiency: 88 },
+  { name: 'OpenAI GPT-4', icon: '🧠', category: 'ai', tags: ['API', 'Function Calling', 'Vision', 'o1'], details: 'Advanced reasoning models', projects: 20, proficiency: 92 },
+  { name: 'Anthropic Claude', icon: '🔮', category: 'ai', tags: ['Constitutional AI', 'Sonnet', 'Haiku'], details: 'Safe and helpful AI assistant', projects: 14, proficiency: 90 },
+  { name: 'Google Gemini', icon: '💎', category: 'ai', tags: ['Multimodal', 'Code', 'Pro'], details: 'Google's advanced AI model', projects: 8, proficiency: 82 },
+  { name: 'DeepSeek', icon: '🔬', category: 'ai', tags: ['Reasoning', 'Math', 'Code'], details: 'Advanced reasoning capabilities', projects: 6, proficiency: 78 },
+  { name: 'Vector Databases', icon: '📊', category: 'ai', tags: ['Pinecone', 'Chroma', 'Qdrant', 'Weaviate'], details: 'Semantic search and retrieval', projects: 12, proficiency: 88 },
+  { name: 'HuggingFace', icon: '🤗', category: 'ai', tags: ['Transformers', 'Datasets', 'Inference'], details: 'Open-source ML platform', projects: 10, proficiency: 85 },
 
-  // AI & Agents (10 skills)
-  { name: 'GPT-4', icon: '🧠', category: 'ai', tags: ['Fine-tuning', 'Function Calling', 'Vision'], details: 'Multimodal solutions', projects: 9 },
-  { name: 'LangChain', icon: '⛓️', category: 'ai', tags: ['RAG', 'Agents', 'Tools'], details: 'AI workflows', projects: 11 },
-  { name: 'LlamaIndex', icon: '🦙', category: 'ai', tags: ['Data Loaders', 'Query Engine', 'Chat'], details: 'Data augmentation', projects: 7 },
-  { name: 'HuggingFace', icon: '🤗', category: 'ai', tags: ['Transformers', 'Pipelines', 'Inference'], details: 'Model deployment', projects: 8 },
-  { name: 'Vector DBs', icon: '📊', category: 'ai', tags: ['Pinecone', 'Chroma', 'Qdrant'], details: 'Semantic search', projects: 6 },
-  { name: 'OpenAI', icon: '🔓', category: 'ai', tags: ['API', 'Embeddings', 'Moderation'], details: 'Enterprise integrations', projects: 12 },
-  { name: 'LangSmith', icon: '🔍', category: 'ai', tags: ['Tracing', 'Monitoring', 'Testing'], details: 'LLM observability', projects: 5 },
-  { name: 'AutoGPT', icon: '🤖', category: 'ai', tags: ['Agents', 'Memory', 'Planning'], details: 'Autonomous systems', projects: 4 },
-  { name: 'TensorFlow', icon: '📈', category: 'ai', tags: ['Keras', 'Layers', 'Models'], details: 'Neural networks', projects: 6 },
-  { name: 'PyTorch', icon: '🔥', category: 'ai', tags: ['Tensors', 'Autograd', 'NN'], details: 'Deep learning', projects: 5 },
+  // Automation & Workflows
+  { name: 'N8N', icon: '🔄', category: 'automation', tags: ['Workflows', 'Self-hosted', 'Integrations'], details: 'Node-based automation platform', projects: 18, proficiency: 92 },
+  { name: 'Make.com', icon: '🔧', category: 'automation', tags: ['Visual', 'Integrations', 'SaaS'], details: 'Visual automation platform', projects: 15, proficiency: 88 },
+  { name: 'Zapier', icon: '⚡', category: 'automation', tags: ['Triggers', 'Actions', 'Multi-step'], details: 'App integration automation', projects: 12, proficiency: 85 },
+  { name: 'Agentic Workflows', icon: '🤖', category: 'automation', tags: ['Self-directed', 'Autonomous', 'Planning'], details: 'Autonomous decision-making patterns', projects: 8, proficiency: 90 },
+  { name: 'GitHub Actions', icon: '⚙️', category: 'automation', tags: ['CI/CD', 'Workflows', 'Automation'], details: 'DevOps automation platform', projects: 25, proficiency: 90 },
 
-  // IoT (10 skills)
-  { name: 'ESP32', icon: '⚡', category: 'iot', tags: ['BLE', 'WiFi', 'FreeRTOS'], details: '15+ deployments', projects: 21 },
-  { name: 'LoRaWAN', icon: '📡', category: 'iot', tags: ['Long Range', 'Mesh', 'LPWAN'], details: 'Industrial IoT', projects: 8 },
-  { name: 'Zigbee', icon: '🐝', category: 'iot', tags: ['Mesh', 'Low Power', 'HA'], details: 'Smart home systems', projects: 12 },
-  { name: 'MQTT', icon: '🔌', category: 'iot', tags: ['Pub/Sub', 'Broker', 'QoS'], details: 'Message streaming', projects: 17 },
-  { name: 'Raspberry Pi', icon: '🍓', category: 'iot', tags: ['Python', 'GPIO', 'Linux'], details: 'Edge computing', projects: 14 },
-  { name: 'Arduino', icon: '🔄', category: 'iot', tags: ['Sensors', 'Actuators', 'Shields'], details: 'Rapid prototyping', projects: 16 },
-  { name: 'RTOS', icon: '⏱️', category: 'iot', tags: ['FreeRTOS', 'Zephyr', 'ThreadX'], details: 'Real-time systems', projects: 9 },
-  { name: 'OPC UA', icon: '🏭', category: 'iot', tags: ['IIoT', 'Security', 'PubSub'], details: 'Industrial automation', projects: 7 },
-  { name: 'Modbus', icon: '🔧', category: 'iot', tags: ['TCP', 'RTU', 'ASCII'], details: 'Industrial protocol', projects: 6 },
-  { name: 'CoAP', icon: '🌐', category: 'iot', tags: ['RESTful', 'DTLS', 'Observe'], details: 'Constrained devices', projects: 5 },
+  // Web Development
+  { name: 'Next.js', icon: '🌐', category: 'web', tags: ['React', 'SSR', 'App Router', 'RSC'], details: 'Full-stack React framework', projects: 22, proficiency: 95 },
+  { name: 'React', icon: '⚛️', category: 'web', tags: ['Hooks', 'Context', 'Suspense', 'Server Components'], details: 'Modern UI development', projects: 28, proficiency: 92 },
+  { name: 'TypeScript', icon: '📘', category: 'web', tags: ['Type Safety', 'Generics', 'Strict Mode'], details: 'Type-safe development', projects: 25, proficiency: 90 },
+  { name: 'Node.js', icon: '🟢', category: 'web', tags: ['Express', 'API', 'Microservices'], details: 'Server-side JavaScript', projects: 18, proficiency: 88 },
+  { name: 'PostgreSQL', icon: '🐘', category: 'web', tags: ['JSONB', 'Vector Ext', 'Performance'], details: 'Advanced relational database', projects: 15, proficiency: 85 },
+  { name: 'Redis', icon: '🔴', category: 'web', tags: ['Caching', 'Pub/Sub', 'Sessions'], details: 'In-memory data structure', projects: 12, proficiency: 82 },
 
-  // Cloud Skills (10 skills)
-  { name: 'AWS', icon: '☁️', category: 'cloud', tags: ['EC2', 'Lambda', 'S3'], details: 'Cloud architecture', projects: 15 },
-  { name: 'Azure', icon: '🌩️', category: 'cloud', tags: ['Functions', 'Cosmos DB', 'AKS'], details: 'Enterprise cloud', projects: 12 },
-  { name: 'GCP', icon: '🌐', category: 'cloud', tags: ['Compute', 'BigQuery', 'GKE'], details: 'Cloud platform', projects: 8 },
-  { name: 'Kubernetes', icon: '⚓', category: 'cloud', tags: ['Containers', 'Pods', 'Services'], details: 'Container orchestration', projects: 10 },
-  { name: 'Terraform', icon: '🏗️', category: 'cloud', tags: ['IaC', 'Modules', 'State'], details: 'Infrastructure as code', projects: 9 },
-  { name: 'CloudFlare', icon: '🛡️', category: 'cloud', tags: ['CDN', 'Workers', 'DNS'], details: 'Edge computing', projects: 11 },
-  { name: 'Vercel', icon: '▲', category: 'cloud', tags: ['Deployment', 'Edge', 'Analytics'], details: 'Frontend deployment', projects: 14 },
-  { name: 'Netlify', icon: '🌐', category: 'cloud', tags: ['JAMstack', 'Functions', 'Forms'], details: 'Static hosting', projects: 13 },
-  { name: 'Heroku', icon: '💜', category: 'cloud', tags: ['PaaS', 'Dynos', 'Add-ons'], details: 'App platform', projects: 16 },
-  { name: 'DigitalOcean', icon: '🌊', category: 'cloud', tags: ['Droplets', 'Spaces', 'Apps'], details: 'Cloud infrastructure', projects: 7 },
+  // IoT Solutions  
+  { name: 'ESP32', icon: '⚡', category: 'iot', tags: ['WiFi', 'Bluetooth', 'FreeRTOS'], details: 'IoT microcontroller platform', projects: 21, proficiency: 90 },
+  { name: 'LoRaWAN', icon: '📡', category: 'iot', tags: ['Long Range', 'LPWAN', 'TTN'], details: 'Long-range IoT communication', projects: 8, proficiency: 85 },
+  { name: 'MQTT', icon: '🔌', category: 'iot', tags: ['Pub/Sub', 'QoS', 'Broker'], details: 'IoT messaging protocol', projects: 17, proficiency: 88 },
+  { name: 'Raspberry Pi', icon: '🍓', category: 'iot', tags: ['Linux', 'GPIO', 'Edge AI'], details: 'Edge computing platform', projects: 14, proficiency: 86 },
+  { name: 'Arduino', icon: '🔄', category: 'iot', tags: ['Prototyping', 'Sensors', 'Actuators'], details: 'Rapid prototyping platform', projects: 16, proficiency: 88 },
+  { name: 'Zigbee', icon: '🐝', category: 'iot', tags: ['Mesh', 'Home Assistant', 'Low Power'], details: 'Smart home mesh network', projects: 12, proficiency: 82 },
 
-  // Tools & DevOps (10 skills)
-  { name: 'Git', icon: '📝', category: 'tools', tags: ['Version Control', 'Branching', 'CI/CD'], details: 'Source control', projects: 30 },
-  { name: 'Docker', icon: '🐳', category: 'tools', tags: ['Containers', 'Compose', 'Swarm'], details: 'Containerization', projects: 18 },
-  { name: 'Jenkins', icon: '🤖', category: 'tools', tags: ['CI/CD', 'Pipelines', 'Automation'], details: 'Build automation', projects: 12 },
-  { name: 'GitHub Actions', icon: '⚡', category: 'tools', tags: ['Workflows', 'CI/CD', 'Automation'], details: 'CI/CD pipelines', projects: 15 },
-  { name: 'Ansible', icon: '🎮', category: 'tools', tags: ['Automation', 'Playbooks', 'IaC'], details: 'Configuration management', projects: 8 },
-  { name: 'Prometheus', icon: '📊', category: 'tools', tags: ['Monitoring', 'Metrics', 'Alerts'], details: 'System monitoring', projects: 7 },
-  { name: 'Grafana', icon: '📈', category: 'tools', tags: ['Dashboards', 'Visualization', 'Alerts'], details: 'Data visualization', projects: 9 },
-  { name: 'VS Code', icon: '💻', category: 'tools', tags: ['IDE', 'Extensions', 'Debugging'], details: 'Development environment', projects: 25 },
-  { name: 'Postman', icon: '✉️', category: 'tools', tags: ['API Testing', 'Collections', 'Automation'], details: 'API development', projects: 20 },
-  { name: 'Linux', icon: '🐧', category: 'tools', tags: ['Shell', 'Services', 'Security'], details: 'System administration', projects: 22 },
+  // Cloud & Infrastructure
+  { name: 'AWS', icon: '☁️', category: 'cloud', tags: ['Lambda', 'S3', 'EC2', 'Bedrock'], details: 'Cloud infrastructure platform', projects: 15, proficiency: 88 },
+  { name: 'Vercel', icon: '▲', category: 'cloud', tags: ['Edge', 'Serverless', 'AI SDK'], details: 'Frontend deployment platform', projects: 20, proficiency: 90 },
+  { name: 'Docker', icon: '🐳', category: 'cloud', tags: ['Containers', 'Compose', 'Multi-stage'], details: 'Containerization platform', projects: 18, proficiency: 85 },
+  { name: 'Kubernetes', icon: '⚓', category: 'cloud', tags: ['Orchestration', 'Scaling', 'Services'], details: 'Container orchestration', projects: 10, proficiency: 80 },
+  { name: 'Terraform', icon: '🏗️', category: 'cloud', tags: ['IaC', 'Modules', 'State'], details: 'Infrastructure as code', projects: 9, proficiency: 82 },
 ];
 
 export default function Skills() {
-  const [activeTab, setActiveTab] = useState<Category>('web');
+  const [activeTab, setActiveTab] = useState<Category>('ai');
   const [flippedSkill, setFlippedSkill] = useState<string | null>(null);
 
-  // Move the filtering to a useMemo hook to prevent unnecessary recalculations
   const filteredSkills = useMemo(() => {
     return skills.filter(skill => skill.category === activeTab);
-  }, [activeTab]); // Only recalculate when activeTab changes
-
-  // Simplify the handleTabChange function
-  const handleTabChange = useCallback((newCategory: Category) => {
-    console.log('Previous tab:', activeTab);
-    console.log('Clicked tab:', newCategory);
-    setActiveTab(newCategory);
-    setFlippedSkill(null);
   }, [activeTab]);
 
+  const handleTabChange = useCallback((newCategory: Category) => {
+    setActiveTab(newCategory);
+    setFlippedSkill(null);
+  }, []);
+
+  const handleSkillClick = useCallback((skillName: string) => {
+    setFlippedSkill(prev => prev === skillName ? null : skillName);
+  }, []);
+
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#0D1117]" id="skills">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#0D1117] via-[#0D1117] to-[#161B22]" id="skills">
       <div className="max-w-7xl mx-auto">
-        <motion.h2
-          className="text-3xl font-bold mb-8 text-[#E5E7EB] text-center"
+        <motion.div
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          Technical Expertise
-        </motion.h2>
+          <h2 className="text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-[#58A6FF] via-[#10B981] to-[#F59E0B] bg-clip-text text-transparent">
+              Technical Expertise
+            </span>
+          </h2>
+          <p className="text-[#8B949E] text-xl max-w-3xl mx-auto leading-relaxed">
+            Comprehensive technology stack spanning AI agents, modern web development, 
+            IoT solutions, and cloud infrastructure.
+          </p>
+        </motion.div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 mb-6 justify-center">
+        <div className="flex flex-wrap gap-3 mb-12 justify-center">
           {categories.map((category) => (
-            <button
+            <motion.button
               key={category.id}
               type="button"
               onClick={() => handleTabChange(category.id as Category)}
               className={`
-                flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
-                transition-all duration-200 ease-in-out border-2
+                flex items-center gap-3 px-6 py-3 rounded-xl text-sm font-medium
+                transition-all duration-300 border-2 backdrop-blur-sm
                 ${activeTab === category.id 
-                  ? 'bg-[#161B22]' 
-                  : 'text-[#8B949E] hover:bg-[#161B22]/50 border-transparent'
+                  ? 'bg-[#161B22] shadow-lg transform scale-105' 
+                  : 'text-[#8B949E] hover:bg-[#161B22]/50 border-transparent hover:scale-102'
                 }
-                cursor-pointer
               `}
               style={{
-                boxShadow: activeTab === category.id ? `0 0 10px ${category.color}40` : 'none',
+                boxShadow: activeTab === category.id ? `0 8px 32px ${category.color}40` : 'none',
                 borderColor: activeTab === category.id ? category.color : 'transparent',
                 color: activeTab === category.id ? category.color : '#8B949E'
               }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
               <category.icon 
                 className="w-5 h-5"
                 style={{ color: activeTab === category.id ? category.color : '#8B949E' }} 
               />
               {category.label}
-            </button>
+            </motion.button>
           ))}
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <AnimatePresence mode="sync">
-            {filteredSkills.map((skill) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <AnimatePresence mode="wait">
+            {filteredSkills.map((skill, index) => (
               <motion.div
                 key={`${activeTab}-${skill.name}`}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.2 }}
-                className="relative h-40 perspective-1000 transform-style-3d"
-                onClick={() => setFlippedSkill(
-                  skill.name === flippedSkill ? null : skill.name
-                )}
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="relative h-48 cursor-pointer group"
+                onClick={() => handleSkillClick(skill.name)}
               >
                 {/* Front Side */}
-                <div
+                <motion.div
                   className={`
-                    absolute w-full h-full rounded-xl bg-[#161B22] p-4
-                    border-2 transition-all duration-500 backface-hidden
+                    absolute w-full h-full rounded-2xl bg-gradient-to-br from-[#161B22] to-[#0D1117] p-6
+                    border-2 transition-all duration-500 backdrop-blur-sm
                     ${flippedSkill === skill.name 
-                      ? 'opacity-0 rotate-y-180' 
+                      ? 'opacity-0 rotate-y-180 pointer-events-none' 
                       : 'opacity-100 rotate-y-0'
                     }
-                    border-[#30363D]
-                    hover:border-[#58A6FF] hover:shadow-lg
-                    cursor-pointer
+                    border-[#30363D] group-hover:border-[#58A6FF] 
+                    group-hover:shadow-2xl group-hover:shadow-[#58A6FF]/20
+                    group-hover:scale-105 group-hover:-translate-y-2
                   `}
+                  whileHover={{ rotateX: 5, rotateY: 5 }}
                 >
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl">{skill.icon}</span>
-                    <h3 className="text-lg font-medium text-[#E5E7EB]">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl filter drop-shadow-lg">{skill.icon}</span>
+                    <h3 className="text-lg font-semibold text-[#E5E7EB] leading-tight">
                       {skill.name}
                     </h3>
                   </div>
-                  <div className="flex flex-wrap gap-1">
-                    {skill.tags.map((tag) => (
+                  
+                  {/* Proficiency Bar */}
+                  <div className="mb-4">
+                    <div className="flex justify-between text-xs text-[#8B949E] mb-1">
+                      <span>Proficiency</span>
+                      <span>{skill.proficiency}%</span>
+                    </div>
+                    <div className="w-full bg-[#30363D] rounded-full h-2 overflow-hidden">
+                      <motion.div
+                        className="h-full bg-gradient-to-r from-[#58A6FF] to-[#10B981] rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${skill.proficiency}%` }}
+                        transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {skill.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 text-xs rounded-md 
-                                 bg-[#0D1117] text-[#58A6FF]
-                                 border border-[#30363D]"
+                        className="px-2 py-1 text-xs rounded-md bg-[#0D1117] text-[#58A6FF]
+                                 border border-[#30363D] backdrop-blur-sm"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-                </div>
+
+                  <div className="text-xs text-[#8B949E] flex items-center gap-2">
+                    <span>💼 {skill.projects} projects</span>
+                  </div>
+                </motion.div>
 
                 {/* Back Side */}
-                <div
+                <motion.div
                   className={`
-                    absolute w-full h-full rounded-xl bg-[#161B22] p-4
-                    border-2 border-[#58A6FF] transition-all duration-500
-                    flex flex-col justify-center items-center backface-hidden
+                    absolute w-full h-full rounded-2xl bg-gradient-to-br from-[#161B22] to-[#0D1117] p-6
+                    border-2 border-[#58A6FF] transition-all duration-500 backdrop-blur-sm
                     ${flippedSkill === skill.name 
                       ? 'opacity-100 rotate-y-0' 
-                      : 'opacity-0 rotate-y-180'
+                      : 'opacity-0 rotate-y-180 pointer-events-none'
                     }
+                    shadow-2xl shadow-[#58A6FF]/30
                   `}
                 >
-                  <p className="text-sm text-[#E5E7EB] text-center mb-2">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-2xl">{skill.icon}</span>
+                    <h3 className="text-lg font-semibold text-[#E5E7EB]">
+                      {skill.name}
+                    </h3>
+                  </div>
+                  
+                  <p className="text-[#8B949E] text-sm leading-relaxed mb-4">
                     {skill.details}
                   </p>
-                  <div className="text-[#58A6FF] text-xs mb-2">
-                    {skill.projects}+ projects
+                  
+                  <div className="space-y-2">
+                    <div className="text-xs text-[#58A6FF] font-medium">Technologies:</div>
+                    <div className="flex flex-wrap gap-1">
+                      {skill.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 text-xs rounded-md bg-[#58A6FF]/20 text-[#58A6FF]
+                                   border border-[#58A6FF]/30"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
+
+        {/* Summary Stats */}
+        <motion.div
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          {[
+            { label: 'AI Technologies', value: '10+', color: '#10B981' },
+            { label: 'Total Projects', value: '50+', color: '#58A6FF' },
+            { label: 'Years Experience', value: '5+', color: '#F59E0B' },
+            { label: 'Automation Tools', value: '8+', color: '#8B5CF6' },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              className="text-center p-6 rounded-2xl bg-[#161B22] border border-[#30363D]
+                       hover:border-[#58A6FF] transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+            >
+              <div className="text-3xl font-bold mb-2" style={{ color: stat.color }}>
+                {stat.value}
+              </div>
+              <div className="text-[#8B949E] text-sm">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
