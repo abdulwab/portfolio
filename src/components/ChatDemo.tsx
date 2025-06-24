@@ -2,16 +2,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface Message {
-  id: string;
-  content: string;
-  role: 'user' | 'assistant' | 'system';
-  timestamp: Date;
-  typing?: boolean;
-}
-
 interface ChatDemoProps {
   className?: string;
+}
+
+interface Message {
+  id: string;
+  text: string;
+  isUser: boolean;
+  timestamp: Date;
+  typing?: boolean;
 }
 
 const ABDUL_CONTEXT = `You are Abdul Wahab's Personal AI Assistant, representing Abdul Wahab - an expert AI Agent Developer and IoT Solutions Engineer from Lahore, Pakistan.
@@ -158,12 +158,12 @@ AGENT PROTOCOL EXPERTISE:
 
 Remember: You represent Abdul Wahab professionally. Be helpful, knowledgeable, and always aim to connect the visitor&apos;s needs with Abdul&apos;s expertise. Every conversation is an opportunity to showcase Abdul&apos;s cutting-edge knowledge in agent technologies and potentially generate new project opportunities.`;
 
-export default function ChatDemo({ className = "" }: ChatDemoProps) {
+export default function ChatDemo({ className = '' }: ChatDemoProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "👋 Hello! I&apos;m Abdul Wahab&apos;s AI Assistant. I can help you learn about AI agent development, IoT solutions, and how Abdul can assist with your projects. What would you like to know?",
-      role: 'assistant',
+      text: "👋 Hello! I&apos;m Abdul Wahab&apos;s AI Assistant. I can help you learn about AI agent development, IoT solutions, and how Abdul can assist with your projects. What would you like to know?",
+      isUser: false,
       timestamp: new Date()
     }
   ]);
@@ -190,8 +190,8 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: input.trim(),
-      role: 'user',
+      text: input.trim(),
+      isUser: true,
       timestamp: new Date()
     };
 
@@ -202,8 +202,8 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
     // Add typing indicator
     const typingMessage: Message = {
       id: 'typing',
-      content: '',
-      role: 'assistant',
+      text: '',
+      isUser: false,
       timestamp: new Date(),
       typing: true
     };
@@ -219,8 +219,8 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
           messages: [
             { role: 'system', content: ABDUL_CONTEXT },
             ...messages.filter(m => !m.typing).map(m => ({ 
-              role: m.role, 
-              content: m.content 
+              role: m.isUser ? 'user' : 'assistant', 
+              content: m.text 
             })),
             { role: 'user', content: input.trim() }
           ]
@@ -238,8 +238,8 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
         const filtered = prev.filter(m => m.id !== 'typing');
         return [...filtered, {
           id: Date.now().toString(),
-          content: data.message,
-          role: 'assistant',
+          text: data.message,
+          isUser: false,
           timestamp: new Date()
         }];
       });
@@ -250,8 +250,8 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
         const filtered = prev.filter(m => m.id !== 'typing');
         return [...filtered, {
           id: Date.now().toString(),
-          content: "I apologize, but I&apos;m having trouble connecting right now. Please try again or contact Abdul directly at abdulwahabawan82@gmail.com",
-          role: 'assistant',
+          text: "I apologize, but I&apos;m having trouble connecting right now. Please try again or contact Abdul directly at abdulwahabawan82@gmail.com",
+          isUser: false,
           timestamp: new Date()
         }];
       });
@@ -317,10 +317,10 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
             >
               <div className={`max-w-[80%] ${
-                message.role === 'user' 
+                message.isUser 
                   ? 'bg-[var(--accent-ai)] text-white rounded-l-xl rounded-tr-xl' 
                   : 'bg-theme-card border border-[var(--card-border)] rounded-r-xl rounded-tl-xl'
               } p-3`}>
@@ -345,12 +345,12 @@ export default function ChatDemo({ className = "" }: ChatDemoProps) {
                 ) : (
                   <>
                     <p className={`text-sm whitespace-pre-wrap ${
-                      message.role === 'user' ? 'text-white' : 'text-theme-primary'
+                      message.isUser ? 'text-white' : 'text-theme-primary'
                     }`}>
-                      {message.content}
+                      {message.text}
                     </p>
                     <div className={`text-xs mt-1 ${
-                      message.role === 'user' ? 'text-white/70' : 'text-theme-secondary'
+                      message.isUser ? 'text-white/70' : 'text-theme-secondary'
                     }`}>
                       {formatTime(message.timestamp)}
                     </div>

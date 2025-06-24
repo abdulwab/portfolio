@@ -2,6 +2,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
+interface NavigationProps {
+  onOpenAssistant?: () => void;
+}
+
 interface NavItem {
   label: string;
   href: string;
@@ -65,7 +69,7 @@ const navItems: NavItem[] = [
   }
 ];
 
-export default function Navigation() {
+export default function Navigation({ onOpenAssistant }: NavigationProps = {}) {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -133,21 +137,39 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <motion.a
-              href="https://zcal.co/abdul-wahab/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-2 px-6 py-2 bg-gradient-to-r 
-                       from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-xl text-white 
-                       font-medium hover:shadow-lg hover:shadow-[var(--accent-ai)]/30
-                       transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span>📅</span>
-              <span>Book Consultation</span>
-            </motion.a>
+            <div className="flex items-center gap-4">
+              {/* AI Assistant Button */}
+              {onOpenAssistant && (
+                <motion.button
+                  onClick={onOpenAssistant}
+                  className="hidden lg:flex items-center gap-2 px-4 py-2 bg-[var(--background)] 
+                           border border-[var(--accent-ai)] rounded-xl text-[var(--accent-ai)]
+                           font-medium hover:bg-[var(--accent-ai)] hover:text-white
+                           transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span>🤖</span>
+                  <span>AI Assistant</span>
+                </motion.button>
+              )}
+
+              {/* CTA Button */}
+              <motion.a
+                href="https://zcal.co/abdul-wahab/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden lg:flex items-center gap-2 px-6 py-2 bg-gradient-to-r 
+                         from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-xl text-white 
+                         font-medium hover:shadow-lg hover:shadow-[var(--accent-ai)]/30
+                         transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>📅</span>
+                <span>Book Consultation</span>
+              </motion.a>
+            </div>
           </div>
         </nav>
       </motion.header>
@@ -161,7 +183,7 @@ export default function Navigation() {
         transition={{ duration: 0.3, delay: 0.2 }}
       >
         <div className="flex justify-around py-2">
-          {navItems.slice(0, 5).map((item) => (
+          {navItems.slice(0, 4).map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -173,6 +195,19 @@ export default function Navigation() {
               <span className="text-xs font-medium">{item.label}</span>
             </a>
           ))}
+          {/* AI Assistant Button for Mobile */}
+          {onOpenAssistant && (
+            <button
+              onClick={onOpenAssistant}
+              className="flex flex-col items-center p-2 text-theme-secondary 
+                       hover:text-[var(--accent-ai)] transition-colors duration-300"
+            >
+              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <span className="text-xs font-medium">AI Chat</span>
+            </button>
+          )}
         </div>
       </motion.nav>
     </>
