@@ -1,11 +1,6 @@
 'use client';
 import { useEffect } from "react";
-import dynamic from 'next/dynamic';
 import AOS from "aos";
-
-const CustomCursor = dynamic(() => import('./CustomCursor'), {
-  ssr: false,
-});
 
 export default function ClientWrapper({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -18,7 +13,6 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
 
   return (
     <>
-      <CustomCursor />
       {children}
     </>
   );

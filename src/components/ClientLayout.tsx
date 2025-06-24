@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import AOS from "aos";
 import 'aos/dist/aos.css';
 import { ThemeProvider } from './ThemeProvider';
-import CustomCursor from './CustomCursor';
 
 export default function ClientLayout({
   children,
@@ -57,7 +56,6 @@ export default function ClientLayout({
 
   return (
     <ThemeProvider>
-      <CustomCursor />
       {children}
     </ThemeProvider>
   );
