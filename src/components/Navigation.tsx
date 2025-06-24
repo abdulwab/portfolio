@@ -103,10 +103,13 @@ export default function Navigation({ onOpenAssistant }: NavigationProps = {}) {
             <a 
               href="#home"
               onClick={(e) => handleNavClick(e, '#home')}
-              className="text-2xl font-bold bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] 
-                       bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
+              className="flex items-center gap-3 hover:scale-105 transition-transform duration-300"
             >
-              AW
+              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] 
+                            flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                AW
+              </div>
+              <span className="text-xl font-bold text-theme-primary hidden sm:block">Abdul Wahab</span>
             </a>
             
             <div className="hidden md:flex items-center space-x-1">
