@@ -228,6 +228,91 @@ export function AIAgent() {
           </motion.p>
         </motion.div>
 
+        <div className="space-y-8">
+          <h3 className="text-3xl font-bold text-theme-primary">AI Agent Solutions</h3>
+          <p className="text-theme-secondary text-lg leading-relaxed">
+            Building autonomous intelligent systems that can understand, reason, and act independently to solve complex problems.
+          </p>
+          
+          {/* Agent Communication Protocols Section */}
+          <div className="bg-theme-card p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h4 className="text-xl font-semibold text-theme-primary mb-4 flex items-center">
+              <span className="mr-2">🔗</span>
+              Agent Communication Protocols
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <h5 className="font-semibold text-blue-600 dark:text-blue-400">MCP (Model Context Protocol)</h5>
+                  <p className="text-sm text-theme-secondary">Standardized agent-to-agent communication protocol for seamless interoperability</p>
+                </div>
+                <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <h5 className="font-semibold text-green-600 dark:text-green-400">OpenAI Agent SDK</h5>
+                  <p className="text-sm text-theme-secondary">Production-ready framework for autonomous assistants with function calling</p>
+                </div>
+                <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <h5 className="font-semibold text-purple-600 dark:text-purple-400">A2A Protocols</h5>
+                  <p className="text-sm text-theme-secondary">Advanced multi-agent coordination and message passing patterns</p>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                  <h5 className="font-semibold text-orange-600 dark:text-orange-400">Google Agentic Framework</h5>
+                  <p className="text-sm text-theme-secondary">Enterprise-grade agent platform with Vertex AI and Gemini integration</p>
+                </div>
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                  <h5 className="font-semibold text-red-600 dark:text-red-400">AutoGen</h5>
+                  <p className="text-sm text-theme-secondary">Microsoft&apos;s framework for multi-agent conversation systems</p>
+                </div>
+                <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                  <h5 className="font-semibold text-indigo-600 dark:text-indigo-400">Semantic Kernel</h5>
+                  <p className="text-sm text-theme-secondary">Cross-platform AI orchestration for enterprise applications</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Advanced Agentic Patterns */}
+          <div className="bg-theme-card p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <h4 className="text-xl font-semibold text-theme-primary mb-4 flex items-center">
+              <span className="mr-2">🧠</span>
+              Advanced Agentic Patterns
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-4 bg-gradient-to-b from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/40 rounded-lg">
+                <div className="text-2xl mb-2">🔄</div>
+                <h5 className="font-semibold text-theme-primary">ReAct Pattern</h5>
+                <p className="text-sm text-theme-secondary">Reasoning + Acting loops for complex problem solving</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-b from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-900/40 rounded-lg">
+                <div className="text-2xl mb-2">🎯</div>
+                <h5 className="font-semibold text-theme-primary">Plan-and-Execute</h5>
+                <p className="text-sm text-theme-secondary">Multi-step planning with dynamic execution strategies</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-b from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-900/40 rounded-lg">
+                <div className="text-2xl mb-2">🔍</div>
+                <h5 className="font-semibold text-theme-primary">Self-Reflection</h5>
+                <p className="text-sm text-theme-secondary">Agents that evaluate and improve their own outputs</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-b from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-900/40 rounded-lg">
+                <div className="text-2xl mb-2">🛠️</div>
+                <h5 className="font-semibold text-theme-primary">Tool-Augmented</h5>
+                <p className="text-sm text-theme-secondary">Seamless integration of external APIs and tools</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-b from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-900/40 rounded-lg">
+                <div className="text-2xl mb-2">🎭</div>
+                <h5 className="font-semibold text-theme-primary">Multi-Modal</h5>
+                <p className="text-sm text-theme-secondary">Vision, audio, and text processing in unified systems</p>
+              </div>
+              <div className="text-center p-4 bg-gradient-to-b from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-900/40 rounded-lg">
+                <div className="text-2xl mb-2">🤝</div>
+                <h5 className="font-semibold text-theme-primary">Human-in-Loop</h5>
+                <p className="text-sm text-theme-secondary">Collaborative AI systems with human oversight</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Workflow Visualization */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Workflow Types */}
