@@ -166,7 +166,7 @@ export default function ChatDemo() {
 
 
   return (
-    <div className="flex flex-col h-[500px] bg-gradient-to-br from-[#0D1117] to-[#161B22] rounded-2xl border border-[#30363D] shadow-2xl overflow-hidden">
+    <div className="flex flex-col h-[500px] bg-gradient-to-br from-[var(--background)] to-[var(--background-secondary)] rounded-2xl border border-[var(--card-border)] shadow-2xl overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-[#30363D] bg-[#161B22]/50 backdrop-blur-sm">
         <div className="flex items-center justify-between">

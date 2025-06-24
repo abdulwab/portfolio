@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import 'aos/dist/aos.css';
+import { ThemeProvider } from './ThemeProvider';
 
 export default function ClientLayout({
   children,
@@ -16,12 +17,15 @@ export default function ClientLayout({
     AOS.init({
       duration: 800,
       once: true,
+      offset: 100,
     });
   }, []);
 
   return (
-    <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
-      {children}
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <ThemeProvider>
+        {children}
+      </ThemeProvider>
     </body>
   );
 } 

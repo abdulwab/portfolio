@@ -93,8 +93,8 @@ export default function Skills() {
   }, []);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#0D1117] via-[#0D1117] to-[#161B22]" id="skills">
-      <div className="max-w-7xl mx-auto">
+    <section className="section-spacing bg-gradient-to-br from-[var(--background)] via-[var(--background)] to-[var(--background-secondary)]" id="skills">
+      <div className="container-center">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -102,11 +102,11 @@ export default function Skills() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <h2 className="text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-[#58A6FF] via-[#10B981] to-[#F59E0B] bg-clip-text text-transparent">
+            <span className="gradient-text">
               Technical Expertise
             </span>
           </h2>
-          <p className="text-[#8B949E] text-xl max-w-3xl mx-auto leading-relaxed">
+          <p className="text-[var(--text-secondary)] text-xl max-w-3xl mx-auto leading-relaxed">
             Comprehensive technology stack spanning AI agents, modern web development, 
             IoT solutions, and cloud infrastructure.
           </p>

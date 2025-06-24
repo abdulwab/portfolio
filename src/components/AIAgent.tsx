@@ -64,8 +64,8 @@ export function AIAgent() {
   const currentWorkflow = workflowTypes.find(w => w.id === activeWorkflow);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#0D1117] via-[#161B22] to-[#0D1117]">
-      <div className="max-w-7xl mx-auto">
+    <section className="section-spacing bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background)]">
+      <div className="container-center">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -78,12 +78,12 @@ export function AIAgent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="bg-gradient-to-r from-[#58A6FF] via-[#10B981] to-[#F59E0B] bg-clip-text text-transparent">
+            <span className="gradient-text">
               AI Agent Development
             </span>
           </motion.h2>
           <motion.p
-            className="text-[#8B949E] text-xl max-w-3xl mx-auto leading-relaxed"
+            className="text-[var(--text-secondary)] text-xl max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

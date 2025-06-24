@@ -3,30 +3,73 @@
 @tailwind utilities;
 
 :root {
+  --background: #ffffff;
+  --background-secondary: #f8fafc;
+  --foreground: #1e293b;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --accent-web: #0ea5e9;
+  --accent-iot: #3b82f6;
+  --accent-ai: #10b981;
+  --accent-mobile: #ef4444;
+  --accent-chatbot: #ec4899;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --hover-bg: #f1f5f9;
+}
+
+.dark {
   --background: #0D1117;
+  --background-secondary: #161B22;
   --foreground: #C9D1D9;
   --text-primary: #C9D1D9;
   --text-secondary: #8B949E;
   --border-primary: #30363D;
+  --border-secondary: #21262D;
   --accent-web: #7DD3FC;
   --accent-iot: #60A5FA;
   --accent-ai: #34D399;
   --accent-mobile: #F43F5E;
   --accent-chatbot: #EC4899;
+  --card-bg: #161B22;
+  --card-border: #30363D;
+  --hover-bg: #21262D;
 }
 
 @layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
   body {
-    @apply bg-[var(--background)] text-[var(--foreground)];
+    @apply bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300;
+  }
+  
+  section {
+    @apply relative;
   }
 }
 
 @layer components {
   .card {
-    @apply bg-[#161B22] border border-[#30363D] rounded-xl p-6;
+    @apply bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl p-6 transition-colors duration-300;
   }
   
   .tag {
-    @apply px-2 py-1 text-xs rounded-md bg-[#0D1117] border border-[#30363D];
+    @apply px-2 py-1 text-xs rounded-md bg-[var(--background-secondary)] border border-[var(--border-primary)] transition-colors duration-300;
+  }
+  
+  .section-spacing {
+    @apply py-20 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-center {
+    @apply max-w-7xl mx-auto;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-[var(--accent-ai)] via-[var(--accent-iot)] to-[var(--accent-web)] bg-clip-text text-transparent;
   }
 }

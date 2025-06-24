@@ -16,38 +16,33 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="min-h-screen relative pt-20 pb-12 bg-gradient-to-br from-[#0D1117] via-[#0D1117] to-[#161B22]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section className="section-spacing bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background)]">
+      <div className="container-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-5rem)]">
           {/* Left Column */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            className="flex flex-col justify-center"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
           >
+            {/* Profile Image */}
             <motion.div
-              className="relative mb-8 inline-block"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+              className="mb-8 relative mx-auto lg:mx-0"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-gradient-to-r from-[#58A6FF] to-[#10B981] relative">
-                <Image
-                  src="/images/profile.jpeg"
-                  alt="Abdul Wahab"
-                  width={144}
-                  height={144}
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#58A6FF]/10 to-[#10B981]/10" />
+              <div className="relative w-32 h-32 rounded-full p-1 bg-gradient-to-r 
+                            from-[var(--accent-ai)] via-[var(--accent-iot)] to-[var(--accent-web)]">
+                <div className="w-full h-full bg-[var(--background)] rounded-full p-1">
+                  <img
+                    src="/images/profile.jpeg"
+                    alt="Abdul Wahab"
+                    className="w-full h-full rounded-full object-cover shadow-2xl"
+                  />
+                </div>
               </div>
-              <motion.div
-                className="absolute -bottom-2 -right-2 bg-gradient-to-r from-[#58A6FF] to-[#10B981] p-2 rounded-full shadow-lg"
-                animate={{ rotate: [0, 20, -20, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-              >
-                <span className="text-xl">🤖</span>
-              </motion.div>
             </motion.div>
 
             <motion.h1 
@@ -55,11 +50,11 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              <span className="block mb-2 text-[#C9D1D9]">Hi, I&apos;m</span>
-              <span className="bg-gradient-to-r from-[#58A6FF] via-[#10B981] to-[#F59E0B] bg-clip-text text-transparent">
+              <span className="block mb-2 text-[var(--text-primary)]">Hi, I&apos;m</span>
+              <span className="gradient-text">
                 Abdul Wahab
               </span>
-              <div className="min-h-[1.5em] mt-4 text-[#8B949E] text-2xl md:text-3xl">
+              <div className="min-h-[1.5em] mt-4 text-[var(--text-secondary)] text-2xl md:text-3xl">
                 <TypeAnimation
                   sequence={[
                     'AI Agent Developer',
@@ -79,13 +74,13 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              className="text-[#8B949E] text-lg mb-8 max-w-xl leading-relaxed"
+              className="text-[var(--text-secondary)] text-lg mb-8 max-w-xl leading-relaxed"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              Crafting intelligent autonomous systems with <span className="text-[#58A6FF] font-semibold">LangChain</span>, 
-              <span className="text-[#10B981] font-semibold"> CrewAI</span>, and cutting-edge AI technologies. 
+              Crafting intelligent autonomous systems with <span className="text-[var(--accent-ai)] font-semibold">LangChain</span>, 
+              <span className="text-[var(--accent-iot)] font-semibold"> CrewAI</span>, and cutting-edge AI technologies. 
               Specializing in agentic workflows that bridge AI innovation with real-world IoT solutions.
             </motion.p>
 
@@ -103,9 +98,10 @@ export default function Hero() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="group p-4 rounded-xl bg-[#161B22] border border-[#30363D] hover:border-[#58A6FF]
-                           transition-all duration-300 flex items-center gap-3 text-[#C9D1D9] hover:text-[#58A6FF]
-                           hover:shadow-lg hover:shadow-[#58A6FF]/20 hover:scale-105"
+                  className="group p-4 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] 
+                           hover:border-[var(--accent-ai)] transition-all duration-300 flex items-center gap-3 
+                           text-[var(--text-primary)] hover:text-[var(--accent-ai)]
+                           hover:shadow-lg hover:shadow-[var(--accent-ai)]/20 hover:scale-105"
                 >
                   <span className="text-xl group-hover:scale-110 transition-transform">{link.icon}</span>
                   <span className="font-medium">{link.label}</span>
@@ -123,12 +119,12 @@ export default function Hero() {
               {['LangChain', 'CrewAI', 'OpenAI', 'LangGraph', 'N8N'].map((tech, index) => (
                 <motion.span
                   key={tech}
-                  className="px-3 py-1 text-sm bg-gradient-to-r from-[#58A6FF]/20 to-[#10B981]/20 
-                           border border-[#58A6FF]/30 rounded-full text-[#58A6FF] font-medium"
+                  className="px-3 py-1 text-sm bg-gradient-to-r from-[var(--accent-ai)]/20 to-[var(--accent-iot)]/20 
+                           border border-[var(--accent-ai)]/30 rounded-full text-[var(--accent-ai)] font-medium"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(88, 166, 255, 0.1)' }}
+                  whileHover={{ scale: 1.05 }}
                 >
                   {tech}
                 </motion.span>
@@ -140,9 +136,10 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="relative bg-[#161B22] rounded-2xl border border-[#30363D] p-6 shadow-2xl"
+            className="relative bg-[var(--card-bg)] rounded-2xl border border-[var(--card-border)] p-6 shadow-2xl"
           >
-            <div className="absolute -top-3 left-4 bg-gradient-to-r from-[#58A6FF] to-[#10B981] px-4 py-1 rounded-full text-sm font-medium">
+            <div className="absolute -top-3 left-4 bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] 
+                          px-4 py-1 rounded-full text-sm font-medium text-white">
               🤖 AI Assistant v3.0
             </div>
             <ChatDemo />
@@ -150,24 +147,37 @@ export default function Hero() {
 
           {/* Terminal */}
           <motion.div
-            className="fixed bottom-8 right-8 cursor-pointer z-50"
+            className="lg:col-span-2 mt-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            onClick={handleCopy}
-            whileTap={{ scale: 0.95 }}
+            transition={{ delay: 0.8 }}
           >
-            <div className="bg-[#161B22] rounded-lg p-4 border border-[#30363D] hover:border-[#58A6FF]
-                        transition-colors font-mono text-sm flex items-center gap-3 shadow-lg">
-              <span className="text-[#58A6FF]">$</span>
-              <span className="text-[#8B949E]">
-                {copied ? (
-                  <span className="text-[#10B981] flex items-center gap-2">
-                    <span>✅ Copied!</span>
-                  </span>
-                ) : (
-                  'npm create @abdulwahab/ai-agent'
-                )}
-              </span>
+            <div className="bg-[var(--card-bg)] rounded-xl border border-[var(--card-border)] p-6 shadow-xl">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                <div className="w-3 h-3 rounded-full bg-[#27CA3F]"></div>
+                <span className="ml-4 text-[var(--text-secondary)] text-sm">bash</span>
+              </div>
+              <div className="font-mono text-sm">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[var(--accent-ai)]">$</span>
+                  <TypeAnimation
+                    sequence={[
+                      'npm create @abdulwahab/ai-agent',
+                      1000,
+                      'npm create @abdulwahab/ai-agent\n✨ Setting up your AI agent...',
+                      1000,
+                      'npm create @abdulwahab/ai-agent\n✨ Setting up your AI agent...\n🚀 Ready to revolutionize automation!',
+                      2000,
+                    ]}
+                    wrapper="span"
+                    speed={75}
+                    repeat={Infinity}
+                    className="text-[var(--text-primary)]"
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

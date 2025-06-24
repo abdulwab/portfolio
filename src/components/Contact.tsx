@@ -58,10 +58,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="contact" className="section-spacing bg-[var(--background)]">
+      <div className="container-center">
         <motion.h2
-          className="text-3xl font-bold mb-12 text-center text-[var(--text-primary)]"
+          className="text-5xl font-bold mb-12 text-center gradient-text"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

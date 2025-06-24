@@ -1,14 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-// import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
-type NavItem = {
+interface NavItem {
   label: string;
   href: string;
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
-};
+  icon: (props: any) => JSX.Element;
+}
 
 const navItems: NavItem[] = [
   {
@@ -61,22 +60,21 @@ const navItems: NavItem[] = [
     href: '#contact',
     icon: (props) => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     )
   }
 ];
 
 export default function Navigation() {
-  // const pathname = usePathname(); // Currently unused, but available for future route highlighting
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
     <>
       {/* Desktop Navigation */}
       <motion.header 
-        className="fixed top-0 left-0 w-full z-50 bg-[#0D1117]/95 backdrop-blur-md border-b border-[#30363D]/50"
+        className="fixed top-0 left-0 w-full z-50 bg-[var(--background)]/95 backdrop-blur-md 
+                 border-b border-[var(--border-primary)]/50 transition-colors duration-300"
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -85,8 +83,8 @@ export default function Navigation() {
           <div className="flex justify-between items-center">
             <Link 
               href="/" 
-              className="text-2xl font-bold bg-gradient-to-r from-[#58A6FF] to-[#10B981] bg-clip-text text-transparent 
-                       hover:scale-105 transition-transform duration-300"
+              className="text-2xl font-bold bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] 
+                       bg-clip-text text-transparent hover:scale-105 transition-transform duration-300"
             >
               AW
             </Link>
@@ -96,8 +94,9 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group relative px-4 py-2 rounded-xl text-[#8B949E] hover:text-[#C9D1D9] 
-                           transition-all duration-300 hover:bg-[#161B22]/50"
+                  className="group relative px-4 py-2 rounded-xl text-[var(--text-secondary)] 
+                           hover:text-[var(--text-primary)] transition-all duration-300 
+                           hover:bg-[var(--hover-bg)]"
                   onMouseEnter={() => setHoveredItem(item.href)}
                   onMouseLeave={() => setHoveredItem(null)}
                 >
@@ -108,7 +107,7 @@ export default function Navigation() {
                   {hoveredItem === item.href && (
                     <motion.div
                       className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-0.5 
-                               bg-gradient-to-r from-[#58A6FF] to-[#10B981] rounded-full"
+                               bg-gradient-to-r from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-full"
                       layoutId="navbar-indicator"
                       transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
                     />
@@ -120,8 +119,9 @@ export default function Navigation() {
             {/* CTA Button */}
             <motion.a
               href="#contact"
-              className="hidden lg:flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-[#58A6FF] to-[#10B981] 
-                       rounded-xl text-white font-medium hover:shadow-lg hover:shadow-[#58A6FF]/30
+              className="hidden lg:flex items-center gap-2 px-6 py-2 bg-gradient-to-r 
+                       from-[var(--accent-ai)] to-[var(--accent-iot)] rounded-xl text-white 
+                       font-medium hover:shadow-lg hover:shadow-[var(--accent-ai)]/30
                        transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -134,29 +134,23 @@ export default function Navigation() {
       </motion.header>
 
       {/* Mobile Bottom Navigation */}
-      <motion.nav
-        className="fixed bottom-0 left-0 right-0 bg-[#0D1117]/95 backdrop-blur-md border-t border-[#30363D]/50 md:hidden z-50"
+      <motion.nav 
+        className="fixed bottom-0 left-0 w-full z-50 md:hidden bg-[var(--background)]/95 
+                 backdrop-blur-md border-t border-[var(--border-primary)]/50"
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
+        transition={{ duration: 0.3, delay: 0.2 }}
       >
-        <div className="flex justify-around items-center p-3">
+        <div className="flex justify-around py-2">
           {navItems.slice(0, 5).map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex flex-col items-center p-2 rounded-xl text-[#8B949E] hover:text-[#C9D1D9] 
-                       transition-all duration-300 group"
+              className="flex flex-col items-center p-2 text-[var(--text-secondary)] 
+                       hover:text-[var(--accent-ai)] transition-colors duration-300"
             >
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-full bg-[#161B22]/50 border border-[#30363D] 
-                         group-hover:border-[#58A6FF] group-hover:bg-[#58A6FF]/10 transition-all duration-300"
-              >
-                <item.icon className="w-5 h-5" />
-              </motion.div>
-              <span className="text-xs mt-1 font-medium">{item.label}</span>
+              <item.icon className="w-5 h-5 mb-1" />
+              <span className="text-xs font-medium">{item.label}</span>
             </Link>
           ))}
         </div>
