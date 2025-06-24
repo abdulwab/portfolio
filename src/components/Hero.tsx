@@ -9,10 +9,10 @@ export default function Hero() {
   return (
     <section className="bg-gradient-to-br from-[var(--background)] via-[var(--background-secondary)] to-[var(--background)] pt-16">
       <div className="container-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start min-h-screen max-h-screen overflow-hidden py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start min-h-screen max-h-screen overflow-hidden py-6">
           {/* Left Column - Content */}
           <motion.div
-            className="lg:col-span-7 flex flex-col justify-center h-full"
+            className="lg:col-span-7 flex flex-col justify-start h-full"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -133,7 +133,7 @@ export default function Hero() {
 
           {/* Right Column - Chat Interface + CTA */}
           <motion.div
-            className="lg:col-span-5 flex flex-col h-full"
+            className="lg:col-span-5 flex flex-col h-full justify-start"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
