@@ -1,9 +1,13 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ChatDemoProps {
   className?: string;
+}
+
+interface ChatDemoRef {
+  sendMessage: (message: string) => void;
 }
 
 interface Message {
@@ -158,7 +162,7 @@ AGENT PROTOCOL EXPERTISE:
 
 Remember: You represent Abdul Wahab professionally. Be helpful, knowledgeable, and always aim to connect the visitor&apos;s needs with Abdul&apos;s expertise. Every conversation is an opportunity to showcase Abdul&apos;s cutting-edge knowledge in agent technologies and potentially generate new project opportunities.`;
 
-export default function ChatDemo({ className = '' }: ChatDemoProps) {
+const ChatDemo = forwardRef<ChatDemoRef, ChatDemoProps>(({ className = '' }, ref) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -171,13 +175,18 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainer = useRef<HTMLDivElement>(null);
+
+  // Expose sendMessage method to parent components
+  useImperativeHandle(ref, () => ({
+    sendMessage: (message: string) => {
+      handleSendMessage(message);
+    }
+  }));
 
   const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      const messagesContainer = messagesEndRef.current.parentElement;
-      if (messagesContainer) {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
+    if (messagesContainer.current) {
+      messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
     }
   };
 
@@ -185,18 +194,27 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
+
+  const handleSendMessage = async (messageText?: string) => {
+    const messageToSend = messageText || input.trim();
+    if (!messageToSend || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: input.trim(),
+      text: messageToSend,
       isUser: true,
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    if (!messageText) setInput(''); // Only clear input if using the input field
     setIsLoading(true);
 
     // Add typing indicator
@@ -207,6 +225,7 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
       timestamp: new Date(),
       typing: true
     };
+
     setMessages(prev => [...prev, typingMessage]);
 
     try {
@@ -222,7 +241,7 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
               role: m.isUser ? 'user' : 'assistant', 
               content: m.text 
             })),
-            { role: 'user', content: input.trim() }
+            { role: 'user', content: messageToSend }
           ]
         }),
       });
@@ -264,7 +283,7 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      handleSendMessage();
     }
   };
 
@@ -274,14 +293,6 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
     "Book a consultation meeting",
     "What&apos;s Abdul&apos;s experience with Google Agentic Framework?"
   ];
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: false 
-    });
-  };
 
   return (
     <div className={`flex flex-col h-full bg-[var(--background)] rounded-xl border border-[var(--card-border)] ${className}`}>
@@ -309,7 +320,7 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+      <div ref={messagesContainer} className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div
@@ -400,7 +411,7 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
             disabled={isLoading}
           />
           <motion.button
-            onClick={sendMessage}
+            onClick={() => handleSendMessage()}
             disabled={!input.trim() || isLoading}
             className="px-4 py-2 bg-[var(--accent-ai)] text-white rounded-lg text-sm font-medium
                      disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--accent-ai)]/90
@@ -414,4 +425,6 @@ export default function ChatDemo({ className = '' }: ChatDemoProps) {
       </div>
     </div>
   );
-}
+});
+
+export default ChatDemo;
