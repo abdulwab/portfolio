@@ -89,6 +89,7 @@ export default function Hero() {
                 { href: 'mailto:abdulwahabawan82@gmail.com', label: 'Email', icon: '📧', color: 'from-[#EA4335] to-[#FBBC04]' },
                 { href: 'https://github.com/abdulwab', label: 'GitHub', icon: '🐙', color: 'from-[#333] to-[#666]' },
                 { href: 'https://wa.me/923219424726', label: 'WhatsApp', icon: '💬', color: 'from-[#25D366] to-[#128C7E]' },
+                { href: 'https://discord.com/users/abdulwahab726', label: 'Discord', icon: '🎮', color: 'from-[#5865F2] to-[#7289DA]' },
               ].map((link) => (
                 <a
                   key={link.label}
@@ -113,7 +114,7 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              {['LangChain', 'CrewAI', 'OpenAI', 'LangGraph', 'N8N'].map((tech, index) => (
+              {['LangChain', 'CrewAI', 'MCP Protocol', 'OpenAI Agent SDK', 'A2A Protocols', 'Google Agentic', 'AutoGen', 'LangGraph', 'N8N'].map((tech, index) => (
                 <motion.span
                   key={tech}
                   className="px-3 py-1 text-sm bg-gradient-to-r from-[var(--accent-ai)]/20 to-[var(--accent-iot)]/20 
