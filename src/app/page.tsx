@@ -26,38 +26,102 @@ export default function Home() {
     }
   }, []);
 
-  return (
-    <main className="min-h-screen">
-      <Navigation onOpenAssistant={() => setShowAssistantModal(true)} />
-      <section id="home" className="pt-16">
-        <Hero />
-      </section>
-     
-      <section id="ai-agents">
-        <AIAgent />
-      </section>
-      
-      <section id="skills">
-        <Skills />
-      </section>
-      
-      <section id="iot">
-        <IoTSolutions />
-      </section>
-      
-      <section id="projects">
-        <Projects />
-      </section>
-      
-      <section id="contact">
-        <Contact />
-      </section>
+  // Breadcrumb structured data
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://abdulwahab.dev"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AI Agents",
+        "item": "https://abdulwahab.dev#ai-agents"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Skills",
+        "item": "https://abdulwahab.dev#skills"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "IoT Solutions",
+        "item": "https://abdulwahab.dev#iot"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Projects",
+        "item": "https://abdulwahab.dev#projects"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "Contact",
+        "item": "https://abdulwahab.dev#contact"
+      }
+    ]
+  };
 
-      {/* AI Assistant Modal that can be reopened */}
-      <AIAssistantModal 
-        isOpen={showAssistantModal} 
-        onClose={() => setShowAssistantModal(false)} 
+  return (
+    <>
+      {/* Breadcrumb Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
       />
-    </main>
+      
+      <main className="min-h-screen" role="main" itemScope itemType="https://schema.org/WebPage">
+        <Navigation onOpenAssistant={() => setShowAssistantModal(true)} />
+        
+        <article itemScope itemType="https://schema.org/Person">
+          <section id="home" className="pt-16" itemProp="description">
+            <header>
+              <Hero />
+            </header>
+          </section>
+         
+          <section id="ai-agents" aria-labelledby="ai-agents-heading" itemProp="knowsAbout">
+            <h2 id="ai-agents-heading" className="sr-only">AI Agent Development Services</h2>
+            <AIAgent />
+          </section>
+          
+          <section id="skills" aria-labelledby="skills-heading" itemProp="hasOccupation">
+            <h2 id="skills-heading" className="sr-only">Technical Skills and Expertise</h2>
+            <Skills />
+          </section>
+          
+          <section id="iot" aria-labelledby="iot-heading" itemProp="knowsAbout">
+            <h2 id="iot-heading" className="sr-only">IoT Solutions and Smart Automation</h2>
+            <IoTSolutions />
+          </section>
+          
+          <section id="projects" aria-labelledby="projects-heading" itemProp="hasCredential">
+            <h2 id="projects-heading" className="sr-only">Portfolio Projects and Case Studies</h2>
+            <Projects />
+          </section>
+          
+          <section id="contact" aria-labelledby="contact-heading" itemProp="contactPoint">
+            <h2 id="contact-heading" className="sr-only">Contact Information and Get in Touch</h2>
+            <Contact />
+          </section>
+        </article>
+
+        {/* AI Assistant Modal that can be reopened */}
+        <AIAssistantModal 
+          isOpen={showAssistantModal} 
+          onClose={() => setShowAssistantModal(false)} 
+        />
+      </main>
+    </>
   );
 }

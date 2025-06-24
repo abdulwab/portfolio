@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://abdulwahab.dev/sitemap.xml
+
+# Block access to admin or private areas (if any)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow specific important resources
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /logo.svg
+Allow: /images/
+Allow: /videos/
+Allow: /projects/
+
+# Crawl delay (optional - helps with server load)
+Crawl-delay: 1 
