@@ -427,4 +427,6 @@ const ChatDemo = forwardRef<ChatDemoRef, ChatDemoProps>(({ className = '' }, ref
   );
 });
 
+ChatDemo.displayName = 'ChatDemo';
+
 export default ChatDemo;
