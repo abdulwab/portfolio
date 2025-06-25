@@ -62,10 +62,13 @@ export default function Contact() {
       emailjs.init(publicKey);
       
       const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
+        name: formData.name,           // For {{name}} in template
+        email: formData.email,         // For {{email}} in template  
+        from_name: formData.name,      // For {{from_name}} in template
+        from_email: formData.email,    // For {{from_email}} in template
         subject: formData.subject || 'Portfolio Contact Form',
         message: formData.message,
+        title: formData.subject || 'Contact Form Submission',
         to_name: 'Abdul Wahab',
         to_email: 'abdulwahabawan82@gmail.com',
         reply_to: formData.email
