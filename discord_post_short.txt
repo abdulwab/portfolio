@@ -1,0 +1,46 @@
+🤖 AI Agent Developer & IoT Solutions Expert Available! 
+
+Hey everyone! 👋
+
+I'm Abdul Wahab, specializing in intelligent autonomous systems that work in production. Looking to integrate cutting-edge AI or need IoT solutions? I'd love to help!
+
+🚀 What I Offer:
+🧠 AI Agent Development
+• LangChain & CrewAI workflows
+• OpenAI Agent SDK & AutoGen
+• RAG Pipelines & MCP Protocol
+
+🔗 IoT & Automation
+• MQTT Dashboards & Smart Home Systems
+• Industrial IoT & Device Integration
+
+⚡ Advanced Patterns
+• ReAct loops & Plan-Execute workflows
+• Multi-agent systems & Tool integration
+
+💼 Recent Success:
+• Research agents with document analysis
+• Smart home with voice control
+• Customer service bots (90%+ accuracy)
+• IoT monitoring dashboards
+
+🛠️ Tech Stack:
+LangChain, CrewAI, AutoGen, OpenAI GPT-4, Python, React, MQTT, Arduino
+
+📈 Why Me:
+✅ 15+ AI frameworks
+✅ Production-ready solutions
+✅ End-to-end development
+
+💬 Need Help With:
+• Custom AI agents
+• IoT solutions that scale
+• Automation systems
+• AI integration consulting
+
+DM me! Let's transform your ideas into reality.
+
+🔗 https://abdulwahab.live
+📅 https://zcal.co/abdul-wahab/30min
+
+#AIAgent #LangChain #CrewAI #IoT #Automation 
