@@ -76,10 +76,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: '32x32' }
     ],
     apple: { url: '/favicon.svg', type: 'image/svg+xml' },
-    shortcut: '/favicon.ico',
+    shortcut: '/favicon.svg',
   },
   manifest: '/manifest.json',
   alternates: {
@@ -150,7 +149,6 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="alternate icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="canonical" href={siteUrl} />
         
