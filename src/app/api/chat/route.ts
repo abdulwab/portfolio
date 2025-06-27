@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         'X-Title': 'Abdul Wahab Portfolio AI Assistant',
       },
       body: JSON.stringify({
-        model: 'openai/gpt-3.5-turbo', // Using GPT-3.5-turbo via OpenRouter
+        model: 'openai/gpt-4o-mini', // Using GPT-4o mini via OpenRouter - 60% cheaper and more capable than GPT-3.5-turbo
         messages: messages,
         max_tokens: 500,
         temperature: 0.7,
